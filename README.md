@@ -1,1 +1,1 @@
-# avaneesh-pandey-metal-calculator
+# avaneesh-pandey-machining-calculator
