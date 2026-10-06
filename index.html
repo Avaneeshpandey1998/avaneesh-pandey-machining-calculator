@@ -1,0 +1,1455 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1220">
+<title>Avaneesh Machining Rate Calculator</title>
+
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#0b1220;
+  --card:#111a2e;
+  --card2:#16223a;
+  --border:#263654;
+  --text:#f4f7fb;
+  --muted:#9eabc1;
+  --blue:#2388ff;
+  --cyan:#18c8ff;
+  --green:#19c37d;
+  --orange:#ff9d42;
+  --red:#ff5d73;
+  --shadow:0 15px 40px rgba(0,0,0,.25);
+}
+body{
+  margin:0;
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#07101e,#101a30 50%,#091221);
+  color:var(--text);
+}
+header{
+  padding:28px 20px;
+  text-align:center;
+  border-bottom:1px solid var(--border);
+  background:rgba(8,15,29,.9);
+  position:sticky;
+  top:0;
+  z-index:20;
+  backdrop-filter:blur(12px);
+}
+header h1{margin:0;font-size:28px}
+header p{margin:7px 0 0;color:var(--muted)}
+
+.container{
+  max-width:1250px;
+  margin:auto;
+  padding:25px 16px 100px;
+}
+
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+  margin-bottom:22px;
+}
+.tab{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  padding:13px 10px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:700;
+}
+.tab.active{
+  background:linear-gradient(135deg,var(--blue),#1764d3);
+  border-color:#48a3ff;
+}
+
+.section{display:none}
+.section.active{display:block}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+}
+.card{
+  background:linear-gradient(145deg,var(--card),#0d1729);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+.card.full{grid-column:1/-1}
+.card h2{
+  margin:0 0 5px;
+  font-size:20px;
+}
+.card .sub{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:18px;
+}
+
+.fields{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:13px;
+}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+label{font-size:13px;color:#c6d0df;font-weight:600}
+input,select{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid var(--border);
+  background:#0a1323;
+  color:var(--text);
+  border-radius:10px;
+  outline:none;
+  font-size:14px;
+}
+input:focus,select:focus{border-color:var(--blue)}
+
+button.primary{
+  width:100%;
+  margin-top:16px;
+  border:0;
+  border-radius:11px;
+  padding:14px;
+  color:white;
+  background:linear-gradient(135deg,var(--blue),#1764d3);
+  cursor:pointer;
+  font-weight:800;
+  font-size:15px;
+}
+button.secondary{
+  border:1px solid var(--border);
+  background:#17233a;
+  color:white;
+  padding:10px 14px;
+  border-radius:9px;
+  cursor:pointer;
+}
+
+.result{
+  margin-top:17px;
+  padding:18px;
+  border:1px solid #284064;
+  border-radius:14px;
+  background:#0a1425;
+}
+.result-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.result-box{
+  padding:13px;
+  border-radius:10px;
+  background:#111e34;
+  border:1px solid #233654;
+}
+.result-box span{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:5px;
+}
+.result-box strong{font-size:18px}
+.cost{
+  color:#55e6a7!important;
+  font-size:23px!important;
+}
+
+.shape-preview{
+  min-height:210px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#08111f;
+  border:1px dashed #315078;
+  border-radius:14px;
+  margin-bottom:16px;
+}
+.shape-svg{
+  width:170px;
+  height:170px;
+}
+.note{
+  padding:12px;
+  border-left:3px solid var(--orange);
+  background:#171c25;
+  color:#c7d0df;
+  font-size:13px;
+  border-radius:5px;
+  margin-top:12px;
+}
+
+.file-box{
+  border:2px dashed #36537b;
+  padding:35px 20px;
+  text-align:center;
+  border-radius:15px;
+  background:#0a1425;
+}
+.file-box input{max-width:400px;margin:auto}
+
+.price-list{
+  width:100%;
+  border-collapse:collapse;
+}
+.price-list th,.price-list td{
+  border-bottom:1px solid var(--border);
+  padding:10px;
+  text-align:left;
+}
+.price-list th{color:#9fb0c8}
+
+.total-card{
+  margin-top:18px;
+  padding:22px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#123b32,#0b2420);
+  border:1px solid #1c765c;
+}
+.total-card .big{
+  font-size:32px;
+  font-weight:900;
+  color:#55e6a7;
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  padding:25px;
+  border-top:1px solid var(--border);
+}
+
+/* Floating normal calculator */
+.floating-calc{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  width:290px;
+  background:#101a2e;
+  border:1px solid #385071;
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+  padding:14px;
+  z-index:100;
+}
+.calc-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+.calc-head strong{font-size:14px}
+.calc-display{
+  background:#07101d;
+  border:1px solid #273b59;
+  padding:14px;
+  border-radius:10px;
+  text-align:right;
+  min-height:50px;
+  font-size:20px;
+  margin-bottom:10px;
+  overflow:hidden;
+}
+.calc-buttons{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px;
+}
+.calc-buttons button{
+  padding:12px 5px;
+  border:1px solid #263a58;
+  background:#17243b;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+.calc-buttons button:hover{background:#203453}
+.calc-buttons .operator{color:#65b5ff}
+.calc-buttons .equal{background:#1768d8}
+.calc-buttons .clear{color:#ff7182}
+
+.quick-estimate{
+  margin-top:16px;
+  padding:16px;
+  border:1px solid #284064;
+  border-radius:14px;
+  background:#0a1425;
+}
+.estimate-title{
+  font-size:18px;
+  font-weight:800;
+  margin-bottom:12px;
+}
+.estimate-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:8px 0;
+  border-bottom:1px solid #1d2b42;
+}
+.estimate-row span{color:#c6d0df;font-size:13px}
+.estimate-row strong{font-size:15px}
+.estimate-row input{
+  width:130px;
+  padding:8px 10px;
+  text-align:right;
+}
+.estimate-subtotal{
+  margin-top:4px;
+  padding-top:12px;
+  font-weight:700;
+}
+.estimate-total{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-top:14px;
+  padding:14px;
+  border-radius:11px;
+  background:linear-gradient(135deg,#123b32,#0b2420);
+  border:1px solid #1c765c;
+}
+.estimate-total span{
+  font-weight:800;
+}
+.estimate-total strong{
+  color:#55e6a7;
+  font-size:23px;
+}
+
+@media(max-width:800px){
+  .grid,.fields{grid-template-columns:1fr}
+  .result-grid{grid-template-columns:1fr 1fr}
+  .floating-calc{
+    width:250px;
+    right:8px;
+    bottom:8px;
+  }
+}
+@media(max-width:500px){
+  header h1{font-size:22px}
+  .result-grid{grid-template-columns:1fr}
+  .floating-calc{
+    width:220px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>⚙️ Avaneesh Machining Rate Calculator</h1>
+  <p>Metal Weight • Material Cost • VMC • Welding • Manpower • Transport • File Analysis</p>
+</header>
+
+<div class="container">
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('weight',this)">⚖️ Metal Weight</button>
+    <button class="tab" onclick="showTab('machining',this)">🔩 VMC Machining</button>
+    <button class="tab" onclick="showTab('welding',this)">🔥 Welding</button>
+    <button class="tab" onclick="showTab('manpower',this)">👷 Manpower</button>
+    <button class="tab" onclick="showTab('transport',this)">🚚 Transport</button>
+    <button class="tab" onclick="showTab('files',this)">📁 DXF / IGS / PDF</button>
+    <button class="tab" onclick="showTab('quotation',this)">📋 Estimate</button>
+  </div>
+
+  <!-- METAL WEIGHT -->
+  <section id="weight" class="section active">
+    <div class="grid">
+
+      <div class="card">
+        <h2>Metal Weight Calculator</h2>
+        <div class="sub">Select the shape and enter dimensions.</div>
+
+        <div class="fields">
+
+          <div class="field">
+            <label>Metal Shape</label>
+            <select id="shape" onchange="updateShape()">
+              <option value="round">Round Bar</option>
+              <option value="square">Square Bar</option>
+              <option value="rect">Rectangle / Flat Bar</option>
+              <option value="plate">Plate / Sheet</option>
+              <option value="pipe">Round Pipe / Tube</option>
+              <option value="hollowSquare">Square Hollow Section</option>
+              <option value="hollowRect">Rectangular Hollow Section</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Material</label>
+            <select id="material" onchange="setMaterialRate()">
+              <option value="7.85">Mild Steel / MS</option>
+              <option value="7.85">EN8 Steel</option>
+              <option value="7.85">EN19 Steel</option>
+              <option value="8.00">Tool Steel</option>
+              <option value="7.90">SS 304</option>
+              <option value="7.90">SS 316</option>
+              <option value="2.70">Aluminium</option>
+              <option value="8.50">Brass</option>
+              <option value="8.96">Copper</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Density (g/cm³)</label>
+            <input id="density" type="number" value="7.85" step="0.01">
+          </div>
+
+          <div class="field">
+            <label>Material Rate (₹/kg)</label>
+            <input id="materialRate" type="number" value="75" step="0.01">
+          </div>
+
+        </div>
+
+        <div id="dimensionFields"></div>
+
+        <button class="primary" onclick="calculateWeight()">Calculate Weight & Cost</button>
+
+        <div class="result">
+          <div class="result-grid">
+            <div class="result-box">
+              <span>Selected Shape</span>
+              <strong id="resultShape">Round Bar</strong>
+            </div>
+            <div class="result-box">
+              <span>Volume</span>
+              <strong id="resultVolume">0 cm³</strong>
+            </div>
+            <div class="result-box">
+              <span>Weight / Piece</span>
+              <strong id="pieceWeight">0 kg</strong>
+            </div>
+            <div class="result-box">
+              <span>Quantity</span>
+              <strong id="resultQty">1</strong>
+            </div>
+            <div class="result-box">
+              <span>Total Weight</span>
+              <strong id="totalWeight">0 kg</strong>
+            </div>
+            <div class="result-box">
+              <span>Material Rate</span>
+              <strong id="resultRate">₹0/kg</strong>
+            </div>
+          </div>
+
+          <div class="total-card">
+            <div>💰 Total Estimated Material Cost</div>
+            <div class="big" id="materialCost">₹0.00</div>
+          </div>
+        </div>
+
+        <div class="note">
+          Material cost = Total weight × Material rate. Add machining, welding,
+          manpower and transport separately for a complete manufacturing estimate.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Shape & Estimated Cost</h2>
+        <div class="sub">Shape drawing and quick manufacturing estimate.</div>
+
+        <div class="shape-preview" id="shapePreview"></div>
+
+        <div class="quick-estimate">
+          <div class="estimate-title">💰 Estimated Cost</div>
+
+          <div class="estimate-row">
+            <span>Material Cost</span>
+            <strong id="quickMaterialCost">₹0.00</strong>
+          </div>
+
+          <div class="estimate-row">
+            <span>Machining Cost</span>
+            <input id="quickMachining" type="number" value="0" min="0" step="0.01"
+                   oninput="updateQuickEstimate()">
+          </div>
+
+          <div class="estimate-row">
+            <span>Welding Cost</span>
+            <input id="quickWelding" type="number" value="0" min="0" step="0.01"
+                   oninput="updateQuickEstimate()">
+          </div>
+
+          <div class="estimate-row">
+            <span>Labour / Manpower</span>
+            <input id="quickManpower" type="number" value="0" min="0" step="0.01"
+                   oninput="updateQuickEstimate()">
+          </div>
+
+          <div class="estimate-row">
+            <span>Other Cost</span>
+            <input id="quickOther" type="number" value="0" min="0" step="0.01"
+                   oninput="updateQuickEstimate()">
+          </div>
+
+          <div class="estimate-row">
+            <span>Profit (%)</span>
+            <input id="quickProfit" type="number" value="15" min="0" step="0.1"
+                   oninput="updateQuickEstimate()">
+          </div>
+
+          <div class="estimate-row estimate-subtotal">
+            <span>Production Cost</span>
+            <strong id="quickProductionCost">₹0.00</strong>
+          </div>
+
+          <div class="estimate-row">
+            <span>Profit Amount</span>
+            <strong id="quickProfitAmount">₹0.00</strong>
+          </div>
+
+          <div class="estimate-total">
+            <span>Estimated Selling Cost</span>
+            <strong id="quickEstimatedCost">₹0.00</strong>
+          </div>
+        </div>
+
+        <div class="note">
+          All dimensions are in <b>mm</b>. Change the shape to see its drawing and
+          enter machining/labour costs for a quick manufacturing estimate.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MACHINING -->
+  <section id="machining" class="section">
+    <div class="grid">
+      <div class="card">
+        <h2>VMC Machining Cost Calculator</h2>
+        <div class="sub">Calculate machine-hour based machining cost.</div>
+
+        <div class="fields">
+          <div class="field">
+            <label>Machine Hour Rate (₹/hr)</label>
+            <input id="vmcRate" type="number" value="1000">
+          </div>
+          <div class="field">
+            <label>Machining Time (minutes)</label>
+            <input id="vmcTime" type="number" value="60">
+          </div>
+          <div class="field">
+            <label>Setup Time (minutes)</label>
+            <input id="setupTime" type="number" value="30">
+          </div>
+          <div class="field">
+            <label>Tooling Cost (₹)</label>
+            <input id="toolCost" type="number" value="100">
+          </div>
+          <div class="field">
+            <label>Programming Cost (₹)</label>
+            <input id="programCost" type="number" value="100">
+          </div>
+          <div class="field">
+            <label>Quantity</label>
+            <input id="vmcQty" type="number" value="1">
+          </div>
+        </div>
+
+        <button class="primary" onclick="calculateVMC()">Calculate Machining Cost</button>
+
+        <div class="result">
+          <div class="result-grid">
+            <div class="result-box">
+              <span>Machine Cost</span>
+              <strong id="machineCost">₹0</strong>
+            </div>
+            <div class="result-box">
+              <span>Setup Cost</span>
+              <strong id="setupCost">₹0</strong>
+            </div>
+            <div class="result-box">
+              <span>Tool + Program</span>
+              <strong id="extraCost">₹0</strong>
+            </div>
+            <div class="result-box">
+              <span>Total</span>
+              <strong class="cost" id="vmcTotal">₹0</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WELDING -->
+  <section id="welding" class="section">
+    <div class="grid">
+      <div class="card">
+        <h2>Welding Cost Calculator</h2>
+        <div class="sub">Estimate welding labour, consumable and machine cost.</div>
+
+        <div class="fields">
+          <div class="field">
+            <label>Welding Time (minutes)</label>
+            <input id="weldTime" type="number" value="60">
+          </div>
+          <div class="field">
+            <label>Welder Rate (₹/hour)</label>
+            <input id="welderRate" type="number" value="400">
+          </div>
+          <div class="field">
+            <label>Machine Rate (₹/hour)</label>
+            <input id="weldMachineRate" type="number" value="150">
+          </div>
+          <div class="field">
+            <label>Consumable Cost (₹)</label>
+            <input id="weldConsumable" type="number" value="100">
+          </div>
+          <div class="field">
+            <label>Quantity</label>
+            <input id="weldQty" type="number" value="1">
+          </div>
+        </div>
+
+        <button class="primary" onclick="calculateWelding()">Calculate Welding Cost</button>
+
+        <div class="total-card">
+          <div>Total Welding Cost</div>
+          <div class="big" id="weldTotal">₹0.00</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANPOWER -->
+  <section id="manpower" class="section">
+    <div class="grid">
+      <div class="card">
+        <h2>Manpower Cost Calculator</h2>
+        <div class="sub">Calculate labour cost based on people and working hours.</div>
+
+        <div class="fields">
+          <div class="field">
+            <label>Number of Workers</label>
+            <input id="workers" type="number" value="1">
+          </div>
+          <div class="field">
+            <label>Hours / Worker</label>
+            <input id="workerHours" type="number" value="8">
+          </div>
+          <div class="field">
+            <label>Rate / Worker / Hour (₹)</label>
+            <input id="workerRate" type="number" value="250">
+          </div>
+          <div class="field">
+            <label>Overhead (%)</label>
+            <input id="workerOverhead" type="number" value="10">
+          </div>
+        </div>
+
+        <button class="primary" onclick="calculateManpower()">Calculate Manpower Cost</button>
+
+        <div class="total-card">
+          <div>Total Manpower Cost</div>
+          <div class="big" id="manpowerTotal">₹0.00</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSPORT -->
+  <section id="transport" class="section">
+    <div class="grid">
+      <div class="card">
+        <h2>Transportation Cost Calculator</h2>
+        <div class="sub">Calculate transport cost based on distance and vehicle rate.</div>
+
+        <div class="fields">
+          <div class="field">
+            <label>Distance (km)</label>
+            <input id="distance" type="number" value="50">
+          </div>
+          <div class="field">
+            <label>Vehicle Rate (₹/km)</label>
+            <input id="vehicleRate" type="number" value="30">
+          </div>
+          <div class="field">
+            <label>Loading / Unloading (₹)</label>
+            <input id="loadingCost" type="number" value="500">
+          </div>
+          <div class="field">
+            <label>Other Charges (₹)</label>
+            <input id="otherTransport" type="number" value="0">
+          </div>
+        </div>
+
+        <button class="primary" onclick="calculateTransport()">Calculate Transport Cost</button>
+
+        <div class="total-card">
+          <div>Total Transportation Cost</div>
+          <div class="big" id="transportTotal">₹0.00</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILE READER -->
+  <section id="files" class="section">
+    <div class="grid">
+      <div class="card full">
+        <h2>📁 Drawing / CAD File Reader</h2>
+        <div class="sub">Upload DXF, IGS/IGES or PDF files for project reference.</div>
+
+        <div class="file-box">
+          <h3>Upload Drawing</h3>
+          <p style="color:#9eabc1">
+            DXF • IGS • IGES • PDF
+          </p>
+          <input type="file"
+                 id="cadFile"
+                 accept=".dxf,.igs,.iges,.pdf"
+                 onchange="readFile(this)">
+          <div id="fileInfo" style="margin-top:18px;color:#55e6a7"></div>
+        </div>
+
+        <div class="note">
+          Browser-only file reading has limitations. PDF text can be read with a PDF
+          library, while full DXF/IGS geometry extraction requires a CAD parser.
+          This upload area is ready for adding those libraries later.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESTIMATE -->
+  <section id="quotation" class="section">
+    <div class="grid">
+      <div class="card">
+        <h2>📋 Manufacturing Cost Estimate</h2>
+        <div class="sub">Combine your calculated costs into one estimate.</div>
+
+        <div class="fields">
+          <div class="field">
+            <label>Raw Material Cost (₹)</label>
+            <input id="qMaterial" type="number" value="0">
+          </div>
+          <div class="field">
+            <label>Machining Cost (₹)</label>
+            <input id="qMachining" type="number" value="0">
+          </div>
+          <div class="field">
+            <label>Welding Cost (₹)</label>
+            <input id="qWelding" type="number" value="0">
+          </div>
+          <div class="field">
+            <label>Manpower Cost (₹)</label>
+            <input id="qManpower" type="number" value="0">
+          </div>
+          <div class="field">
+            <label>Transportation (₹)</label>
+            <input id="qTransport" type="number" value="0">
+          </div>
+          <div class="field">
+            <label>Other Cost (₹)</label>
+            <input id="qOther" type="number" value="0">
+          </div>
+          <div class="field">
+            <label>Profit (%)</label>
+            <input id="qProfit" type="number" value="15">
+          </div>
+          <div class="field">
+            <label>GST (%)</label>
+            <input id="qGST" type="number" value="18">
+          </div>
+        </div>
+
+        <button class="primary" onclick="calculateQuotation()">Generate Estimate</button>
+
+        <div class="result">
+          <div class="result-grid">
+            <div class="result-box">
+              <span>Production Cost</span>
+              <strong id="productionCost">₹0</strong>
+            </div>
+            <div class="result-box">
+              <span>Profit</span>
+              <strong id="profitCost">₹0</strong>
+            </div>
+            <div class="result-box">
+              <span>Subtotal</span>
+              <strong id="quoteSubtotal">₹0</strong>
+            </div>
+            <div class="result-box">
+              <span>GST</span>
+              <strong id="gstCost">₹0</strong>
+            </div>
+          </div>
+
+          <div class="total-card">
+            <div>💰 Final Estimated Selling Price</div>
+            <div class="big" id="finalQuote">₹0.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Avaneesh Machining Rate Calculator © 2026
+</footer>
+
+<!-- FLOATING CALCULATOR -->
+<div class="floating-calc">
+  <div class="calc-head">
+    <strong>🧮 Calculator</strong>
+    <button class="secondary" onclick="clearCalc()">C</button>
+  </div>
+
+  <div class="calc-display" id="calcDisplay">0</div>
+
+  <div class="calc-buttons">
+    <button onclick="calcInput('7')">7</button>
+    <button onclick="calcInput('8')">8</button>
+    <button onclick="calcInput('9')">9</button>
+    <button class="operator" onclick="calcInput('/')">÷</button>
+
+    <button onclick="calcInput('4')">4</button>
+    <button onclick="calcInput('5')">5</button>
+    <button onclick="calcInput('6')">6</button>
+    <button class="operator" onclick="calcInput('*')">×</button>
+
+    <button onclick="calcInput('1')">1</button>
+    <button onclick="calcInput('2')">2</button>
+    <button onclick="calcInput('3')">3</button>
+    <button class="operator" onclick="calcInput('-')">−</button>
+
+    <button onclick="calcInput('0')">0</button>
+    <button onclick="calcInput('.')">.</button>
+    <button onclick="percentage()">%</button>
+    <button class="operator" onclick="calcInput('+')">+</button>
+
+    <button onclick="backspace()">⌫</button>
+    <button style="grid-column:span 3" class="equal" onclick="calculateCalc()">=</button>
+  </div>
+</div>
+
+<script>
+
+/* ================================
+   TAB SYSTEM
+================================ */
+
+function showTab(id, button){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+
+  document.getElementById(id).classList.add('active');
+  button.classList.add('active');
+}
+
+/* ================================
+   METAL CALCULATOR
+================================ */
+
+const shapeNames = {
+  round:"Round Bar",
+  square:"Square Bar",
+  rect:"Rectangle / Flat Bar",
+  plate:"Plate / Sheet",
+  pipe:"Round Pipe / Tube",
+  hollowSquare:"Square Hollow Section",
+  hollowRect:"Rectangular Hollow Section"
+};
+
+function updateShape(){
+
+  const shape=document.getElementById("shape").value;
+
+  document.getElementById("resultShape").textContent=shapeNames[shape];
+
+  let html="";
+
+  if(shape==="round"){
+    html=`
+      <div class="fields" style="margin-top:14px">
+        <div class="field">
+          <label>Diameter (mm)</label>
+          <input id="d1" type="number" value="50">
+        </div>
+        <div class="field">
+          <label>Length (mm)</label>
+          <input id="l1" type="number" value="1000">
+        </div>
+        <div class="field">
+          <label>Quantity</label>
+          <input id="qty" type="number" value="1">
+        </div>
+      </div>`;
+  }
+
+  if(shape==="square"){
+    html=`
+      <div class="fields" style="margin-top:14px">
+        <div class="field">
+          <label>Side (mm)</label>
+          <input id="d1" type="number" value="50">
+        </div>
+        <div class="field">
+          <label>Length (mm)</label>
+          <input id="l1" type="number" value="1000">
+        </div>
+        <div class="field">
+          <label>Quantity</label>
+          <input id="qty" type="number" value="1">
+        </div>
+      </div>`;
+  }
+
+  if(shape==="rect"){
+    html=`
+      <div class="fields" style="margin-top:14px">
+        <div class="field">
+          <label>Width (mm)</label>
+          <input id="d1" type="number" value="50">
+        </div>
+        <div class="field">
+          <label>Thickness (mm)</label>
+          <input id="d2" type="number" value="10">
+        </div>
+        <div class="field">
+          <label>Length (mm)</label>
+          <input id="l1" type="number" value="1000">
+        </div>
+        <div class="field">
+          <label>Quantity</label>
+          <input id="qty" type="number" value="1">
+        </div>
+      </div>`;
+  }
+
+  if(shape==="plate"){
+    html=`
+      <div class="fields" style="margin-top:14px">
+        <div class="field">
+          <label>Width (mm)</label>
+          <input id="d1" type="number" value="500">
+        </div>
+        <div class="field">
+          <label>Length (mm)</label>
+          <input id="l1" type="number" value="1000">
+        </div>
+        <div class="field">
+          <label>Thickness (mm)</label>
+          <input id="d2" type="number" value="10">
+        </div>
+        <div class="field">
+          <label>Quantity</label>
+          <input id="qty" type="number" value="1">
+        </div>
+      </div>`;
+  }
+
+  if(shape==="pipe"){
+    html=`
+      <div class="fields" style="margin-top:14px">
+        <div class="field">
+          <label>Outer Diameter (mm)</label>
+          <input id="d1" type="number" value="60">
+        </div>
+        <div class="field">
+          <label>Wall Thickness (mm)</label>
+          <input id="d2" type="number" value="5">
+        </div>
+        <div class="field">
+          <label>Length (mm)</label>
+          <input id="l1" type="number" value="1000">
+        </div>
+        <div class="field">
+          <label>Quantity</label>
+          <input id="qty" type="number" value="1">
+        </div>
+      </div>`;
+  }
+
+  if(shape==="hollowSquare"){
+    html=`
+      <div class="fields" style="margin-top:14px">
+        <div class="field">
+          <label>Outer Side (mm)</label>
+          <input id="d1" type="number" value="50">
+        </div>
+        <div class="field">
+          <label>Wall Thickness (mm)</label>
+          <input id="d2" type="number" value="5">
+        </div>
+        <div class="field">
+          <label>Length (mm)</label>
+          <input id="l1" type="number" value="1000">
+        </div>
+        <div class="field">
+          <label>Quantity</label>
+          <input id="qty" type="number" value="1">
+        </div>
+      </div>`;
+  }
+
+  if(shape==="hollowRect"){
+    html=`
+      <div class="fields" style="margin-top:14px">
+        <div class="field">
+          <label>Outer Width (mm)</label>
+          <input id="d1" type="number" value="60">
+        </div>
+        <div class="field">
+          <label>Outer Height (mm)</label>
+          <input id="d2" type="number" value="40">
+        </div>
+        <div class="field">
+          <label>Wall Thickness (mm)</label>
+          <input id="d3" type="number" value="5">
+        </div>
+        <div class="field">
+          <label>Length (mm)</label>
+          <input id="l1" type="number" value="1000">
+        </div>
+        <div class="field">
+          <label>Quantity</label>
+          <input id="qty" type="number" value="1">
+        </div>
+      </div>`;
+  }
+
+  document.getElementById("dimensionFields").innerHTML=html;
+
+  drawShape(shape);
+}
+
+function setMaterialRate(){
+  const density=document.getElementById("material").value;
+  document.getElementById("density").value=density;
+}
+
+function calculateWeight(){
+
+  const shape=document.getElementById("shape").value;
+  const density=parseFloat(document.getElementById("density").value)||0;
+  const rate=parseFloat(document.getElementById("materialRate").value)||0;
+
+  const d1=parseFloat(document.getElementById("d1")?.value)||0;
+  const d2=parseFloat(document.getElementById("d2")?.value)||0;
+  const d3=parseFloat(document.getElementById("d3")?.value)||0;
+  const length=parseFloat(document.getElementById("l1")?.value)||0;
+  const qty=parseFloat(document.getElementById("qty")?.value)||1;
+
+  let volume=0;
+
+  /*
+    Dimensions are mm.
+    Convert mm³ to cm³ by dividing by 1000.
+  */
+
+  if(shape==="round"){
+    volume=(Math.PI*d1*d1/4*length)/1000;
+  }
+
+  if(shape==="square"){
+    volume=(d1*d1*length)/1000;
+  }
+
+  if(shape==="rect" || shape==="plate"){
+    volume=(d1*d2*length)/1000;
+  }
+
+  if(shape==="pipe"){
+    const inner=d1-2*d2;
+    volume=(Math.PI/4*(d1*d1-inner*inner)*length)/1000;
+  }
+
+  if(shape==="hollowSquare"){
+    const inner=d1-2*d2;
+    volume=((d1*d1-inner*inner)*length)/1000;
+  }
+
+  if(shape==="hollowRect"){
+    const innerW=d1-2*d3;
+    const innerH=d2-2*d3;
+    volume=((d1*d2)-(innerW*innerH))*length/1000;
+  }
+
+  const weightPerPiece=(volume*density)/1000;
+  const totalWeight=weightPerPiece*qty;
+  const cost=totalWeight*rate;
+
+  document.getElementById("resultShape").textContent=shapeNames[shape];
+  document.getElementById("resultVolume").textContent=format(volume)+" cm³";
+  document.getElementById("pieceWeight").textContent=format(weightPerPiece)+" kg";
+  document.getElementById("resultQty").textContent=qty;
+  document.getElementById("totalWeight").textContent=format(totalWeight)+" kg";
+  document.getElementById("resultRate").textContent="₹"+format(rate)+"/kg";
+  document.getElementById("materialCost").textContent=money(cost);
+
+  // Automatically transfer material cost to estimate calculator
+  document.getElementById("qMaterial").value=cost.toFixed(2);
+  updateQuickEstimate();
+}
+
+function format(n){
+  return Number(n||0).toLocaleString("en-IN",{
+    maximumFractionDigits:3
+  });
+}
+
+function money(n){
+  return "₹"+Number(n||0).toLocaleString("en-IN",{
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  });
+}
+
+/* ================================
+   QUICK ESTIMATE
+================================ */
+
+function updateQuickEstimate(){
+  const material = Number(document.getElementById("materialCost")?.textContent
+    .replace(/[₹,]/g,"")) || 0;
+
+  const machining = Number(document.getElementById("quickMachining")?.value) || 0;
+  const welding = Number(document.getElementById("quickWelding")?.value) || 0;
+  const manpower = Number(document.getElementById("quickManpower")?.value) || 0;
+  const other = Number(document.getElementById("quickOther")?.value) || 0;
+  const profit = Number(document.getElementById("quickProfit")?.value) || 0;
+
+  const production = material + machining + welding + manpower + other;
+  const profitAmount = production * profit / 100;
+  const estimated = production + profitAmount;
+
+  document.getElementById("quickMaterialCost").textContent = money(material);
+  document.getElementById("quickProductionCost").textContent = money(production);
+  document.getElementById("quickProfitAmount").textContent = money(profitAmount);
+  document.getElementById("quickEstimatedCost").textContent = money(estimated);
+
+  // Keep the quotation page synchronized.
+  document.getElementById("qMaterial").value = material.toFixed(2);
+  document.getElementById("qMachining").value = machining.toFixed(2);
+  document.getElementById("qWelding").value = welding.toFixed(2);
+  document.getElementById("qManpower").value = manpower.toFixed(2);
+  document.getElementById("qOther").value = other.toFixed(2);
+  document.getElementById("qProfit").value = profit;
+}
+
+/* ================================
+   SHAPE DRAWINGS
+================================ */
+
+function drawShape(shape){
+
+  let svg="";
+
+  if(shape==="round"){
+    svg=`
+    <svg class="shape-svg" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="65" fill="#1d70d6" stroke="#65b5ff" stroke-width="5"/>
+      <text x="100" y="106" text-anchor="middle" fill="white" font-size="20">Ø</text>
+    </svg>`;
+  }
+
+  if(shape==="square"){
+    svg=`
+    <svg class="shape-svg" viewBox="0 0 200 200">
+      <rect x="40" y="40" width="120" height="120" rx="4"
+      fill="#1d70d6" stroke="#65b5ff" stroke-width="5"/>
+    </svg>`;
+  }
+
+  if(shape==="rect" || shape==="plate"){
+    svg=`
+    <svg class="shape-svg" viewBox="0 0 200 200">
+      <rect x="25" y="65" width="150" height="70"
+      fill="#1d70d6" stroke="#65b5ff" stroke-width="5"/>
+    </svg>`;
+  }
+
+  if(shape==="pipe"){
+    svg=`
+    <svg class="shape-svg" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="70" fill="#1d70d6" stroke="#65b5ff" stroke-width="5"/>
+      <circle cx="100" cy="100" r="42" fill="#08111f" stroke="#65b5ff" stroke-width="5"/>
+    </svg>`;
+  }
+
+  if(shape==="hollowSquare"){
+    svg=`
+    <svg class="shape-svg" viewBox="0 0 200 200">
+      <rect x="35" y="35" width="130" height="130" fill="#1d70d6" stroke="#65b5ff" stroke-width="5"/>
+      <rect x="70" y="70" width="60" height="60" fill="#08111f" stroke="#65b5ff" stroke-width="5"/>
+    </svg>`;
+  }
+
+  if(shape==="hollowRect"){
+    svg=`
+    <svg class="shape-svg" viewBox="0 0 200 200">
+      <rect x="25" y="55" width="150" height="90" fill="#1d70d6" stroke="#65b5ff" stroke-width="5"/>
+      <rect x="60" y="80" width="80" height="40" fill="#08111f" stroke="#65b5ff" stroke-width="5"/>
+    </svg>`;
+  }
+
+  document.getElementById("shapePreview").innerHTML=svg;
+}
+
+/* ================================
+   VMC
+================================ */
+
+function calculateVMC(){
+
+  const rate=Number(document.getElementById("vmcRate").value)||0;
+  const time=Number(document.getElementById("vmcTime").value)||0;
+  const setup=Number(document.getElementById("setupTime").value)||0;
+  const tool=Number(document.getElementById("toolCost").value)||0;
+  const program=Number(document.getElementById("programCost").value)||0;
+  const qty=Number(document.getElementById("vmcQty").value)||1;
+
+  const machine=(time/60)*rate*qty;
+  const setupCost=(setup/60)*rate;
+  const extra=tool+program;
+  const total=machine+setupCost+extra;
+
+  document.getElementById("machineCost").textContent=money(machine);
+  document.getElementById("setupCost").textContent=money(setupCost);
+  document.getElementById("extraCost").textContent=money(extra);
+  document.getElementById("vmcTotal").textContent=money(total);
+
+  document.getElementById("qMachining").value=total.toFixed(2);
+}
+
+/* ================================
+   WELDING
+================================ */
+
+function calculateWelding(){
+
+  const time=Number(document.getElementById("weldTime").value)||0;
+  const welder=Number(document.getElementById("welderRate").value)||0;
+  const machine=Number(document.getElementById("weldMachineRate").value)||0;
+  const consumable=Number(document.getElementById("weldConsumable").value)||0;
+  const qty=Number(document.getElementById("weldQty").value)||1;
+
+  const labour=(time/60)*welder*qty;
+  const machineCost=(time/60)*machine*qty;
+  const total=labour+machineCost+consumable*qty;
+
+  document.getElementById("weldTotal").textContent=money(total);
+  document.getElementById("qWelding").value=total.toFixed(2);
+}
+
+/* ================================
+   MANPOWER
+================================ */
+
+function calculateManpower(){
+
+  const workers=Number(document.getElementById("workers").value)||0;
+  const hours=Number(document.getElementById("workerHours").value)||0;
+  const rate=Number(document.getElementById("workerRate").value)||0;
+  const overhead=Number(document.getElementById("workerOverhead").value)||0;
+
+  const base=workers*hours*rate;
+  const total=base+(base*overhead/100);
+
+  document.getElementById("manpowerTotal").textContent=money(total);
+  document.getElementById("qManpower").value=total.toFixed(2);
+}
+
+/* ================================
+   TRANSPORT
+================================ */
+
+function calculateTransport(){
+
+  const distance=Number(document.getElementById("distance").value)||0;
+  const rate=Number(document.getElementById("vehicleRate").value)||0;
+  const loading=Number(document.getElementById("loadingCost").value)||0;
+  const other=Number(document.getElementById("otherTransport").value)||0;
+
+  const total=(distance*rate)+loading+other;
+
+  document.getElementById("transportTotal").textContent=money(total);
+  document.getElementById("qTransport").value=total.toFixed(2);
+}
+
+/* ================================
+   FILE UPLOAD
+================================ */
+
+function readFile(input){
+
+  const file=input.files[0];
+
+  if(!file){
+    document.getElementById("fileInfo").textContent="";
+    return;
+  }
+
+  const ext=file.name.split(".").pop().toLowerCase();
+
+  document.getElementById("fileInfo").innerHTML=
+    "✅ File selected: <b>"+file.name+
+    "</b><br>Type: "+ext.toUpperCase()+
+    "<br>Size: "+(file.size/1024).toFixed(1)+" KB";
+
+  /*
+    This version confirms the uploaded file.
+    Full geometric DXF/IGS extraction requires a CAD parsing library.
+  */
+}
+
+/* ================================
+   QUOTATION
+================================ */
+
+function calculateQuotation(){
+
+  const material=Number(document.getElementById("qMaterial").value)||0;
+  const machining=Number(document.getElementById("qMachining").value)||0;
+  const welding=Number(document.getElementById("qWelding").value)||0;
+  const manpower=Number(document.getElementById("qManpower").value)||0;
+  const transport=Number(document.getElementById("qTransport").value)||0;
+  const other=Number(document.getElementById("qOther").value)||0;
+  const profit=Number(document.getElementById("qProfit").value)||0;
+  const gst=Number(document.getElementById("qGST").value)||0;
+
+  const production=material+machining+welding+manpower+transport+other;
+  const profitAmount=production*profit/100;
+  const subtotal=production+profitAmount;
+  const gstAmount=subtotal*gst/100;
+  const final=subtotal+gstAmount;
+
+  document.getElementById("productionCost").textContent=money(production);
+  document.getElementById("profitCost").textContent=money(profitAmount);
+  document.getElementById("quoteSubtotal").textContent=money(subtotal);
+  document.getElementById("gstCost").textContent=money(gstAmount);
+  document.getElementById("finalQuote").textContent=money(final);
+}
+
+/* ================================
+   NORMAL CALCULATOR
+================================ */
+
+let calcExpression="";
+
+function calcInput(value){
+
+  if(calcExpression==="Error") calcExpression="";
+
+  calcExpression+=value;
+
+  document.getElementById("calcDisplay").textContent=calcExpression;
+}
+
+function clearCalc(){
+
+  calcExpression="";
+  document.getElementById("calcDisplay").textContent="0";
+}
+
+function backspace(){
+
+  calcExpression=calcExpression.slice(0,-1);
+
+  document.getElementById("calcDisplay").textContent=
+    calcExpression||"0";
+}
+
+function percentage(){
+
+  try{
+
+    if(!calcExpression)return;
+
+    const value=parseFloat(calcExpression);
+
+    if(!isNaN(value)){
+      calcExpression=String(value/100);
+      document.getElementById("calcDisplay").textContent=calcExpression;
+    }
+
+  }catch{
+    calcExpression="Error";
+    document.getElementById("calcDisplay").textContent="Error";
+  }
+}
+
+function calculateCalc(){
+
+  try{
+
+    if(!calcExpression)return;
+
+    /*
+      Only basic mathematical characters are accepted.
+    */
+    if(!/^[0-9+\-*/().%\s]+$/.test(calcExpression)){
+      throw new Error();
+    }
+
+    const result=Function(
+      '"use strict"; return ('+calcExpression+')'
+    )();
+
+    if(!Number.isFinite(result))throw new Error();
+
+    calcExpression=String(result);
+
+    document.getElementById("calcDisplay").textContent=
+      Number(result).toLocaleString("en-IN");
+
+  }catch{
+
+    calcExpression="Error";
+    document.getElementById("calcDisplay").textContent="Error";
+  }
+}
+
+/* Keyboard support */
+document.addEventListener("keydown",function(e){
+
+  if(
+    e.key>="0" &&
+    e.key<="9" ||
+    ["+","-","*","/","(",")","."].includes(e.key)
+  ){
+    calcInput(e.key);
+  }
+
+  if(e.key==="Enter")calculateCalc();
+  if(e.key==="Escape")clearCalc();
+  if(e.key==="Backspace")backspace();
+});
+
+/* ================================
+   INITIAL LOAD
+================================ */
+
+updateShape();
+
+calculateWeight();
+
+updateQuickEstimate();
+
+</script>
+
+</body>
+</html>
+```
