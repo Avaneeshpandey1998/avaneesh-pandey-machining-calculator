@@ -1,225 +1,3843 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avaneesh-Pandey | Metal Weight Calculator</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0f172a">
+<meta name="description" content="Avaneesh Machining Rate Calculator - Metal weight, machining, VMC, welding, manpower, material, transport and quotation calculator.">
+
+<title>Avaneesh Machining Rate Calculator</title>
+
 <style>
-:root{--primary:#173b67;--accent:#f28c28;--bg:#f4f6f9;--card:#fff;--text:#1d2733;--muted:#667085;--border:#d9dee7;--good:#087443;--danger:#b42318}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-header{background:linear-gradient(135deg,#102f52,#1e5a91);color:white;padding:22px 5%;display:flex;justify-content:space-between;align-items:center;gap:20px}
-.brand{font-size:28px;font-weight:800}.tag{font-size:13px;opacity:.85;margin-top:4px}.badge{background:#ffffff18;border:1px solid #ffffff33;padding:8px 12px;border-radius:20px;font-size:12px}
-main{max-width:1250px;margin:24px auto;padding:0 18px}.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:20px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:0 5px 20px #12263a0b}
-h2{margin:0 0 16px;font-size:19px}h3{font-size:15px;margin:18px 0 10px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin-bottom:12px}
-label{display:block;font-size:12px;font-weight:700;color:#475467;margin-bottom:6px}
-input,select{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:9px;background:white;font-size:14px;outline:none}
-input:focus,select:focus{border-color:#4285c5;box-shadow:0 0 0 3px #4285c51a}
-.buttons{display:flex;gap:10px;margin-top:12px}.btn{border:0;border-radius:9px;padding:12px 18px;font-weight:700;cursor:pointer}.primary{background:var(--primary);color:white}.secondary{background:#eef2f6;color:#344054}
-.result{background:linear-gradient(135deg,#f8fbff,#eef7ff);border:1px solid #cfe2f5;border-radius:12px;padding:18px;margin-bottom:14px}
-.big{font-size:34px;font-weight:800;color:var(--primary)}.unit{font-size:15px;color:var(--muted)}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px}.stat b{display:block;font-size:18px;margin-top:4px}
-.formula{background:#f8f9fb;border-left:4px solid var(--accent);padding:12px;border-radius:6px;font-family:Consolas,monospace;font-size:13px;line-height:1.55;overflow:auto}
-.note{font-size:12px;color:var(--muted);line-height:1.5}.error{color:var(--danger);font-size:12px;font-weight:700;margin-top:8px}
-.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{border-bottom:1px solid var(--border);padding:9px;text-align:left}.table th{background:#f8fafc}
-.hidden{display:none!important}.pill{display:inline-block;padding:4px 8px;border-radius:20px;background:#edf7f1;color:var(--good);font-size:11px;font-weight:700}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:30px}
-@media(max-width:850px){.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr}.big{font-size:28px}}
-.unitrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}.shape-preview{margin:12px 0;padding:14px;border:1px solid var(--border);border-radius:12px;background:#fbfcfe;text-align:center}.shape-preview svg{max-width:100%;height:155px}.shape-title{font-weight:800;color:var(--primary);font-size:14px}.shape-help{font-size:11px;color:var(--muted);margin-top:5px}@media(max-width:850px){.unitrow{grid-template-columns:1fr}} 
+:root{
+  --bg:#f1f5f9;
+  --card:#ffffff;
+  --dark:#0f172a;
+  --dark2:#1e293b;
+  --primary:#2563eb;
+  --primary2:#1d4ed8;
+  --green:#16a34a;
+  --orange:#ea580c;
+  --red:#dc2626;
+  --purple:#7c3aed;
+  --muted:#64748b;
+  --border:#e2e8f0;
+  --shadow:0 10px 30px rgba(15,23,42,.08);
+  --radius:16px;
+}
+
+*{box-sizing:border-box}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:#0f172a;
+}
+
+button,input,select,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  min-height:100vh;
+}
+
+/* HEADER */
+.header{
+  background:linear-gradient(135deg,#0f172a,#172554);
+  color:#fff;
+  padding:18px 24px;
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:0 5px 20px rgba(0,0,0,.18);
+}
+
+.header-inner{
+  max-width:1450px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.logo{
+  width:48px;
+  height:48px;
+  border-radius:13px;
+  background:linear-gradient(135deg,#2563eb,#60a5fa);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  font-weight:900;
+  box-shadow:0 8px 20px rgba(37,99,235,.35);
+}
+
+.brand h1{
+  margin:0;
+  font-size:20px;
+}
+
+.brand p{
+  margin:4px 0 0;
+  color:#cbd5e1;
+  font-size:12px;
+}
+
+.header-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.header-btn{
+  border:1px solid rgba(255,255,255,.15);
+  color:#fff;
+  background:rgba(255,255,255,.08);
+  padding:9px 13px;
+  border-radius:9px;
+}
+
+.header-btn:hover{
+  background:rgba(255,255,255,.16);
+}
+
+/* LAYOUT */
+.container{
+  max-width:1450px;
+  margin:auto;
+  padding:24px;
+}
+
+.dashboard{
+  display:grid;
+  grid-template-columns:250px 1fr;
+  gap:22px;
+}
+
+/* SIDEBAR */
+.sidebar{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:12px;
+  height:max-content;
+  position:sticky;
+  top:92px;
+  box-shadow:var(--shadow);
+}
+
+.nav-title{
+  padding:12px;
+  color:#94a3b8;
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+
+.nav-btn{
+  width:100%;
+  border:0;
+  background:transparent;
+  text-align:left;
+  padding:12px;
+  border-radius:10px;
+  color:#334155;
+  margin-bottom:4px;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+  background:#eff6ff;
+  color:#1d4ed8;
+  font-weight:700;
+}
+
+.nav-btn span{
+  display:inline-block;
+  width:26px;
+}
+
+/* CONTENT */
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.page-title{
+  margin:0 0 6px;
+  font-size:27px;
+}
+
+.page-subtitle{
+  color:var(--muted);
+  margin:0 0 20px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:20px;
+  margin-bottom:20px;
+}
+
+.card h2{
+  margin:0 0 6px;
+  font-size:19px;
+}
+
+.card h3{
+  margin:20px 0 12px;
+}
+
+.card-description{
+  color:var(--muted);
+  font-size:13px;
+  margin:0 0 18px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  gap:14px;
+}
+
+.grid-2{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.grid-3{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.grid-4{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+/* FORM */
+.field{
+  margin-bottom:12px;
+}
+
+.field label{
+  display:block;
+  margin-bottom:6px;
+  font-size:12px;
+  color:#475569;
+  font-weight:700;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  border:1px solid #cbd5e1;
+  background:#fff;
+  color:#0f172a;
+  border-radius:9px;
+  padding:10px 11px;
+  outline:none;
+  transition:.15s;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#60a5fa;
+  box-shadow:0 0 0 3px rgba(37,99,235,.1);
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+/* BUTTONS */
+.btn{
+  border:0;
+  padding:11px 16px;
+  border-radius:9px;
+  font-weight:700;
+  transition:.15s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+}
+
+.btn-primary{
+  background:var(--primary);
+  color:#fff;
+}
+
+.btn-primary:hover{
+  background:var(--primary2);
+}
+
+.btn-green{
+  background:var(--green);
+  color:#fff;
+}
+
+.btn-orange{
+  background:var(--orange);
+  color:#fff;
+}
+
+.btn-red{
+  background:var(--red);
+  color:#fff;
+}
+
+.btn-gray{
+  background:#e2e8f0;
+  color:#334155;
+}
+
+.button-row{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+/* DASHBOARD CARDS */
+.stat{
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px;
+  background:#fff;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.stat-value{
+  font-size:25px;
+  font-weight:800;
+  margin-top:7px;
+}
+
+.blue{color:#2563eb}
+.green{color:#16a34a}
+.orange{color:#ea580c}
+.purple{color:#7c3aed}
+
+/* RESULT */
+.result-box{
+  background:#0f172a;
+  color:#fff;
+  border-radius:14px;
+  padding:20px;
+}
+
+.result-box .label{
+  color:#94a3b8;
+  font-size:12px;
+}
+
+.result-total{
+  font-size:35px;
+  font-weight:900;
+  margin:8px 0;
+}
+
+.result-row{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.result-row:last-child{
+  border-bottom:0;
+}
+
+/* COST BREAKDOWN */
+.cost-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.cost-table th,
+.cost-table td{
+  padding:11px 8px;
+  border-bottom:1px solid var(--border);
+  text-align:left;
+}
+
+.cost-table th{
+  color:#64748b;
+  font-size:12px;
+}
+
+.cost-table td:last-child,
+.cost-table th:last-child{
+  text-align:right;
+}
+
+/* UPLOAD */
+.dropzone{
+  border:2px dashed #94a3b8;
+  border-radius:15px;
+  padding:35px 20px;
+  text-align:center;
+  background:#f8fafc;
+  transition:.2s;
+}
+
+.dropzone.drag{
+  border-color:#2563eb;
+  background:#eff6ff;
+}
+
+.drop-icon{
+  font-size:40px;
+  margin-bottom:8px;
+}
+
+.file-name{
+  margin-top:12px;
+  font-weight:800;
+  color:#1e293b;
+}
+
+.analysis{
+  margin-top:18px;
+}
+
+.badge{
+  display:inline-block;
+  background:#dbeafe;
+  color:#1d4ed8;
+  border-radius:20px;
+  padding:5px 9px;
+  font-size:11px;
+  font-weight:800;
+  margin:3px;
+}
+
+.warning{
+  background:#fff7ed;
+  color:#9a3412;
+  border:1px solid #fed7aa;
+  border-radius:10px;
+  padding:12px;
+  font-size:13px;
+}
+
+.success{
+  background:#f0fdf4;
+  color:#166534;
+  border:1px solid #bbf7d0;
+  border-radius:10px;
+  padding:12px;
+  font-size:13px;
+}
+
+/* QUICK MODULES */
+.module-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:15px;
+}
+
+.module{
+  border:1px solid var(--border);
+  background:#fff;
+  padding:20px;
+  border-radius:15px;
+  transition:.2s;
+  cursor:pointer;
+}
+
+.module:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow);
+  border-color:#93c5fd;
+}
+
+.module-icon{
+  font-size:28px;
+}
+
+.module h3{
+  margin:10px 0 5px;
+}
+
+.module p{
+  color:var(--muted);
+  font-size:13px;
+  margin:0;
+}
+
+/* CALCULATOR */
+.calc{
+  max-width:380px;
+  margin:auto;
+  background:#0f172a;
+  padding:15px;
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(15,23,42,.25);
+}
+
+.calc-display{
+  background:#020617;
+  color:#fff;
+  border-radius:12px;
+  padding:15px;
+  min-height:80px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-end;
+  font-size:31px;
+  font-weight:700;
+  overflow:hidden;
+  word-break:break-all;
+  margin-bottom:12px;
+}
+
+.calc-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+
+.calc-btn{
+  min-height:58px;
+  border:0;
+  border-radius:11px;
+  background:#1e293b;
+  color:#fff;
+  font-size:18px;
+  font-weight:700;
+}
+
+.calc-btn:hover{
+  background:#334155;
+}
+
+.calc-btn.operator{
+  background:#2563eb;
+}
+
+.calc-btn.equal{
+  background:#16a34a;
+}
+
+.calc-btn.clear{
+  background:#dc2626;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:100;
+  background:#0f172a;
+  color:#fff;
+  padding:13px 17px;
+  border-radius:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  transform:translateY(120px);
+  opacity:0;
+  transition:.25s;
+  max-width:350px;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.65);
+  z-index:90;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-content{
+  background:#fff;
+  border-radius:18px;
+  width:min(700px,100%);
+  max-height:90vh;
+  overflow:auto;
+  padding:22px;
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+/* QUOTATION */
+.quote{
+  background:#fff;
+  border:1px solid #cbd5e1;
+  padding:30px;
+  border-radius:10px;
+}
+
+.quote-header{
+  display:flex;
+  justify-content:space-between;
+  border-bottom:2px solid #0f172a;
+  padding-bottom:15px;
+  margin-bottom:20px;
+}
+
+.quote-title{
+  font-size:24px;
+  font-weight:900;
+}
+
+.quote-meta{
+  color:#64748b;
+  font-size:12px;
+}
+
+.quote-total{
+  font-size:28px;
+  font-weight:900;
+  text-align:right;
+  margin-top:20px;
+}
+
+/* FOOTER */
+.footer{
+  text-align:center;
+  color:#64748b;
+  padding:30px 20px;
+  font-size:12px;
+}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .dashboard{
+    grid-template-columns:1fr;
+  }
+
+  .sidebar{
+    position:static;
+    display:flex;
+    overflow:auto;
+    gap:5px;
+  }
+
+  .nav-title{
+    display:none;
+  }
+
+  .nav-btn{
+    min-width:max-content;
+    margin:0;
+  }
+
+  .module-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:700px){
+  .container{
+    padding:14px;
+  }
+
+  .header{
+    padding:12px 14px;
+  }
+
+  .header-inner{
+    align-items:flex-start;
+  }
+
+  .brand h1{
+    font-size:16px;
+  }
+
+  .brand p{
+    display:none;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .module-grid{
+    grid-template-columns:1fr;
+  }
+
+  .page-title{
+    font-size:23px;
+  }
+
+  .header-actions{
+    display:none;
+  }
+
+  .sidebar{
+    border-radius:10px;
+  }
+
+  .card{
+    padding:15px;
+  }
+
+  .result-total{
+    font-size:28px;
+  }
+}
+
+/* PRINT */
+@media print{
+  .header,
+  .sidebar,
+  .no-print,
+  .footer{
+    display:none!important;
+  }
+
+  body{
+    background:#fff;
+  }
+
+  .container{
+    max-width:none;
+    padding:0;
+  }
+
+  .dashboard{
+    display:block;
+  }
+
+  .page{
+    display:none!important;
+  }
+
+  #page-quotation{
+    display:block!important;
+  }
+
+  .quote{
+    border:0;
+  }
+}
 </style>
 </head>
+
 <body>
-<header>
-  <div><div class="brand">Avaneesh-Pandey</div><div class="tag">Professional Metal Weight • Cost • Formula Calculator</div></div>
-  <div class="badge">Engineering / Fabrication Tool</div>
+
+<div class="app">
+
+<header class="header">
+  <div class="header-inner">
+
+    <div class="brand">
+      <div class="logo">A</div>
+      <div>
+        <h1>Avaneesh Machining Rate Calculator</h1>
+        <p>Metal • VMC • CNC • Welding • Labour • Quotation</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="header-btn" onclick="showPage('dashboard')">Dashboard</button>
+      <button class="header-btn" onclick="showPage('settings')">⚙ Rates</button>
+      <button class="header-btn" onclick="showPage('calculator')">🧮 Calculator</button>
+    </div>
+
+  </div>
 </header>
 
+<div class="container">
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+  <div class="nav-title">Main</div>
+
+  <button class="nav-btn active" data-page="dashboard" onclick="showPage('dashboard')">
+    <span>🏠</span> Dashboard
+  </button>
+
+  <button class="nav-btn" data-page="drawing" onclick="showPage('drawing')">
+    <span>📐</span> Drawing Estimator
+  </button>
+
+  <button class="nav-btn" data-page="weight" onclick="showPage('weight')">
+    <span>⚖️</span> Metal Weight
+  </button>
+
+  <button class="nav-btn" data-page="machining" onclick="showPage('machining')">
+    <span>⚙️</span> Machining / VMC
+  </button>
+
+  <button class="nav-btn" data-page="welding" onclick="showPage('welding')">
+    <span>🔥</span> Welding
+  </button>
+
+  <button class="nav-btn" data-page="labour" onclick="showPage('labour')">
+    <span>👷</span> Manpower
+  </button>
+
+  <button class="nav-btn" data-page="material" onclick="showPage('material')">
+    <span>🧱</span> Raw Material
+  </button>
+
+  <button class="nav-btn" data-page="transport" onclick="showPage('transport')">
+    <span>🚚</span> Transportation
+  </button>
+
+  <button class="nav-btn" data-page="quotation" onclick="showPage('quotation')">
+    <span>🧾</span> Quotation
+  </button>
+
+  <div class="nav-title">Tools</div>
+
+  <button class="nav-btn" data-page="calculator" onclick="showPage('calculator')">
+    <span>🧮</span> Calculator
+  </button>
+
+  <button class="nav-btn" data-page="settings" onclick="showPage('settings')">
+    <span>⚙️</span> Rate Settings
+  </button>
+
+</aside>
+
+
+<!-- MAIN CONTENT -->
+
 <main>
-<div class="grid">
-<section class="card">
-<h2>1. Select Material & Shape</h2>
-<div class="row">
-<div class="field"><label>Material</label><select id="material"></select></div>
-<div class="field"><label>Shape / Section</label><select id="shape">
-<option value="plate">Plate / Sheet</option><option value="round">Round Bar / Rod</option>
-<option value="square">Square Bar</option><option value="flat">Flat Bar</option>
-<option value="hex">Hex Bar</option><option value="pipe">Round Pipe / Tube</option>
-<option value="recttube">Rectangular Tube</option><option value="squaretube">Square Tube</option>
-<option value="angle">Angle</option><option value="channel">C Channel</option>
-<option value="ibeam">I / H Beam</option><option value="disc">Round Disc</option>
-</select></div>
-</div>
 
-<div class="shape-preview" id="shapePreview"></div>
+<!-- DASHBOARD -->
 
-<div class="unitrow">
-<div class="field"><label>Dimension Unit</label><select id="unit">
-<option value="mm">Millimetre (mm)</option><option value="cm">Centimetre (cm)</option><option value="m">Metre (m)</option><option value="in">Inch (in)</option><option value="ft">Feet (ft)</option><option value="yd">Yard (yd)</option></select></div>
-<div class="field"><label>Length</label><input id="length" type="number" min="0" step="0.01" value="1000"></div>
-</div>
+<section class="page active" id="page-dashboard">
 
-<div class="row">
-<div class="field"><label>Quantity (pcs)</label><input id="qty" type="number" min="1" step="1" value="1"></div>
-</div>
+  <h2 class="page-title">Machining Cost Dashboard</h2>
 
-<div id="dims"></div>
+  <p class="page-subtitle">
+    Estimate complete manufacturing cost from raw material to finished part.
+  </p>
 
-<h3>Optional Cost & Allowance</h3>
-<div class="row">
-<div class="field"><label>Material Rate (₹ / kg)</label><input id="rate" type="number" min="0" step="0.01" placeholder="e.g. 65"></div>
-<div class="field"><label>Cutting / Wastage Allowance (%)</label><input id="allowance" type="number" min="0" step="0.1" value="0"></div>
-</div>
+  <div class="grid grid-4">
 
-<div class="buttons"><button class="btn primary" id="calc">Calculate</button><button class="btn secondary" id="reset">Reset</button></div>
-<div id="error" class="error"></div>
+    <div class="stat">
+      <div class="stat-label">Material Rate</div>
+      <div class="stat-value blue" id="dashMaterialRate">₹0/kg</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">VMC Rate</div>
+      <div class="stat-value green" id="dashVmcRate">₹0/hr</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Labour Rate</div>
+      <div class="stat-value orange" id="dashLabourRate">₹0/hr</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Welding Rate</div>
+      <div class="stat-value purple" id="dashWeldingRate">₹0/hr</div>
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Quick Costing Modules</h2>
+
+    <p class="card-description">
+      Select a calculator to start.
+    </p>
+
+    <div class="module-grid">
+
+      <div class="module" onclick="showPage('drawing')">
+        <div class="module-icon">📐</div>
+        <h3>Drawing Estimator</h3>
+        <p>Upload DXF, IGS, IGES, PDF and estimate drawing-based cost.</p>
+      </div>
+
+      <div class="module" onclick="showPage('weight')">
+        <div class="module-icon">⚖️</div>
+        <h3>Metal Weight</h3>
+        <p>Calculate volume, weight and material value.</p>
+      </div>
+
+      <div class="module" onclick="showPage('machining')">
+        <div class="module-icon">⚙️</div>
+        <h3>VMC / CNC</h3>
+        <p>Calculate machining time, machine cost and tooling.</p>
+      </div>
+
+      <div class="module" onclick="showPage('welding')">
+        <div class="module-icon">🔥</div>
+        <h3>Welding</h3>
+        <p>Estimate welding time, filler and labour.</p>
+      </div>
+
+      <div class="module" onclick="showPage('labour')">
+        <div class="module-icon">👷</div>
+        <h3>Manpower</h3>
+        <p>Calculate operator, helper and inspection costs.</p>
+      </div>
+
+      <div class="module" onclick="showPage('quotation')">
+        <div class="module-icon">🧾</div>
+        <h3>Final Quotation</h3>
+        <p>Combine all costs and generate a quotation.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Costing Workflow</h2>
+
+    <div class="grid grid-4">
+
+      <div class="stat">
+        <div class="stat-label">01</div>
+        <strong>Upload Drawing</strong>
+        <p class="card-description">DXF / IGS / IGES / PDF</p>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">02</div>
+        <strong>Enter Operations</strong>
+        <p class="card-description">VMC / welding / labour</p>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">03</div>
+        <strong>Apply Rates</strong>
+        <p class="card-description">Your own shop rates</p>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">04</div>
+        <strong>Generate Price</strong>
+        <p class="card-description">Cost + overhead + profit</p>
+      </div>
+
+    </div>
+
+  </div>
+
 </section>
 
-<section class="card">
-<h2>2. Result <span class="pill">Theoretical Weight</span></h2>
-<div class="result">
-<div class="unit">Weight per piece</div>
-<div class="big" id="piece">0.000 kg</div>
-</div>
-<div class="stats">
-<div class="stat">Weight / metre<b id="kgm">—</b></div>
-<div class="stat">Total net weight<b id="total">0.000 kg</b></div>
-<div class="stat">Order weight<b id="order">0.000 kg</b></div>
-<div class="stat">Estimated cost<b id="cost">—</b></div>
-</div>
-<h3>Calculation Details</h3>
-<div class="formula" id="formula">Enter dimensions and click Calculate.</div>
-<p class="note">Results are theoretical and depend on the selected density and nominal dimensions. Actual supplied weight can vary because of mill tolerances, corner radii, composition, coating and manufacturing variation.</p>
+
+<!-- DRAWING -->
+
+<section class="page" id="page-drawing">
+
+  <h2 class="page-title">Drawing / CAD Cost Estimator</h2>
+
+  <p class="page-subtitle">
+    Upload a DXF, IGS, IGES or PDF drawing and use detected geometry as the starting point for costing.
+  </p>
+
+  <div class="card">
+
+    <div
+      class="dropzone"
+      id="dropzone"
+      onclick="document.getElementById('cadFile').click()"
+    >
+
+      <div class="drop-icon">📂</div>
+
+      <h3>Upload CAD / Drawing File</h3>
+
+      <p>
+        DXF • IGS • IGES • PDF
+      </p>
+
+      <button
+        class="btn btn-primary"
+        type="button"
+        onclick="event.stopPropagation();document.getElementById('cadFile').click()"
+      >
+        Choose File
+      </button>
+
+      <input
+        id="cadFile"
+        type="file"
+        accept=".dxf,.igs,.iges,.pdf"
+        hidden
+      >
+
+      <div class="file-name" id="fileName">
+        No file selected
+      </div>
+
+    </div>
+
+    <div class="analysis" id="cadAnalysis"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Drawing Cost Inputs</h2>
+
+    <p class="card-description">
+      CAD geometry does not automatically know the manufacturing thickness or production method. Verify these values before quoting.
+    </p>
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label>Material</label>
+        <select id="drawMaterial">
+          <option value="mildsteel">Mild Steel</option>
+          <option value="stainless">Stainless Steel</option>
+          <option value="aluminium">Aluminium</option>
+          <option value="brass">Brass</option>
+          <option value="copper">Copper</option>
+          <option value="castiron">Cast Iron</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Width / X (mm)</label>
+        <input id="drawWidth" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Height / Y (mm)</label>
+        <input id="drawHeight" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Thickness / Z (mm)</label>
+        <input id="drawThickness" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Quantity</label>
+        <input id="drawQty" type="number" min="1" value="1">
+      </div>
+
+      <div class="field">
+        <label>VMC Hours / Part</label>
+        <input id="drawVmcHours" type="number" min="0" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>Welding Hours / Part</label>
+        <input id="drawWeldHours" type="number" min="0" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>Labour Hours / Part</label>
+        <input id="drawLabourHours" type="number" min="0" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>Transport / Order (₹)</label>
+        <input id="drawTransport" type="number" min="0" value="0">
+      </div>
+
+    </div>
+
+    <button class="btn btn-primary" onclick="calculateDrawingCost()">
+      Calculate Drawing Cost
+    </button>
+
+  </div>
+
+
+  <div id="drawingResult"></div>
+
 </section>
-</div>
 
-<div class="card" style="margin-top:20px">
-<h2>Formula Reference</h2>
-<table class="table">
-<thead><tr><th>Section</th><th>Cross-section / Volume formula</th><th>Typical use</th></tr></thead>
-<tbody>
-<tr><td>Plate / Sheet</td><td>V = L × W × T</td><td>MS / SS plates, sheets</td></tr>
-<tr><td>Round Bar</td><td>A = πD² / 4</td><td>Solid shaft / rod</td></tr>
-<tr><td>Square Bar</td><td>A = S²</td><td>Solid square</td></tr>
-<tr><td>Flat Bar</td><td>A = W × T</td><td>Bright / MS flat</td></tr>
-<tr><td>Hex Bar</td><td>A = 0.866025 × AF²</td><td>Hexagonal bar</td></tr>
-<tr><td>Round Pipe</td><td>A = π/4 × (OD² − ID²), ID = OD − 2t</td><td>Pipe / tube</td></tr>
-<tr><td>Square Tube</td><td>A = W² − (W − 2t)²</td><td>SHS</td></tr>
-<tr><td>Rectangular Tube</td><td>A = WH − (W − 2t)(H − 2t)</td><td>RHS</td></tr>
-<tr><td>Angle</td><td>A ≈ t(A + B − t)</td><td>L angle</td></tr>
-<tr><td>C Channel</td><td>A ≈ t(H + 2B − 2t)</td><td>Fabrication channel</td></tr>
-<tr><td>I / H Beam</td><td>A ≈ 2Bt + (H − 2t)tw</td><td>Structural beam</td></tr>
-<tr><td>Disc</td><td>V = πD²/4 × T</td><td>Round plate / blank</td></tr>
-</tbody>
-</table>
-<p class="note"><b>Core equation:</b> Weight = Volume × Density. For long sections, Weight = Cross-sectional Area × Length × Density. Dimensions are entered in mm; density is stored in kg/m³.</p>
-</div>
 
-<div class="card" style="margin-top:20px">
-<h2>Material Density Reference</h2>
-<div class="row">
-<table class="table"><thead><tr><th>Material</th><th>Density kg/m³</th></tr></thead><tbody id="densityTable"></tbody></table>
-<div>
-<h3>Built-in materials</h3>
-<p class="note">MS / carbon steel, stainless steels, aluminium, copper, brass, cast iron, zinc, nickel and titanium are included. A custom density option is also available.</p>
-<h3>Unit shortcut</h3>
-<div class="formula">For MS plate: Weight (kg) = L(mm) × W(mm) × T(mm) × 0.00000785</div>
-</div>
-</div>
-</div>
+<!-- WEIGHT -->
+
+<section class="page" id="page-weight">
+
+  <h2 class="page-title">Metal Weight Calculator</h2>
+
+  <p class="page-subtitle">
+    Calculate approximate weight for common rectangular metal parts.
+  </p>
+
+  <div class="card">
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label>Material</label>
+        <select id="weightMaterial">
+          <option value="mildsteel">Mild Steel</option>
+          <option value="stainless">Stainless Steel</option>
+          <option value="aluminium">Aluminium</option>
+          <option value="brass">Brass</option>
+          <option value="copper">Copper</option>
+          <option value="castiron">Cast Iron</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Length (mm)</label>
+        <input id="weightL" type="number" min="0">
+      </div>
+
+      <div class="field">
+        <label>Width (mm)</label>
+        <input id="weightW" type="number" min="0">
+      </div>
+
+      <div class="field">
+        <label>Thickness (mm)</label>
+        <input id="weightT" type="number" min="0">
+      </div>
+
+      <div class="field">
+        <label>Quantity</label>
+        <input id="weightQty" type="number" min="1" value="1">
+      </div>
+
+    </div>
+
+    <button class="btn btn-primary" onclick="calculateWeight()">
+      Calculate Weight
+    </button>
+
+  </div>
+
+  <div id="weightResult"></div>
+
+</section>
+
+
+<!-- MACHINING -->
+
+<section class="page" id="page-machining">
+
+  <h2 class="page-title">VMC / CNC Machining Cost</h2>
+
+  <p class="page-subtitle">
+    Calculate machine time, tooling, programming, setup and machining cost.
+  </p>
+
+  <div class="card">
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label>Machine</label>
+        <select id="machineType">
+          <option value="vmc">VMC</option>
+          <option value="hmc">HMC</option>
+          <option value="cnc">CNC Turning</option>
+          <option value="lathe">Conventional Lathe</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Machining Hours / Part</label>
+        <input id="machineHours" type="number" min="0" step="0.01" value="1">
+      </div>
+
+      <div class="field">
+        <label>Quantity</label>
+        <input id="machineQty" type="number" min="1" value="1">
+      </div>
+
+      <div class="field">
+        <label>Setup Hours</label>
+        <input id="setupHours" type="number" min="0" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>Programming Hours</label>
+        <input id="programHours" type="number" min="0" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>Tooling Cost / Part (₹)</label>
+        <input id="toolingCost" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Inspection Hours</label>
+        <input id="inspectionHours" type="number" min="0" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>Rework / Scrap (%)</label>
+        <input id="scrapPercent" type="number" min="0" step="0.1" value="0">
+      </div>
+
+    </div>
+
+    <button class="btn btn-primary" onclick="calculateMachining()">
+      Calculate Machining Cost
+    </button>
+
+  </div>
+
+  <div id="machiningResult"></div>
+
+</section>
+
+
+<!-- WELDING -->
+
+<section class="page" id="page-welding">
+
+  <h2 class="page-title">Welding Cost Calculator</h2>
+
+  <p class="page-subtitle">
+    Estimate welding machine, filler, labour and consumable cost.
+  </p>
+
+  <div class="card">
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label>Welding Process</label>
+        <select id="weldProcess">
+          <option>MIG</option>
+          <option>TIG</option>
+          <option>ARC</option>
+          <option>Laser</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Welding Hours / Part</label>
+        <input id="weldHours" type="number" min="0" step="0.01" value="1">
+      </div>
+
+      <div class="field">
+        <label>Quantity</label>
+        <input id="weldQty" type="number" min="1" value="1">
+      </div>
+
+      <div class="field">
+        <label>Filler / Electrode Cost (₹)</label>
+        <input id="fillerCost" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Gas / Consumables (₹)</label>
+        <input id="gasCost" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Grinding / Finishing Hours</label>
+        <input id="grindingHours" type="number" min="0" step="0.01" value="0">
+      </div>
+
+    </div>
+
+    <button class="btn btn-orange" onclick="calculateWelding()">
+      Calculate Welding Cost
+    </button>
+
+  </div>
+
+  <div id="weldingResult"></div>
+
+</section>
+
+
+<!-- LABOUR -->
+
+<section class="page" id="page-labour">
+
+  <h2 class="page-title">Manpower / Labour Cost</h2>
+
+  <p class="page-subtitle">
+    Calculate operator, helper, inspection and finishing manpower.
+  </p>
+
+  <div class="card">
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label>Operator Hours</label>
+        <input id="operatorHours" type="number" min="0" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>Helper Hours</label>
+        <input id="helperHours" type="number" min="0" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>Inspector Hours</label>
+        <input id="inspectorHours" type="number" min="0" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>Finishing Hours</label>
+        <input id="finishingHours" type="number" min="0" step="0.01" value="0">
+      </div>
+
+      <div class="field">
+        <label>Quantity</label>
+        <input id="labourQty" type="number" min="1" value="1">
+      </div>
+
+    </div>
+
+    <button class="btn btn-primary" onclick="calculateLabour()">
+      Calculate Manpower Cost
+    </button>
+
+  </div>
+
+  <div id="labourResult"></div>
+
+</section>
+
+
+<!-- MATERIAL -->
+
+<section class="page" id="page-material">
+
+  <h2 class="page-title">Raw Material Cost</h2>
+
+  <p class="page-subtitle">
+    Calculate raw material value including cutting allowance and scrap.
+  </p>
+
+  <div class="card">
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label>Material</label>
+        <select id="materialType">
+          <option value="mildsteel">Mild Steel</option>
+          <option value="stainless">Stainless Steel</option>
+          <option value="aluminium">Aluminium</option>
+          <option value="brass">Brass</option>
+          <option value="copper">Copper</option>
+          <option value="castiron">Cast Iron</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Weight / Part (kg)</label>
+        <input id="materialWeight" type="number" min="0" step="0.001">
+      </div>
+
+      <div class="field">
+        <label>Quantity</label>
+        <input id="materialQty" type="number" min="1" value="1">
+      </div>
+
+      <div class="field">
+        <label>Scrap / Cutting Allowance (%)</label>
+        <input id="materialScrap" type="number" min="0" step="0.1" value="10">
+      </div>
+
+    </div>
+
+    <button class="btn btn-primary" onclick="calculateMaterial()">
+      Calculate Material Cost
+    </button>
+
+  </div>
+
+  <div id="materialResult"></div>
+
+</section>
+
+
+<!-- TRANSPORT -->
+
+<section class="page" id="page-transport">
+
+  <h2 class="page-title">Transportation Cost</h2>
+
+  <p class="page-subtitle">
+    Estimate pickup, delivery, freight and loading costs.
+  </p>
+
+  <div class="card">
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label>Vehicle / Freight Cost (₹)</label>
+        <input id="vehicleCost" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Distance (km)</label>
+        <input id="distanceKm" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Rate / km (₹)</label>
+        <input id="rateKm" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Loading (₹)</label>
+        <input id="loadingCost" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Unloading (₹)</label>
+        <input id="unloadingCost" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Packaging (₹)</label>
+        <input id="packagingCost" type="number" min="0" value="0">
+      </div>
+
+    </div>
+
+    <button class="btn btn-primary" onclick="calculateTransport()">
+      Calculate Transport
+    </button>
+
+  </div>
+
+  <div id="transportResult"></div>
+
+</section>
+
+
+<!-- QUOTATION -->
+
+<section class="page" id="page-quotation">
+
+  <h2 class="page-title">Final Manufacturing Quotation</h2>
+
+  <p class="page-subtitle">
+    Combine all manufacturing costs into one final selling price.
+  </p>
+
+  <div class="card no-print">
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label>Raw Material Cost (₹)</label>
+        <input id="quoteMaterial" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Machining / VMC (₹)</label>
+        <input id="quoteMachining" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Welding (₹)</label>
+        <input id="quoteWelding" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Manpower (₹)</label>
+        <input id="quoteLabour" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Transportation (₹)</label>
+        <input id="quoteTransport" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Other Cost (₹)</label>
+        <input id="quoteOther" type="number" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label>Overhead (%)</label>
+        <input id="quoteOverhead" type="number" min="0" step="0.1" value="10">
+      </div>
+
+      <div class="field">
+        <label>Profit (%)</label>
+        <input id="quoteProfit" type="number" min="0" step="0.1" value="15">
+      </div>
+
+      <div class="field">
+        <label>GST (%)</label>
+        <input id="quoteGst" type="number" min="0" step="0.1" value="18">
+      </div>
+
+      <div class="field">
+        <label>Quantity</label>
+        <input id="quoteQty" type="number" min="1" value="1">
+      </div>
+
+      <div class="field">
+        <label>Customer / Project</label>
+        <input id="quoteCustomer" type="text" placeholder="Customer name">
+      </div>
+
+      <div class="field">
+        <label>Part / Job Name</label>
+        <input id="quotePart" type="text" placeholder="Part name">
+      </div>
+
+    </div>
+
+    <div class="button-row">
+
+      <button class="btn btn-primary" onclick="calculateQuotation()">
+        Calculate Quotation
+      </button>
+
+      <button class="btn btn-green" onclick="printQuotation()">
+        Print / Save PDF
+      </button>
+
+      <button class="btn btn-gray" onclick="clearQuotation()">
+        Clear
+      </button>
+
+    </div>
+
+  </div>
+
+  <div id="quotationResult"></div>
+
+</section>
+
+
+<!-- CALCULATOR -->
+
+<section class="page" id="page-calculator">
+
+  <h2 class="page-title">Normal Calculator</h2>
+
+  <p class="page-subtitle">
+    Addition, subtraction, multiplication, division and percentage.
+  </p>
+
+  <div class="card">
+
+    <div class="calc">
+
+      <div class="calc-display" id="calcDisplay">
+        0
+      </div>
+
+      <div class="calc-grid">
+
+        <button class="calc-btn clear" onclick="calcClear()">C</button>
+        <button class="calc-btn" onclick="calcInput('%')">%</button>
+        <button class="calc-btn" onclick="calcBack()">⌫</button>
+        <button class="calc-btn operator" onclick="calcInput('/')">÷</button>
+
+        <button class="calc-btn" onclick="calcInput('7')">7</button>
+        <button class="calc-btn" onclick="calcInput('8')">8</button>
+        <button class="calc-btn" onclick="calcInput('9')">9</button>
+        <button class="calc-btn operator" onclick="calcInput('*')">×</button>
+
+        <button class="calc-btn" onclick="calcInput('4')">4</button>
+        <button class="calc-btn" onclick="calcInput('5')">5</button>
+        <button class="calc-btn" onclick="calcInput('6')">6</button>
+        <button class="calc-btn operator" onclick="calcInput('-')">−</button>
+
+        <button class="calc-btn" onclick="calcInput('1')">1</button>
+        <button class="calc-btn" onclick="calcInput('2')">2</button>
+        <button class="calc-btn" onclick="calcInput('3')">3</button>
+        <button class="calc-btn operator" onclick="calcInput('+')">+</button>
+
+        <button class="calc-btn" onclick="calcInput('0')">0</button>
+        <button class="calc-btn" onclick="calcInput('.')">.</button>
+        <button class="calc-btn equal" style="grid-column:span 2" onclick="calcEqual()">=</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section class="page" id="page-settings">
+
+  <h2 class="page-title">Rate Settings</h2>
+
+  <p class="page-subtitle">
+    Enter your actual shop rates. Values are saved in this browser.
+  </p>
+
+  <div class="card">
+
+    <h2>Material Rates</h2>
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label>Mild Steel ₹/kg</label>
+        <input id="rateMildsteel" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Stainless Steel ₹/kg</label>
+        <input id="rateStainless" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Aluminium ₹/kg</label>
+        <input id="rateAluminium" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Brass ₹/kg</label>
+        <input id="rateBrass" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Copper ₹/kg</label>
+        <input id="rateCopper" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Cast Iron ₹/kg</label>
+        <input id="rateCastiron" type="number" min="0" step="0.01">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Machine Rates</h2>
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label>VMC ₹/hour</label>
+        <input id="rateVmc" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>HMC ₹/hour</label>
+        <input id="rateHmc" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>CNC Turning ₹/hour</label>
+        <input id="rateCnc" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Conventional Lathe ₹/hour</label>
+        <input id="rateLathe" type="number" min="0" step="0.01">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Manpower Rates</h2>
+
+    <div class="grid grid-4">
+
+      <div class="field">
+        <label>Operator ₹/hour</label>
+        <input id="rateOperator" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Helper ₹/hour</label>
+        <input id="rateHelper" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Inspector ₹/hour</label>
+        <input id="rateInspector" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Finishing ₹/hour</label>
+        <input id="rateFinishing" type="number" min="0" step="0.01">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Welding / Other</h2>
+
+    <div class="grid grid-3">
+
+      <div class="field">
+        <label>Welding Machine ₹/hour</label>
+        <input id="rateWelding" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Programming ₹/hour</label>
+        <input id="rateProgramming" type="number" min="0" step="0.01">
+      </div>
+
+      <div class="field">
+        <label>Inspection ₹/hour</label>
+        <input id="rateInspection" type="number" min="0" step="0.01">
+      </div>
+
+    </div>
+
+    <div class="button-row">
+
+      <button class="btn btn-primary" onclick="saveRates()">
+        Save Rates
+      </button>
+
+      <button class="btn btn-gray" onclick="resetRates()">
+        Reset Defaults
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
 </main>
-<footer>Avaneesh-Pandey • Metal Weight Calculator • Formula-based calculation for engineering and fabrication use</footer>
+
+</div>
+
+</div>
+
+
+<footer class="footer">
+  © <span id="year"></span> Avaneesh Machining Rate Calculator • Built for manufacturing cost estimation
+</footer>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
 
 <script>
-const materials = {
-"MS / Mild Steel":7850,"Carbon Steel":7840,"SS 304":7930,"SS 316":8000,
-"Cast Iron":7200,"Aluminium":2700,"Copper":8960,"Brass":8500,"Zinc":7130,
-"Nickel":8900,"Titanium":4500,"Magnesium":1740,"Custom Density":7850
-};
-const material=document.getElementById('material');
-Object.keys(materials).forEach(m=>{let o=document.createElement('option');o.value=m;o.textContent=m;material.appendChild(o)});
-const dims=document.getElementById('dims'), shape=document.getElementById('shape'), unit=document.getElementById('unit');
-const unitToMM={mm:1,cm:10,m:1000,in:25.4,ft:304.8,yd:914.4};
-function U(){return unit.value} function mm(id){return val(id)*unitToMM[U()]} function ulab(){return U().toUpperCase()}
-function preview(){
-const s=shape.value, names={plate:'Plate / Sheet',round:'Round Bar / Rod',square:'Square Bar',flat:'Flat Bar',hex:'Hex Bar',pipe:'Round Pipe / Tube',recttube:'Rectangular Tube',squaretube:'Square Tube',angle:'Angle',channel:'C Channel',ibeam:'I / H Beam',disc:'Round Disc'};
-const drawings={
-plate:`<svg viewBox="0 0 300 150"><rect x="45" y="35" width="210" height="80" fill="#dcecff" stroke="#173b67" stroke-width="3"/><line x1="45" y1="125" x2="255" y2="125" stroke="#f28c28" stroke-width="2"/><text x="150" y="143" text-anchor="middle">L</text><line x1="270" y1="35" x2="270" y2="115" stroke="#f28c28" stroke-width="2"/><text x="280" y="80">W</text></svg>`,
-round:`<svg viewBox="0 0 300 150"><ellipse cx="150" cy="75" rx="65" ry="48" fill="#dcecff" stroke="#173b67" stroke-width="3"/><line x1="85" y1="75" x2="215" y2="75" stroke="#f28c28" stroke-width="2"/><text x="150" y="68" text-anchor="middle">D</text></svg>`,
-square:`<svg viewBox="0 0 300 150"><rect x="90" y="25" width="120" height="100" fill="#dcecff" stroke="#173b67" stroke-width="3"/><text x="150" y="145" text-anchor="middle">S</text></svg>`,
-flat:`<svg viewBox="0 0 300 150"><rect x="45" y="55" width="210" height="40" fill="#dcecff" stroke="#173b67" stroke-width="3"/><text x="150" y="115" text-anchor="middle">W × T</text></svg>`,
-hex:`<svg viewBox="0 0 300 150"><polygon points="100,35 200,35 235,75 200,115 100,115 65,75" fill="#dcecff" stroke="#173b67" stroke-width="3"/><text x="150" y="145" text-anchor="middle">Across Flats (AF)</text></svg>`,
-pipe:`<svg viewBox="0 0 300 150"><circle cx="150" cy="75" r="55" fill="#fff" stroke="#173b67" stroke-width="12"/><circle cx="150" cy="75" r="35" fill="white" stroke="#173b67" stroke-width="3"/><text x="150" y="70" text-anchor="middle">OD</text><text x="150" y="88" text-anchor="middle">ID</text></svg>`,
-recttube:`<svg viewBox="0 0 300 150"><rect x="65" y="30" width="170" height="90" fill="#dcecff" stroke="#173b67" stroke-width="12"/><rect x="78" y="43" width="144" height="64" fill="white" stroke="#173b67" stroke-width="3"/><text x="150" y="145" text-anchor="middle">W × H × t</text></svg>`,
-squaretube:`<svg viewBox="0 0 300 150"><rect x="95" y="25" width="110" height="110" fill="#dcecff" stroke="#173b67" stroke-width="12"/><rect x="108" y="38" width="84" height="84" fill="white" stroke="#173b67" stroke-width="3"/><text x="150" y="145" text-anchor="middle">S × t</text></svg>`,
-angle:`<svg viewBox="0 0 300 150"><path d="M85 30 V120 H230" fill="none" stroke="#173b67" stroke-width="25"/><text x="150" y="145" text-anchor="middle">A × B × t</text></svg>`,
-channel:`<svg viewBox="0 0 300 150"><path d="M220 30 H85 V120 H220" fill="none" stroke="#173b67" stroke-width="20"/><text x="150" y="145" text-anchor="middle">H × B × t</text></svg>`,
-ibeam:`<svg viewBox="0 0 300 150"><path d="M70 30 H230 M105 30 V120 M70 120 H230" fill="none" stroke="#173b67" stroke-width="20"/><path d="M150 40 V110" stroke="#173b67" stroke-width="20"/><text x="150" y="145" text-anchor="middle">H × B × t</text></svg>`,
-disc:`<svg viewBox="0 0 300 150"><circle cx="150" cy="75" r="55" fill="#dcecff" stroke="#173b67" stroke-width="3"/><text x="150" y="70" text-anchor="middle">D</text><text x="150" y="90" text-anchor="middle">T</text></svg>`
-};
-document.getElementById('shapePreview').innerHTML=`${drawings[s]}<div class="shape-title">${names[s]}</div><div class="shape-help">Enter all dimensions in ${U()} • calculator converts internally to mm</div>`;
-}
-const D=(id,label,placeholder='')=>`<div class="field"><label>${label}</label><input id="${id}" type="number" min="0" step="0.01" placeholder="${placeholder}"></div>`;
-function renderDims(){
-let s=shape.value, html='<div class="row">';
-if(s==='plate') html+=D('width',`Width (${ulab()})`,'1000')+D('thickness',`Thickness (${ulab()})`,'10');
-if(s==='round') html+=D('diameter',`Diameter (${ulab()})`,'25');
-if(s==='square') html+=D('side',`Side (${ulab()})`,'25');
-if(s==='flat') html+=D('width',`Width (${ulab()})`,'50')+D('thickness',`Thickness (${ulab()})`,'6');
-if(s==='hex') html+=D('af',`Across Flats (${ulab()})`,'24');
-if(s==='pipe') html+=D('od',`Outside Diameter (${ulab()})`,'50')+D('wall',`Wall Thickness (${ulab()})`,'3');
-if(s==='recttube') html+=D('width',`Outside Width (${ulab()})`,'50')+D('height',`Outside Height (${ulab()})`,'30')+D('wall',`Wall Thickness (${ulab()})`,'2');
-if(s==='squaretube') html+=D('side',`Outside Side (${ulab()})`,'50')+D('wall',`Wall Thickness (${ulab()})`,'2');
-if(s==='angle') html+=D('legA',`Leg A (${ulab()})`,'50')+D('legB',`Leg B (${ulab()})`,'50')+D('thickness',`Thickness (${ulab()})`,'5');
-if(s==='channel') html+=D('height',`Overall Height H (${ulab()})`,'100')+D('flange',`Flange B (${ulab()})`,'50')+D('thickness',`Thickness t (${ulab()})`,'5')+D('web',`Web Thickness tw (${ulab()})`,'5');
-if(s==='ibeam') html+=D('height',`Overall Height H (${ulab()})`,'200')+D('flange',`Flange Width B (${ulab()})`,'100')+D('thickness',`Flange Thickness t (${ulab()})`,'8')+D('web',`Web Thickness tw (${ulab()})`,'6');
-if(s==='disc') html+=D('diameter',`Diameter (${ulab()})`,'100')+D('thickness',`Thickness (${ulab()})`,'10');
-html+='</div>';
-if(material.value==='Custom Density') html+=`<div class="field">${D('customDensity','Custom Density (kg/m³)','7850').replace('<div class="field">','').replace('</div>','')}</div>`;
-dims.innerHTML=html; preview();
-}
-shape.addEventListener('change',renderDims);material.addEventListener('change',renderDims);unit.addEventListener('change',renderDims);renderDims();
+/* =========================================================
+   AVANEESH MACHINING RATE CALCULATOR
+   ========================================================= */
 
-function val(id){return Number(document.getElementById(id)?.value||0)}
-window.addEventListener('error', function(e){
-  const box=document.getElementById('shapePreview');
-  if(box && !box.innerHTML.trim()){
-    box.innerHTML='<div class="shape-title">Shape Preview</div><div class="shape-help">Select a shape to view its dimensional drawing.</div>';
-  }
-});
-function calculate(){
-const s=shape.value, L=mm('length'), q=val('qty'), rho=material.value==='Custom Density'?val('customDensity'):materials[material.value];
-if(L<=0||q<=0||rho<=0){showError('Please enter valid length, quantity and density.');return}
-let A=0, formula='';
-const pi=Math.PI;
-if(s==='plate'){let W=mm('width'),T=mm('thickness');A=W*T;formula=`Volume = L × W × T = ${L} × ${W} × ${T} mm³`;}
-if(s==='round'){let d=mm('diameter');A=pi*d*d/4;formula=`Area = π/4 × D² = π/4 × ${d}² = ${A.toFixed(3)} mm²`;}
-if(s==='square'){let a=mm('side');A=a*a;formula=`Area = S² = ${a}² = ${A.toFixed(3)} mm²`;}
-if(s==='flat'){let W=mm('width'),T=mm('thickness');A=W*T;formula=`Area = W × T = ${W} × ${T} = ${A.toFixed(3)} mm²`;}
-if(s==='hex'){let af=val('af');A=0.8660254038*af*af;formula=`Area = 0.866025 × AF² = ${A.toFixed(3)} mm²`;}
-if(s==='pipe'){let od=mm('od'),t=mm('wall'),id=od-2*t;if(id<0){showError('Wall thickness cannot be greater than OD/2.');return}A=pi/4*(od*od-id*id);formula=`ID = OD − 2t = ${id.toFixed(3)} mm; Area = π/4 × (OD² − ID²) = ${A.toFixed(3)} mm²`;}
-if(s==='recttube'){let W=mm('width'),H=mm('height'),t=mm('wall');if(2*t>=Math.min(W,H)){showError('Wall thickness is too large for this tube.');return}A=W*H-(W-2*t)*(H-2*t);formula=`Area = WH − (W−2t)(H−2t) = ${A.toFixed(3)} mm²`;}
-if(s==='squaretube'){let a=mm('side'),t=mm('wall');if(2*t>=a){showError('Wall thickness is too large for this tube.');return}A=a*a-(a-2*t)*(a-2*t);formula=`Area = S² − (S−2t)² = ${A.toFixed(3)} mm²`;}
-if(s==='angle'){let a=mm('legA'),b=mm('legB'),t=mm('thickness');if(t>=Math.min(a,b)){showError('Thickness must be smaller than both angle legs.');return}A=t*(a+b-t);formula=`Area ≈ t(A+B−t) = ${A.toFixed(3)} mm²`;}
-if(s==='channel'){let H=mm('height'),B=mm('flange'),t=mm('thickness'),tw=mm('web');if(2*t>=H||tw<=0){showError('Check channel dimensions.');return}A=tw*(H-2*t)+2*B*t;formula=`Area ≈ tw(H−2t) + 2Bt = ${A.toFixed(3)} mm²`;}
-if(s==='ibeam'){let H=mm('height'),B=mm('flange'),t=mm('thickness'),tw=mm('web');if(2*t>=H||tw<=0){showError('Check beam dimensions.');return}A=2*B*t+(H-2*t)*tw;formula=`Area ≈ 2Bt + (H−2t)tw = ${A.toFixed(3)} mm²`;}
-if(s==='disc'){let d=val('diameter'),T=val('thickness');A=pi*d*d/4;formula=`Volume = πD²/4 × T; Area = ${A.toFixed(3)} mm²`;}
-if(A<=0){showError('Please enter all required dimensions.');return}
-const volume=A*L; const piece=volume/1e9*rho; const total=piece*q; const allowance=val('allowance');const order=total*(1+allowance/100);const rate=val('rate');
-document.getElementById('piece').textContent=fmt(piece)+' kg';
-document.getElementById('kgm').textContent=fmt(piece/(L/1000))+' kg/m';
-document.getElementById('total').textContent=fmt(total)+' kg';
-document.getElementById('order').textContent=fmt(order)+' kg';
-document.getElementById('cost').textContent=rate>0?'₹ '+fmt(order*rate):'—';
-document.getElementById('formula').innerHTML=`${formula}<br>Cross-sectional area = <b>${fmt(A)} mm²</b><br>Volume = Area × Length = <b>${fmt(volume)} mm³</b><br>Weight = Volume ÷ 1,000,000,000 × Density<br>= ${fmt(volume)} ÷ 1e9 × ${rho} = <b>${fmt(piece)} kg/piece</b><br>Total = Piece weight × Quantity = <b>${fmt(total)} kg</b>`;
-showError('');
+
+/* -------------------------
+   DEFAULT RATES
+------------------------- */
+
+const DEFAULT_RATES = {
+
+  materials:{
+    mildsteel:85,
+    stainless:180,
+    aluminium:280,
+    brass:600,
+    copper:850,
+    castiron:100
+  },
+
+  density:{
+    mildsteel:7.85,
+    stainless:8.00,
+    aluminium:2.70,
+    brass:8.50,
+    copper:8.96,
+    castiron:7.20
+  },
+
+  machines:{
+    vmc:900,
+    hmc:1300,
+    cnc:800,
+    lathe:500
+  },
+
+  labour:{
+    operator:250,
+    helper:150,
+    inspector:300,
+    finishing:220
+  },
+
+  welding:600,
+  programming:700,
+  inspection:300
+
+};
+
+let RATES =
+  JSON.parse(
+    localStorage.getItem("avaneeshRates") ||
+    "null"
+  ) || structuredClone(DEFAULT_RATES);
+
+
+/* -------------------------
+   HELPERS
+------------------------- */
+
+function $(id){
+  return document.getElementById(id);
 }
-function fmt(n){return Number(n).toLocaleString('en-IN',{minimumFractionDigits:3,maximumFractionDigits:3})}
-function showError(t){document.getElementById('error').textContent=t}
-document.getElementById('calc').addEventListener('click',calculate);
-document.querySelectorAll('input').forEach(x=>x.addEventListener('input',()=>{if(document.getElementById('error').textContent)showError('')}));
-document.getElementById('reset').addEventListener('click',()=>{location.reload()});
-document.getElementById('densityTable').innerHTML=Object.entries(materials).filter(x=>x[0]!=='Custom Density').map(x=>`<tr><td>${x[0]}</td><td>${x[1].toLocaleString('en-IN')}</td></tr>`).join('');
+
+function num(id){
+  const n=Number($(id)?.value);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function money(value){
+  return new Intl.NumberFormat(
+    "en-IN",
+    {
+      style:"currency",
+      currency:"INR",
+      maximumFractionDigits:2
+    }
+  ).format(Number(value)||0);
+}
+
+function round(value,d=2){
+  const p=Math.pow(10,d);
+  return Math.round((Number(value)||0)*p)/p;
+}
+
+function escapeHTML(str){
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function toast(message){
+
+  const el=$("toast");
+
+  el.textContent=message;
+
+  el.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer=setTimeout(
+    ()=>el.classList.remove("show"),
+    2500
+  );
+}
+
+
+/* -------------------------
+   NAVIGATION
+------------------------- */
+
+function showPage(page){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(p=>p.classList.remove("active"));
+
+  const target=$("page-"+page);
+
+  if(target)
+    target.classList.add("active");
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(btn=>{
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page===page
+      );
+    });
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* -------------------------
+   DASHBOARD
+------------------------- */
+
+function updateDashboard(){
+
+  $("dashMaterialRate").textContent =
+    money(RATES.materials.mildsteel)+"/kg";
+
+  $("dashVmcRate").textContent =
+    money(RATES.machines.vmc)+"/hr";
+
+  $("dashLabourRate").textContent =
+    money(RATES.labour.operator)+"/hr";
+
+  $("dashWeldingRate").textContent =
+    money(RATES.welding)+"/hr";
+
+}
+
+
+/* -------------------------
+   SETTINGS
+------------------------- */
+
+function loadRateInputs(){
+
+  $("rateMildsteel").value=RATES.materials.mildsteel;
+  $("rateStainless").value=RATES.materials.stainless;
+  $("rateAluminium").value=RATES.materials.aluminium;
+  $("rateBrass").value=RATES.materials.brass;
+  $("rateCopper").value=RATES.materials.copper;
+  $("rateCastiron").value=RATES.materials.castiron;
+
+  $("rateVmc").value=RATES.machines.vmc;
+  $("rateHmc").value=RATES.machines.hmc;
+  $("rateCnc").value=RATES.machines.cnc;
+  $("rateLathe").value=RATES.machines.lathe;
+
+  $("rateOperator").value=RATES.labour.operator;
+  $("rateHelper").value=RATES.labour.helper;
+  $("rateInspector").value=RATES.labour.inspector;
+  $("rateFinishing").value=RATES.labour.finishing;
+
+  $("rateWelding").value=RATES.welding;
+  $("rateProgramming").value=RATES.programming;
+  $("rateInspection").value=RATES.inspection;
+
+}
+
+function saveRates(){
+
+  RATES.materials.mildsteel=num("rateMildsteel");
+  RATES.materials.stainless=num("rateStainless");
+  RATES.materials.aluminium=num("rateAluminium");
+  RATES.materials.brass=num("rateBrass");
+  RATES.materials.copper=num("rateCopper");
+  RATES.materials.castiron=num("rateCastiron");
+
+  RATES.machines.vmc=num("rateVmc");
+  RATES.machines.hmc=num("rateHmc");
+  RATES.machines.cnc=num("rateCnc");
+  RATES.machines.lathe=num("rateLathe");
+
+  RATES.labour.operator=num("rateOperator");
+  RATES.labour.helper=num("rateHelper");
+  RATES.labour.inspector=num("rateInspector");
+  RATES.labour.finishing=num("rateFinishing");
+
+  RATES.welding=num("rateWelding");
+  RATES.programming=num("rateProgramming");
+  RATES.inspection=num("rateInspection");
+
+  localStorage.setItem(
+    "avaneeshRates",
+    JSON.stringify(RATES)
+  );
+
+  updateDashboard();
+
+  toast("Rates saved successfully");
+
+}
+
+function resetRates(){
+
+  RATES=structuredClone(DEFAULT_RATES);
+
+  localStorage.removeItem("avaneeshRates");
+
+  loadRateInputs();
+
+  updateDashboard();
+
+  toast("Default rates restored");
+
+}
+
+
+/* =========================================================
+   METAL WEIGHT
+   ========================================================= */
+
+function calculateWeight(){
+
+  const material=$("weightMaterial").value;
+
+  const L=num("weightL");
+  const W=num("weightW");
+  const T=num("weightT");
+  const qty=Math.max(1,num("weightQty"));
+
+  if(L<=0 || W<=0 || T<=0){
+
+    toast("Enter length, width and thickness");
+
+    return;
+
+  }
+
+  /*
+    mm³ / 1000 = cm³
+    density = g/cm³
+    grams / 1000 = kg
+  */
+
+  const volumeCm3=
+    L*W*T/1000;
+
+  const weightPerPart=
+    volumeCm3*
+    RATES.density[material]/
+    1000;
+
+  const totalWeight=
+    weightPerPart*qty;
+
+  const materialCost=
+    totalWeight*
+    RATES.materials[material];
+
+  $("weightResult").innerHTML=`
+
+    <div class="card">
+
+      <div class="result-box">
+
+        <div class="label">
+          Estimated Total Weight
+        </div>
+
+        <div class="result-total">
+          ${round(totalWeight,3)} kg
+        </div>
+
+        <div class="result-row">
+          <span>Volume / part</span>
+          <strong>${round(volumeCm3,2)} cm³</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Weight / part</span>
+          <strong>${round(weightPerPart,3)} kg</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Quantity</span>
+          <strong>${qty}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Material value</span>
+          <strong>${money(materialCost)}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   MACHINING
+   ========================================================= */
+
+function calculateMachining(){
+
+  const machine=$("machineType").value;
+
+  const hours=num("machineHours");
+  const qty=Math.max(1,num("machineQty"));
+
+  const setup=num("setupHours");
+  const programming=num("programHours");
+
+  const tooling=num("toolingCost");
+  const inspection=num("inspectionHours");
+
+  const scrap=num("scrapPercent");
+
+  const machineRate=
+    RATES.machines[machine] || 0;
+
+  const machineCost=
+    hours*qty*machineRate;
+
+  const setupCost=
+    setup*machineRate;
+
+  const programCost=
+    programming*RATES.programming;
+
+  const inspectionCost=
+    inspection*RATES.inspection;
+
+  const toolingCost=
+    tooling*qty;
+
+  const subtotal=
+    machineCost+
+    setupCost+
+    programCost+
+    inspectionCost+
+    toolingCost;
+
+  const scrapCost=
+    subtotal*scrap/100;
+
+  const total=
+    subtotal+scrapCost;
+
+  const perPart=
+    total/qty;
+
+  $("machiningResult").innerHTML=`
+
+    <div class="card">
+
+      <div class="result-box">
+
+        <div class="label">Total Machining Cost</div>
+
+        <div class="result-total">
+          ${money(total)}
+        </div>
+
+        <div class="result-row">
+          <span>Machine</span>
+          <strong>${escapeHTML(machine.toUpperCase())}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Machine Cost</span>
+          <strong>${money(machineCost)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Setup</span>
+          <strong>${money(setupCost)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Programming</span>
+          <strong>${money(programCost)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Tooling</span>
+          <strong>${money(toolingCost)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Inspection</span>
+          <strong>${money(inspectionCost)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Scrap / Rework</span>
+          <strong>${money(scrapCost)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Cost / Part</span>
+          <strong>${money(perPart)}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   WELDING
+   ========================================================= */
+
+function calculateWelding(){
+
+  const hours=num("weldHours");
+  const qty=Math.max(1,num("weldQty"));
+
+  const filler=num("fillerCost");
+  const gas=num("gasCost");
+
+  const grinding=num("grindingHours");
+
+  const weldMachine=
+    hours*
+    qty*
+    RATES.welding;
+
+  const fillerTotal=
+    filler*qty;
+
+  const gasTotal=
+    gas*qty;
+
+  const grindingCost=
+    grinding*
+    qty*
+    RATES.labour.finishing;
+
+  const total=
+    weldMachine+
+    fillerTotal+
+    gasTotal+
+    grindingCost;
+
+  $("weldingResult").innerHTML=`
+
+    <div class="card">
+
+      <div class="result-box">
+
+        <div class="label">Total Welding Cost</div>
+
+        <div class="result-total">
+          ${money(total)}
+        </div>
+
+        <div class="result-row">
+          <span>Welding machine</span>
+          <strong>${money(weldMachine)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Filler / electrode</span>
+          <strong>${money(fillerTotal)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Gas / consumables</span>
+          <strong>${money(gasTotal)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Grinding / finishing</span>
+          <strong>${money(grindingCost)}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   LABOUR
+   ========================================================= */
+
+function calculateLabour(){
+
+  const operator=
+    num("operatorHours")*
+    RATES.labour.operator;
+
+  const helper=
+    num("helperHours")*
+    RATES.labour.helper;
+
+  const inspector=
+    num("inspectorHours")*
+    RATES.labour.inspector;
+
+  const finishing=
+    num("finishingHours")*
+    RATES.labour.finishing;
+
+  const qty=
+    Math.max(1,num("labourQty"));
+
+  const total=
+    (
+      operator+
+      helper+
+      inspector+
+      finishing
+    )*qty;
+
+  $("labourResult").innerHTML=`
+
+    <div class="card">
+
+      <div class="result-box">
+
+        <div class="label">Total Manpower Cost</div>
+
+        <div class="result-total">
+          ${money(total)}
+        </div>
+
+        <div class="result-row">
+          <span>Operator</span>
+          <strong>${money(operator*qty)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Helper</span>
+          <strong>${money(helper*qty)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Inspector</span>
+          <strong>${money(inspector*qty)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Finishing</span>
+          <strong>${money(finishing*qty)}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   RAW MATERIAL
+   ========================================================= */
+
+function calculateMaterial(){
+
+  const material=$("materialType").value;
+
+  const weight=num("materialWeight");
+
+  const qty=Math.max(1,num("materialQty"));
+
+  const scrap=num("materialScrap");
+
+  const baseWeight=
+    weight*qty;
+
+  const scrapWeight=
+    baseWeight*scrap/100;
+
+  const purchaseWeight=
+    baseWeight+scrapWeight;
+
+  const rate=
+    RATES.materials[material];
+
+  const cost=
+    purchaseWeight*rate;
+
+  $("materialResult").innerHTML=`
+
+    <div class="card">
+
+      <div class="result-box">
+
+        <div class="label">Raw Material Cost</div>
+
+        <div class="result-total">
+          ${money(cost)}
+        </div>
+
+        <div class="result-row">
+          <span>Finished weight</span>
+          <strong>${round(baseWeight,3)} kg</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Scrap allowance</span>
+          <strong>${round(scrapWeight,3)} kg</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Purchase weight</span>
+          <strong>${round(purchaseWeight,3)} kg</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Material rate</span>
+          <strong>${money(rate)}/kg</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   TRANSPORT
+   ========================================================= */
+
+function calculateTransport(){
+
+  const vehicle=num("vehicleCost");
+
+  const distance=num("distanceKm");
+
+  const rate=num("rateKm");
+
+  const loading=num("loadingCost");
+  const unloading=num("unloadingCost");
+  const packaging=num("packagingCost");
+
+  const distanceCost=
+    distance*rate;
+
+  const total=
+    vehicle+
+    distanceCost+
+    loading+
+    unloading+
+    packaging;
+
+  $("transportResult").innerHTML=`
+
+    <div class="card">
+
+      <div class="result-box">
+
+        <div class="label">Total Transportation Cost</div>
+
+        <div class="result-total">
+          ${money(total)}
+        </div>
+
+        <div class="result-row">
+          <span>Vehicle / freight</span>
+          <strong>${money(vehicle)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Distance</span>
+          <strong>${round(distance,1)} km</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Distance cost</span>
+          <strong>${money(distanceCost)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Loading</span>
+          <strong>${money(loading)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Unloading</span>
+          <strong>${money(unloading)}</strong>
+        </div>
+
+        <div class="result-row">
+          <span>Packaging</span>
+          <strong>${money(packaging)}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   QUOTATION
+   ========================================================= */
+
+function calculateQuotation(){
+
+  const material=num("quoteMaterial");
+  const machining=num("quoteMachining");
+  const welding=num("quoteWelding");
+  const labour=num("quoteLabour");
+  const transport=num("quoteTransport");
+  const other=num("quoteOther");
+
+  const overheadPercent=num("quoteOverhead");
+  const profitPercent=num("quoteProfit");
+  const gstPercent=num("quoteGst");
+
+  const qty=Math.max(1,num("quoteQty"));
+
+  const direct=
+    material+
+    machining+
+    welding+
+    labour+
+    transport+
+    other;
+
+  const overhead=
+    direct*overheadPercent/100;
+
+  const costBeforeProfit=
+    direct+overhead;
+
+  const profit=
+    costBeforeProfit*
+    profitPercent/100;
+
+  const sellingBeforeGst=
+    costBeforeProfit+profit;
+
+  const gst=
+    sellingBeforeGst*
+    gstPercent/100;
+
+  const finalTotal=
+    sellingBeforeGst+gst;
+
+  const perPart=
+    finalTotal/qty;
+
+  const customer=
+    $("quoteCustomer").value ||
+    "Customer";
+
+  const part=
+    $("quotePart").value ||
+    "Manufacturing Job";
+
+  $("quotationResult").innerHTML=`
+
+    <div class="card">
+
+      <div class="quote" id="printQuote">
+
+        <div class="quote-header">
+
+          <div>
+            <div class="quote-title">
+              AVANEESH MACHINING RATE CALCULATOR
+            </div>
+
+            <div class="quote-meta">
+              Manufacturing Cost Estimate
+            </div>
+          </div>
+
+          <div style="text-align:right">
+            <strong>${escapeHTML(part)}</strong>
+            <br>
+            <span class="quote-meta">
+              ${escapeHTML(customer)}
+            </span>
+          </div>
+
+        </div>
+
+
+        <table class="cost-table">
+
+          <thead>
+            <tr>
+              <th>Cost Component</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td>Raw Material</td>
+              <td>${money(material)}</td>
+            </tr>
+
+            <tr>
+              <td>Machining / VMC</td>
+              <td>${money(machining)}</td>
+            </tr>
+
+            <tr>
+              <td>Welding</td>
+              <td>${money(welding)}</td>
+            </tr>
+
+            <tr>
+              <td>Manpower</td>
+              <td>${money(labour)}</td>
+            </tr>
+
+            <tr>
+              <td>Transportation</td>
+              <td>${money(transport)}</td>
+            </tr>
+
+            <tr>
+              <td>Other</td>
+              <td>${money(other)}</td>
+            </tr>
+
+            <tr>
+              <td>Direct Cost</td>
+              <td><strong>${money(direct)}</strong></td>
+            </tr>
+
+            <tr>
+              <td>Overhead (${overheadPercent}%)</td>
+              <td>${money(overhead)}</td>
+            </tr>
+
+            <tr>
+              <td>Profit (${profitPercent}%)</td>
+              <td>${money(profit)}</td>
+            </tr>
+
+            <tr>
+              <td>GST (${gstPercent}%)</td>
+              <td>${money(gst)}</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+
+        <div class="quote-total">
+
+          Final Quotation:
+          ${money(finalTotal)}
+
+          <div style="
+            font-size:14px;
+            color:#64748b;
+            font-weight:600;
+            margin-top:5px;
+          ">
+            ${money(perPart)} / part • Qty ${qty}
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   QUOTATION HELPERS
+   ========================================================= */
+
+function printQuotation(){
+
+  if(!$("printQuote")){
+
+    calculateQuotation();
+
+  }
+
+  showPage("quotation");
+
+  setTimeout(
+    ()=>window.print(),
+    200
+  );
+
+}
+
+function clearQuotation(){
+
+  [
+    "quoteMaterial",
+    "quoteMachining",
+    "quoteWelding",
+    "quoteLabour",
+    "quoteTransport",
+    "quoteOther"
+  ].forEach(id=>{
+    $(id).value=0;
+  });
+
+  $("quotationResult").innerHTML="";
+
+}
+
+
+/* =========================================================
+   CAD FILE READER
+   ========================================================= */
+
+$("cadFile").addEventListener(
+  "change",
+  function(){
+
+    if(this.files[0])
+      analyzeCADFile(this.files[0]);
+
+  }
+);
+
+
+const dropzone=$("dropzone");
+
+dropzone.addEventListener(
+  "dragover",
+  e=>{
+    e.preventDefault();
+    dropzone.classList.add("drag");
+  }
+);
+
+dropzone.addEventListener(
+  "dragleave",
+  ()=>{
+    dropzone.classList.remove("drag");
+  }
+);
+
+dropzone.addEventListener(
+  "drop",
+  e=>{
+
+    e.preventDefault();
+
+    dropzone.classList.remove("drag");
+
+    const file=e.dataTransfer.files[0];
+
+    if(file)
+      analyzeCADFile(file);
+
+  }
+);
+
+
+/* =========================================================
+   CAD ANALYSIS
+========================================================= */
+
+async function analyzeCADFile(file){
+
+  $("fileName").textContent=
+    file.name+
+    " • "+
+    formatBytes(file.size);
+
+  const extension=
+    file.name
+      .split(".")
+      .pop()
+      .toLowerCase();
+
+  $("cadAnalysis").innerHTML=`
+
+    <div class="success">
+      Reading <strong>${escapeHTML(file.name)}</strong>...
+    </div>
+
+  `;
+
+  try{
+
+    if(extension==="dxf"){
+
+      const text=
+        await file.text();
+
+      const result=
+        parseDXF(text);
+
+      displayCADResult(
+        result,
+        "DXF"
+      );
+
+    }
+
+    else if(
+      extension==="igs" ||
+      extension==="iges"
+    ){
+
+      const text=
+        await file.text();
+
+      const result=
+        parseIGES(text);
+
+      displayCADResult(
+        result,
+        "IGES"
+      );
+
+    }
+
+    else if(extension==="pdf"){
+
+      displayPDFResult(file);
+
+    }
+
+    else{
+
+      throw new Error(
+        "Unsupported file"
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    $("cadAnalysis").innerHTML=`
+
+      <div class="warning">
+
+        This file could not be automatically analysed.
+
+        <br><br>
+
+        You can still enter the drawing dimensions
+        manually below and calculate the quotation.
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+function formatBytes(bytes){
+
+  if(!bytes)
+    return "0 B";
+
+  const units=[
+    "B","KB","MB","GB"
+  ];
+
+  const i=
+    Math.floor(
+      Math.log(bytes)/Math.log(1024)
+    );
+
+  return (
+    bytes/
+    Math.pow(1024,i)
+  ).toFixed(1)+" "+units[i];
+
+}
+
+
+/* =========================================================
+   DXF PARSER
+========================================================= */
+
+function parseDXF(text){
+
+  const lines=
+    text
+      .replace(/\r/g,"")
+      .split("\n");
+
+  let xs=[];
+  let ys=[];
+  let zs=[];
+
+  let entities=0;
+  let lineCount=0;
+  let circles=0;
+  let arcs=0;
+  let polylines=0;
+  let points=0;
+
+  let entity="";
+
+  for(let i=0;i<lines.length-1;i++){
+
+    const code=
+      lines[i].trim();
+
+    const value=
+      lines[i+1].trim();
+
+    if(code==="0"){
+
+      entity=value.toUpperCase();
+
+      if([
+        "LINE",
+        "CIRCLE",
+        "ARC",
+        "LWPOLYLINE",
+        "POLYLINE",
+        "POINT"
+      ].includes(entity)){
+
+        entities++;
+
+      }
+
+      if(entity==="LINE")
+        lineCount++;
+
+      if(entity==="CIRCLE")
+        circles++;
+
+      if(entity==="ARC")
+        arcs++;
+
+      if(
+        entity==="LWPOLYLINE" ||
+        entity==="POLYLINE"
+      )
+        polylines++;
+
+      if(entity==="POINT")
+        points++;
+
+    }
+
+    if(
+      code==="10" ||
+      code==="11" ||
+      code==="12" ||
+      code==="13"
+    ){
+
+      const n=Number(value);
+
+      if(Number.isFinite(n))
+        xs.push(n);
+
+    }
+
+    if(
+      code==="20" ||
+      code==="21" ||
+      code==="22" ||
+      code==="23"
+    ){
+
+      const n=Number(value);
+
+      if(Number.isFinite(n))
+        ys.push(n);
+
+    }
+
+    if(
+      code==="30" ||
+      code==="31" ||
+      code==="32" ||
+      code==="33"
+    ){
+
+      const n=Number(value);
+
+      if(Number.isFinite(n))
+        zs.push(n);
+
+    }
+
+  }
+
+  const units=
+    detectDXFUnits(text);
+
+  return makeCADResult({
+
+    format:"DXF",
+    entities,
+    lines:lineCount,
+    circles,
+    arcs,
+    polylines,
+    points,
+    xs,
+    ys,
+    zs,
+    units
+
+  });
+
+}
+
+
+function detectDXFUnits(text){
+
+  /*
+    Common AutoCAD $INSUNITS codes.
+  */
+
+  const units={
+    0:"Unknown",
+    1:"Inches",
+    2:"Feet",
+    3:"Miles",
+    4:"Millimeters",
+    5:"Centimeters",
+    6:"Meters",
+    7:"Kilometers"
+  };
+
+  const match=
+    text.match(
+      /\$INSUNITS[\s\S]{0,300}?70\s*\n\s*(\d+)/i
+    );
+
+  if(!match)
+    return "Unknown";
+
+  return units[
+    Number(match[1])
+  ] || "Unknown";
+
+}
+
+
+/* =========================================================
+   IGES PARSER
+========================================================= */
+
+function parseIGES(text){
+
+  const lines=
+    text
+      .replace(/\r/g,"")
+      .split("\n");
+
+  let directory=[];
+
+  let parameter=[];
+
+  for(const line of lines){
+
+    if(line.length<73)
+      continue;
+
+    const section=
+      line.charAt(72)
+        .toUpperCase();
+
+    if(section==="D")
+      directory.push(line);
+
+    if(section==="P")
+      parameter.push(line);
+
+  }
+
+  let entities=0;
+  let lineCount=0;
+  let circles=0;
+  let points=0;
+  let splines=0;
+  let composites=0;
+  let conics=0;
+
+  /*
+    Common IGES directory entity types.
+  */
+
+  for(let i=0;i<directory.length;i+=2){
+
+    const row=directory[i];
+
+    if(!row)
+      continue;
+
+    const type=
+      Number(
+        row
+          .substring(0,8)
+          .trim()
+      );
+
+    if(!Number.isFinite(type))
+      continue;
+
+    entities++;
+
+    if(type===110)
+      lineCount++;
+
+    else if(type===100)
+      circles++;
+
+    else if(type===116)
+      points++;
+
+    else if(type===126)
+      splines++;
+
+    else if(type===102)
+      composites++;
+
+    else if(type===104)
+      conics++;
+
+  }
+
+  /*
+    Lightweight coordinate extraction.
+    This is not a complete IGES geometry kernel.
+  */
+
+  const values=[];
+
+  for(const line of parameter){
+
+    const data=
+      line.substring(0,64);
+
+    const pieces=
+      data.split(/[;,]/);
+
+    for(const piece of pieces){
+
+      const n=
+        Number(
+          piece
+            .trim()
+            .replace(/[A-Za-z]/g,"")
+        );
+
+      if(
+        Number.isFinite(n) &&
+        Math.abs(n)<10000000
+      ){
+
+        values.push(n);
+
+      }
+
+    }
+
+  }
+
+  let xs=[];
+  let ys=[];
+  let zs=[];
+
+  /*
+    Approximate XYZ triplets.
+  */
+
+  for(
+    let i=0;
+    i+2<values.length;
+    i+=3
+  ){
+
+    xs.push(values[i]);
+    ys.push(values[i+1]);
+    zs.push(values[i+2]);
+
+  }
+
+  return makeCADResult({
+
+    format:"IGES",
+    entities,
+    lines:lineCount,
+    circles,
+    arcs:0,
+    polylines:composites,
+    points,
+    splines,
+    conics,
+    xs,
+    ys,
+    zs,
+    units:detectIGESUnits(lines)
+
+  });
+
+}
+
+
+function detectIGESUnits(lines){
+
+  let globalText="";
+
+  for(const line of lines){
+
+    if(
+      line.length>=73 &&
+      line.charAt(72)
+        .toUpperCase()==="G"
+    ){
+
+      globalText+=
+        line.substring(0,72);
+
+    }
+
+  }
+
+  const text=
+    globalText.toUpperCase();
+
+  if(text.includes("MILLIMETER"))
+    return "Millimeters";
+
+  if(text.includes("INCH"))
+    return "Inches";
+
+  if(text.includes("METER"))
+    return "Meters";
+
+  if(text.includes("CENTIMETER"))
+    return "Centimeters";
+
+  return "Unknown";
+
+}
+
+
+/* =========================================================
+   CAD RESULT
+========================================================= */
+
+function makeCADResult(data){
+
+  const xs=data.xs||[];
+  const ys=data.ys||[];
+  const zs=data.zs||[];
+
+  let width=0;
+  let height=0;
+  let depth=0;
+
+  if(xs.length)
+    width=
+      Math.max(...xs)-
+      Math.min(...xs);
+
+  if(ys.length)
+    height=
+      Math.max(...ys)-
+      Math.min(...ys);
+
+  if(zs.length)
+    depth=
+      Math.max(...zs)-
+      Math.min(...zs);
+
+  const factor=
+    unitToMM(data.units);
+
+  return {
+
+    ...data,
+
+    width:
+      Math.abs(width)*factor,
+
+    height:
+      Math.abs(height)*factor,
+
+    depth:
+      Math.abs(depth)*factor
+
+  };
+
+}
+
+
+function unitToMM(unit){
+
+  const u=
+    String(unit)
+      .toLowerCase();
+
+  if(u.includes("millimeter"))
+    return 1;
+
+  if(u.includes("centimeter"))
+    return 10;
+
+  if(u.includes("meter"))
+    return 1000;
+
+  if(u.includes("inch"))
+    return 25.4;
+
+  if(u.includes("feet"))
+    return 304.8;
+
+  return 1;
+
+}
+
+
+/* =========================================================
+   CAD DISPLAY
+========================================================= */
+
+function displayCADResult(result,format){
+
+  if(result.width>0)
+    $("drawWidth").value=
+      round(result.width,2);
+
+  if(result.height>0)
+    $("drawHeight").value=
+      round(result.height,2);
+
+  if(result.depth>0)
+    $("drawThickness").value=
+      round(result.depth,2);
+
+
+  $("cadAnalysis").innerHTML=`
+
+    <div class="success">
+
+      <strong>${format} file read successfully.</strong>
+
+      <div style="margin-top:10px">
+
+        <span class="badge">
+          Units: ${escapeHTML(result.units)}
+        </span>
+
+        <span class="badge">
+          Entities: ${result.entities}
+        </span>
+
+        <span class="badge">
+          Lines: ${result.lines||0}
+        </span>
+
+        <span class="badge">
+          Circles: ${result.circles||0}
+        </span>
+
+        <span class="badge">
+          Arcs: ${result.arcs||0}
+        </span>
+
+        <span class="badge">
+          Points: ${result.points||0}
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="card" style="margin-top:15px">
+
+      <h3>Detected Bounding Dimensions</h3>
+
+      <div class="grid grid-3">
+
+        <div class="stat">
+          <div class="stat-label">X / Width</div>
+          <div class="stat-value blue">
+            ${round(result.width,2)} mm
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Y / Height</div>
+          <div class="stat-value green">
+            ${round(result.height,2)} mm
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Z / Depth</div>
+          <div class="stat-value orange">
+            ${
+              result.depth>0
+              ? round(result.depth,2)+" mm"
+              : "Not detected"
+            }
+          </div>
+        </div>
+
+      </div>
+
+      <div class="warning" style="margin-top:15px">
+
+        CAD dimensions shown here are
+        <strong>bounding dimensions</strong>.
+        They should not be treated as the actual
+        machined volume for complex parts.
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function displayPDFResult(file){
+
+  $("cadAnalysis").innerHTML=`
+
+    <div class="success">
+
+      <strong>PDF drawing uploaded.</strong>
+
+      <br><br>
+
+      File:
+      ${escapeHTML(file.name)}
+
+      <br>
+
+      Size:
+      ${formatBytes(file.size)}
+
+    </div>
+
+    <div class="warning" style="margin-top:15px">
+
+      Browser-only PDF analysis is intentionally
+      conservative. A PDF may contain vector geometry,
+      text dimensions or a scanned drawing.
+
+      <br><br>
+
+      Enter verified drawing dimensions below
+      before generating a quotation.
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   DRAWING COST
+========================================================= */
+
+function calculateDrawingCost(){
+
+  const material=
+    $("drawMaterial").value;
+
+  const width=num("drawWidth");
+  const height=num("drawHeight");
+  const thickness=num("drawThickness");
+
+  const qty=
+    Math.max(1,num("drawQty"));
+
+  if(
+    width<=0 ||
+    height<=0 ||
+    thickness<=0
+  ){
+
+    toast(
+      "Enter verified width, height and thickness"
+    );
+
+    return;
+
+  }
+
+  /*
+    Bounding-box volume.
+  */
+
+  const volumeCm3=
+    width*
+    height*
+    thickness/
+    1000;
+
+  const density=
+    RATES.density[material];
+
+  const weightPerPart=
+    volumeCm3*
+    density/
+    1000;
+
+  const totalWeight=
+    weightPerPart*qty;
+
+  const materialCost=
+    totalWeight*
+    RATES.materials[material];
+
+  const vmc=
+    num("drawVmcHours")*
+    qty*
+    RATES.machines.vmc;
+
+  const welding=
+    num("drawWeldHours")*
+    qty*
+    RATES.welding;
+
+  const labour=
+    num("drawLabourHours")*
+    qty*
+    RATES.labour.operator;
+
+  const transport=
+    num("drawTransport");
+
+  const total=
+    materialCost+
+    vmc+
+    welding+
+    labour+
+    transport;
+
+  const perPart=
+    total/qty;
+
+  $("drawingResult").innerHTML=`
+
+    <div class="card">
+
+      <h2>Drawing Cost Estimate</h2>
+
+      <div class="grid grid-3">
+
+        <div class="stat">
+          <div class="stat-label">Weight / Part</div>
+          <div class="stat-value blue">
+            ${round(weightPerPart,3)} kg
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Total Weight</div>
+          <div class="stat-value green">
+            ${round(totalWeight,3)} kg
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Final Cost</div>
+          <div class="stat-value orange">
+            ${money(total)}
+          </div>
+        </div>
+
+      </div>
+
+      <br>
+
+      <table class="cost-table">
+
+        <tr>
+          <td>Raw material</td>
+          <td>${money(materialCost)}</td>
+        </tr>
+
+        <tr>
+          <td>VMC machining</td>
+          <td>${money(vmc)}</td>
+        </tr>
+
+        <tr>
+          <td>Welding</td>
+          <td>${money(welding)}</td>
+        </tr>
+
+        <tr>
+          <td>Manpower</td>
+          <td>${money(labour)}</td>
+        </tr>
+
+        <tr>
+          <td>Transportation</td>
+          <td>${money(transport)}</td>
+        </tr>
+
+        <tr>
+          <td><strong>Total</strong></td>
+          <td><strong>${money(total)}</strong></td>
+        </tr>
+
+      </table>
+
+      <div class="result-box" style="margin-top:18px">
+
+        <div class="label">
+          Estimated Cost / Part
+        </div>
+
+        <div class="result-total">
+          ${money(perPart)}
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   NORMAL CALCULATOR
+========================================================= */
+
+let calcExpression="";
+
+function updateCalc(){
+
+  $("calcDisplay").textContent=
+    calcExpression || "0";
+
+}
+
+function calcInput(value){
+
+  if(value==="%"){
+
+    /*
+      Percentage of current number.
+    */
+
+    const match=
+      calcExpression.match(
+        /(\d+(?:\.\d+)?)$/
+      );
+
+    if(match){
+
+      const n=
+        Number(match[1])/100;
+
+      calcExpression=
+        calcExpression.slice(
+          0,
+          calcExpression.length-match[1].length
+        )+
+        n;
+
+    }
+
+    updateCalc();
+
+    return;
+
+  }
+
+  calcExpression+=value;
+
+  updateCalc();
+
+}
+
+function calcClear(){
+
+  calcExpression="";
+
+  updateCalc();
+
+}
+
+function calcBack(){
+
+  calcExpression=
+    calcExpression.slice(
+      0,-1
+    );
+
+  updateCalc();
+
+}
+
+function calcEqual(){
+
+  try{
+
+    /*
+      Only permit calculator characters.
+    */
+
+    if(
+      !/^[0-9+\-*/().\s]+$/
+        .test(calcExpression)
+    ){
+
+      throw new Error();
+
+    }
+
+    const result=
+      Function(
+        '"use strict";return ('+
+        calcExpression+
+        ')'
+      )();
+
+    if(!Number.isFinite(result))
+      throw new Error();
+
+    calcExpression=
+      String(
+        round(result,10)
+      );
+
+    updateCalc();
+
+  }catch{
+
+    calcExpression="Error";
+
+    updateCalc();
+
+    setTimeout(
+      calcClear,
+      1000
+    );
+
+  }
+
+}
+
+
+/* Keyboard calculator support */
+
+document.addEventListener(
+  "keydown",
+  e=>{
+
+    if(
+      e.target.tagName==="INPUT" ||
+      e.target.tagName==="TEXTAREA" ||
+      e.target.tagName==="SELECT"
+    )
+      return;
+
+    if(
+      /[0-9+\-*/().%]/.test(e.key)
+    ){
+
+      calcInput(e.key);
+
+    }
+
+    else if(e.key==="Enter"){
+
+      calcEqual();
+
+    }
+
+    else if(e.key==="Backspace"){
+
+      calcBack();
+
+    }
+
+    else if(e.key==="Escape"){
+
+      calcClear();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+$("year").textContent=
+  new Date().getFullYear();
+
+loadRateInputs();
+
+updateDashboard();
+
 </script>
+
 </body>
 </html>
+```
