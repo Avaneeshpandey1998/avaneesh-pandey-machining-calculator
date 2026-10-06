@@ -1,0 +1,3857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Avaneesh Machining Calculator</title>
+
+<style>
+:root{
+    --primary:#1565c0;
+    --primary-dark:#0d47a1;
+    --secondary:#00897b;
+    --success:#2e7d32;
+    --warning:#ef6c00;
+    --danger:#c62828;
+    --dark:#263238;
+    --light:#f5f7fa;
+    --border:#d9e0e7;
+    --white:#ffffff;
+    --shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fa;
+    color:#263238;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.header-main{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 24px;
+}
+
+.logo-area h1{
+    color:var(--primary-dark);
+    font-size:25px;
+}
+
+.logo-area p{
+    color:#607d8b;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.live-clock{
+    text-align:right;
+    font-weight:bold;
+    color:var(--dark);
+}
+
+.live-clock .date{
+    font-size:13px;
+    color:#607d8b;
+}
+
+.live-clock .time{
+    font-size:20px;
+    color:var(--primary);
+}
+
+/* ================= NAVIGATION ================= */
+
+.navbar{
+    display:flex;
+    overflow-x:auto;
+    gap:5px;
+    padding:7px 18px;
+    background:#fafafa;
+    border-top:1px solid #eee;
+}
+
+.nav-btn{
+    border:0;
+    background:white;
+    color:#455a64;
+    padding:10px 14px;
+    border-radius:7px;
+    cursor:pointer;
+    white-space:nowrap;
+    font-weight:bold;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+    background:var(--primary);
+    color:white;
+}
+
+/* ================= MAIN ================= */
+
+main{
+    max-width:1500px;
+    margin:auto;
+    padding:20px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.section-title{
+    margin-bottom:18px;
+}
+
+.section-title h2{
+    font-size:25px;
+    color:var(--dark);
+}
+
+.section-title p{
+    color:#607d8b;
+    margin-top:5px;
+}
+
+/* ================= CARDS ================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:18px;
+    box-shadow:var(--shadow);
+}
+
+.rate-card{
+    border-left:5px solid var(--primary);
+}
+
+.card-title{
+    font-size:13px;
+    color:#607d8b;
+    margin-bottom:8px;
+}
+
+.card-value{
+    font-size:23px;
+    font-weight:bold;
+    color:var(--dark);
+}
+
+.card-small{
+    margin-top:5px;
+    font-size:12px;
+    color:#78909c;
+}
+
+/* ================= GRID ================= */
+
+.grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+@media(max-width:900px){
+    .grid-2,
+    .grid-3{
+        grid-template-columns:1fr;
+    }
+}
+
+/* ================= FORMS ================= */
+
+.form-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px;
+    box-shadow:var(--shadow);
+    margin-bottom:20px;
+}
+
+.form-card h3{
+    margin-bottom:15px;
+    color:var(--primary-dark);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+}
+
+@media(max-width:700px){
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+label{
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:6px;
+    color:#455a64;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:10px 11px;
+    border:1px solid #cfd8dc;
+    border-radius:6px;
+    background:white;
+    font-size:14px;
+    outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 2px rgba(21,101,192,.08);
+}
+
+/* ================= BUTTONS ================= */
+
+button{
+    font-family:inherit;
+}
+
+.btn{
+    border:0;
+    border-radius:6px;
+    padding:10px 16px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn-success{
+    background:var(--success);
+    color:white;
+}
+
+.btn-warning{
+    background:var(--warning);
+    color:white;
+}
+
+.btn-danger{
+    background:var(--danger);
+    color:white;
+}
+
+.btn-secondary{
+    background:#607d8b;
+    color:white;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+th{
+    background:#eaf2fb;
+    color:#263238;
+    padding:11px;
+    text-align:left;
+    font-size:13px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #e5e9ed;
+    font-size:13px;
+}
+
+tr:hover{
+    background:#fafafa;
+}
+
+/* ================= RESULT ================= */
+
+.result-box{
+    background:#eef7ff;
+    border:1px solid #b9d7f5;
+    border-radius:8px;
+    padding:18px;
+    margin-top:15px;
+}
+
+.result-main{
+    font-size:28px;
+    font-weight:bold;
+    color:var(--primary-dark);
+}
+
+.result-row{
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid #d9e7f2;
+    padding:8px 0;
+}
+
+.result-row:last-child{
+    border-bottom:0;
+}
+
+/* ================= SHAPE DISPLAY ================= */
+
+.shape-box{
+    min-height:280px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#fafafa;
+    border:1px solid var(--border);
+    border-radius:10px;
+    margin-top:10px;
+}
+
+.shape-box svg{
+    max-width:90%;
+    max-height:240px;
+}
+
+.formula{
+    background:#263238;
+    color:#ffffff;
+    padding:13px;
+    border-radius:7px;
+    margin-top:12px;
+    font-family:monospace;
+    line-height:1.6;
+}
+
+/* ================= FILE UPLOAD ================= */
+
+.upload-box{
+    border:2px dashed #90a4ae;
+    border-radius:10px;
+    padding:35px;
+    text-align:center;
+    background:#fafafa;
+}
+
+.upload-box:hover{
+    border-color:var(--primary);
+    background:#f7fbff;
+}
+
+.file-info{
+    margin-top:15px;
+    background:#f5f7fa;
+    padding:15px;
+    border-radius:7px;
+}
+
+/* ================= QUOTATION ================= */
+
+.quote{
+    background:white;
+    padding:30px;
+    border:1px solid #ddd;
+    box-shadow:var(--shadow);
+}
+
+.quote-header{
+    display:flex;
+    justify-content:space-between;
+    border-bottom:2px solid #222;
+    padding-bottom:15px;
+    margin-bottom:20px;
+}
+
+.quote-company{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.quote-total{
+    font-size:24px;
+    font-weight:bold;
+    color:var(--primary-dark);
+}
+
+/* ================= CALCULATOR ================= */
+
+.calc-display{
+    width:100%;
+    height:65px;
+    font-size:28px;
+    text-align:right;
+    padding:10px;
+    background:#263238;
+    color:white;
+    border:0;
+    border-radius:7px;
+    margin-bottom:10px;
+}
+
+.calc-buttons{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:7px;
+}
+
+.calc-buttons button{
+    padding:18px 5px;
+    font-size:18px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    background:#fff;
+    cursor:pointer;
+}
+
+.calc-buttons button:hover{
+    background:#eaf2fb;
+}
+
+.operator{
+    background:#e3f2fd !important;
+    color:#0d47a1;
+    font-weight:bold;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    margin-top:40px;
+    background:#263238;
+    color:white;
+    text-align:center;
+    padding:20px;
+    font-size:13px;
+}
+
+/* ================= PRINT ================= */
+
+@media print{
+    header,
+    .navbar,
+    footer,
+    .no-print{
+        display:none !important;
+    }
+
+    body{
+        background:white;
+    }
+
+    main{
+        padding:0;
+    }
+
+    .page{
+        display:none !important;
+    }
+
+    #quotation{
+        display:block !important;
+    }
+
+    .quote{
+        box-shadow:none;
+        border:0;
+    }
+}
+</style>
+
+<!-- CAD VIEWER LIBRARIES - only for DXF / IGES viewer -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dxf-parser@1.1.2/dist/dxf-parser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/occt-import-js@0.0.23/dist/occt-import-js.js"></script>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="header-main">
+
+<div class="logo-area">
+<h1>⚙️ Avaneesh Machining Calculator</h1>
+<p>Manufacturing • Costing • Estimation • Quotation</p>
+</div>
+
+<div class="live-clock">
+<div class="date" id="liveDate"></div>
+<div class="time" id="liveTime"></div>
+</div>
+
+</div>
+
+<nav class="navbar">
+
+<button class="nav-btn active" onclick="showPage('dashboard',this)">📊 Dashboard</button>
+
+<button class="nav-btn" onclick="showPage('metal',this)">⚙️ Metal Weight</button>
+
+<button class="nav-btn" onclick="showPage('vmc',this)">🔧 VMC Cost</button>
+
+<button class="nav-btn" onclick="showPage('fileReader',this)">📁 DXF / IGES</button>
+
+<button class="nav-btn" onclick="showPage('welding',this)">🔥 Welding</button>
+
+<button class="nav-btn" onclick="showPage('assembly',this)">🔩 Assembly</button>
+
+<button class="nav-btn" onclick="showPage('painting',this)">🎨 Painting</button>
+
+<button class="nav-btn" onclick="showPage('converter',this)">🔄 Converter</button>
+
+<button class="nav-btn" onclick="showPage('calculator',this)">🧮 Calculator</button>
+
+<button class="nav-btn" onclick="showPage('quotation',this)">📄 Quotation</button>
+
+</nav>
+
+</header>
+
+
+<main>
+
+<!-- ===================================================== -->
+<!-- DASHBOARD -->
+<!-- ===================================================== -->
+
+<section id="dashboard" class="page active">
+
+<div class="section-title">
+<h2>📊 Manufacturing Cost Dashboard</h2>
+<p>Update rates below and use them throughout the calculators.</p>
+</div>
+
+<div class="cards">
+
+<div class="card rate-card">
+<div class="card-title">MS / Mild Steel</div>
+<div class="card-value">₹ <span id="dashMS">75</span></div>
+<div class="card-small">per kg</div>
+</div>
+
+<div class="card rate-card">
+<div class="card-title">SS304</div>
+<div class="card-value">₹ <span id="dashSS">190</span></div>
+<div class="card-small">per kg</div>
+</div>
+
+<div class="card rate-card">
+<div class="card-title">Aluminium</div>
+<div class="card-value">₹ <span id="dashAL">260</span></div>
+<div class="card-small">per kg</div>
+</div>
+
+<div class="card rate-card">
+<div class="card-title">Brass</div>
+<div class="card-value">₹ <span id="dashBrass">650</span></div>
+<div class="card-small">per kg</div>
+</div>
+
+<div class="card rate-card">
+<div class="card-title">VMC Machine</div>
+<div class="card-value">₹ <span id="dashVMC">900</span></div>
+<div class="card-small">per hour</div>
+</div>
+
+<div class="card rate-card">
+<div class="card-title">Welding</div>
+<div class="card-value">₹ <span id="dashWelding">450</span></div>
+<div class="card-small">per hour</div>
+</div>
+
+<div class="card rate-card">
+<div class="card-title">Manpower</div>
+<div class="card-value">₹ <span id="dashManpower">250</span></div>
+<div class="card-small">per hour</div>
+</div>
+
+<div class="card rate-card">
+<div class="card-title">Painting</div>
+<div class="card-value">₹ <span id="dashPaint">80</span></div>
+<div class="card-small">per m²</div>
+</div>
+
+</div>
+
+
+<div class="form-card" style="margin-top:20px;">
+
+<h3>⚙️ Live Rate Settings</h3>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>MS Rate ₹/kg</label>
+<input id="rateMS" type="number" value="75" onchange="updateRates()">
+</div>
+
+<div class="form-group">
+<label>SS304 Rate ₹/kg</label>
+<input id="rateSS" type="number" value="190" onchange="updateRates()">
+</div>
+
+<div class="form-group">
+<label>Aluminium ₹/kg</label>
+<input id="rateAL" type="number" value="260" onchange="updateRates()">
+</div>
+
+<div class="form-group">
+<label>Brass ₹/kg</label>
+<input id="rateBrass" type="number" value="650" onchange="updateRates()">
+</div>
+
+<div class="form-group">
+<label>VMC ₹/hour</label>
+<input id="rateVMC" type="number" value="900" onchange="updateRates()">
+</div>
+
+<div class="form-group">
+<label>Welding ₹/hour</label>
+<input id="rateWelding" type="number" value="450" onchange="updateRates()">
+</div>
+
+<div class="form-group">
+<label>Manpower ₹/hour</label>
+<input id="rateManpower" type="number" value="250" onchange="updateRates()">
+</div>
+
+<div class="form-group">
+<label>Painting ₹/m²</label>
+<input id="ratePaint" type="number" value="80" onchange="updateRates()">
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- METAL WEIGHT -->
+<!-- ===================================================== -->
+
+<section id="metal" class="page">
+
+<div class="section-title">
+
+<h2>⚙️ Metal Weight & Material Cost Calculator</h2>
+
+<p>
+Select material and shape. Dimensions can be entered in mm, cm, inch, metre or feet.
+</p>
+
+</div>
+
+
+<div class="grid-2">
+
+<div class="form-card">
+
+<h3>Material & Shape</h3>
+
+<div class="form-group">
+
+<label>Material</label>
+
+<select id="metalMaterial" onchange="calculateMetal()">
+
+<option value="MS">Mild Steel</option>
+<option value="SS304">Stainless Steel 304</option>
+<option value="AL">Aluminium</option>
+<option value="BRASS">Brass</option>
+<option value="COPPER">Copper</option>
+<option value="GI">GI Steel</option>
+<option value="CAST">Cast Iron</option>
+<option value="CUSTOM">Custom Density</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group" style="margin-top:12px;">
+
+<label>Shape / Item</label>
+
+<select id="metalShape" onchange="buildMetalInputs()">
+
+<option value="plate">Plate / Sheet</option>
+
+<option value="round">Round Bar</option>
+
+<option value="square">Square Bar</option>
+
+<option value="flat">Flat Bar</option>
+
+<option value="hex">Hex Bar</option>
+
+<option value="pipe">Round Pipe</option>
+
+<option value="tube">Square / Rectangular Tube</option>
+
+<option value="angle">Angle</option>
+
+<option value="channel">Channel</option>
+
+<option value="ibeam">I Beam</option>
+
+<option value="circle">Circular Disc</option>
+
+<option value="ring">Ring / Washer</option>
+
+<option value="rod">Cylinder / Rod</option>
+
+</select>
+
+</div>
+
+
+<div class="form-grid" id="metalInputs" style="margin-top:15px;"></div>
+
+
+<div class="form-group" style="margin-top:12px;">
+
+<label>Quantity</label>
+
+<input id="metalQty" type="number" value="1" min="1" oninput="calculateMetal()">
+
+</div>
+
+
+<div class="form-group" style="margin-top:12px;">
+
+<label>Custom Density kg/m³</label>
+
+<input id="customDensity" type="number" value="7850" oninput="calculateMetal()">
+
+</div>
+
+
+<button class="btn btn-primary" style="margin-top:15px;" onclick="calculateMetal()">
+
+Calculate Weight & Cost
+
+</button>
+
+</div>
+
+
+<div class="form-card">
+
+<h3>📐 Shape & Formula</h3>
+
+<div class="shape-box" id="shapeDrawing">
+
+</div>
+
+<div class="formula" id="metalFormula">
+
+Select a shape to see the formula.
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="result-box">
+
+<div class="result-main">
+
+Total Weight:
+<span id="metalWeight">0.00</span> kg
+
+</div>
+
+<div class="result-row">
+<span>Volume</span>
+<strong><span id="metalVolume">0</span> cm³</strong>
+</div>
+
+<div class="result-row">
+<span>Material Rate</span>
+<strong>₹ <span id="metalRate">0</span>/kg</strong>
+</div>
+
+<div class="result-row">
+<span>Estimated Material Cost</span>
+<strong>₹ <span id="metalCost">0</span></strong>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- VMC -->
+<!-- ===================================================== -->
+
+<section id="vmc" class="page">
+
+<div class="section-title">
+
+<h2>🔧 VMC Machining Cost Calculator</h2>
+
+<p>
+Calculate setup, programming, machining, tooling, manpower, inspection and overhead cost.
+</p>
+
+</div>
+
+
+<div class="form-card">
+
+<h3>Part Information</h3>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Part Name</label>
+<input id="vmcPart" placeholder="Example: Mounting Plate">
+</div>
+
+<div class="form-group">
+<label>Quantity</label>
+<input id="vmcQty" type="number" value="1">
+</div>
+
+<div class="form-group">
+<label>Material</label>
+
+<select id="vmcMaterial">
+
+<option>MS</option>
+<option>SS304</option>
+<option>Aluminium</option>
+<option>Brass</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Machine Rate ₹/hour</label>
+<input id="vmcMachineRate" type="number" value="900">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="form-card">
+
+<h3>Machining Parameters</h3>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Setup Time / Part (min)</label>
+<input id="setupTime" type="number" value="30">
+</div>
+
+<div class="form-group">
+<label>Programming Time (min)</label>
+<input id="programTime" type="number" value="45">
+</div>
+
+<div class="form-group">
+<label>Machining Time / Part (min)</label>
+<input id="machiningTime" type="number" value="60">
+</div>
+
+<div class="form-group">
+<label>Tool Change / Handling (min)</label>
+<input id="toolTime" type="number" value="10">
+</div>
+
+<div class="form-group">
+<label>Tooling Cost / Part ₹</label>
+<input id="toolCost" type="number" value="100">
+</div>
+
+<div class="form-group">
+<label>Inspection Cost / Part ₹</label>
+<input id="inspectionCost" type="number" value="50">
+</div>
+
+<div class="form-group">
+<label>Manpower ₹/hour</label>
+<input id="vmcManpower" type="number" value="250">
+</div>
+
+<div class="form-group">
+<label>Power / Other Cost ₹/hour</label>
+<input id="vmcOther" type="number" value="100">
+</div>
+
+<div class="form-group">
+<label>Overhead %</label>
+<input id="vmcOverhead" type="number" value="10">
+</div>
+
+<div class="form-group">
+<label>Profit %</label>
+<input id="vmcProfit" type="number" value="15">
+</div>
+
+</div>
+
+<button class="btn btn-primary" style="margin-top:15px;" onclick="calculateVMC()">
+
+Calculate VMC Cost
+
+</button>
+
+</div>
+
+
+<div class="result-box">
+
+<div class="result-main">
+
+Total VMC Cost:
+₹ <span id="vmcTotal">0</span>
+
+</div>
+
+<div class="result-row">
+<span>Setup Cost</span>
+<strong>₹ <span id="vmcSetupCost">0</span></strong>
+</div>
+
+<div class="result-row">
+<span>Programming Cost</span>
+<strong>₹ <span id="vmcProgramCost">0</span></strong>
+</div>
+
+<div class="result-row">
+<span>Machining Cost</span>
+<strong>₹ <span id="vmcMachineCost">0</span></strong>
+</div>
+
+<div class="result-row">
+<span>Tooling</span>
+<strong>₹ <span id="vmcTooling">0</span></strong>
+</div>
+
+<div class="result-row">
+<span>Inspection</span>
+<strong>₹ <span id="vmcInspection">0</span></strong>
+</div>
+
+<div class="result-row">
+<span>Overhead</span>
+<strong>₹ <span id="vmcOH">0</span></strong>
+</div>
+
+<div class="result-row">
+<span>Profit</span>
+<strong>₹ <span id="vmcProfitValue">0</span></strong>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- DXF / IGES -->
+<!-- ===================================================== -->
+
+<section id="fileReader" class="page">
+
+<div class="section-title">
+<h2>📁 CAD Drawing Viewer — DXF / IGES</h2>
+<p>Open DXF drawings in 2D and IGS / IGES models in 3D directly in the browser.</p>
+</div>
+
+<div class="form-card">
+
+<div class="upload-box">
+<h3>📂 Upload CAD File</h3>
+<p style="margin:10px 0;color:#607d8b;">
+Supported formats: DXF, IGS, IGES
+</p>
+
+<input
+type="file"
+id="cadFile"
+accept=".dxf,.igs,.iges"
+onchange="loadCADDrawing(this)"
+>
+
+<div id="cadViewerStatus" style="margin-top:12px;color:#607d8b;font-size:13px;">
+No drawing loaded
+</div>
+</div>
+
+</div>
+
+<div class="form-card">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:12px;
+">
+
+<h3 style="margin-bottom:0;">🖥️ CAD Drawing</h3>
+
+<div style="display:flex;gap:7px;flex-wrap:wrap;">
+<button class="btn btn-primary" onclick="cadFitView()">🔍 Fit Drawing</button>
+<button class="btn btn-secondary" onclick="cadResetView()">↻ Reset</button>
+<button class="btn btn-secondary" onclick="toggleCADGrid()">▦ Grid</button>
+</div>
+
+</div>
+
+<div
+id="cadViewer"
+style="
+width:100%;
+height:650px;
+background:#111820;
+border:2px solid #263238;
+border-radius:8px;
+overflow:hidden;
+position:relative;
+"
+>
+<div
+id="cadEmptyMessage"
+style="
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#90a4ae;
+font-size:18px;
+text-align:center;
+pointer-events:none;
+"
+>
+Upload a DXF or IGS / IGES file to display the CAD model
+</div>
+</div>
+
+</div>
+
+<div class="grid-2">
+
+<div class="form-card">
+<h3>📋 Drawing Information</h3>
+<div id="cadResult" class="file-info">
+No CAD file uploaded.
+</div>
+</div>
+
+<div class="form-card">
+<h3>📐 Drawing Dimensions</h3>
+<div id="cadDimensions" class="file-info">
+No dimensions available.
+</div>
+</div>
+
+</div>
+
+<div class="form-card">
+
+<h3>💰 Automatic Machining Estimation</h3>
+
+<p style="color:#607d8b;margin-bottom:15px;">
+Drawing geometry is used as an input for estimation. Machine parameters can be adjusted for accurate quotation.
+</p>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Material</label>
+<select id="cadMaterial">
+<option value="MS">Mild Steel</option>
+<option value="SS304">SS304</option>
+<option value="AL">Aluminium</option>
+<option value="BRASS">Brass</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Quantity</label>
+<input id="cadQty" type="number" value="1" min="1">
+</div>
+
+<div class="form-group">
+<label>Setup Time (min)</label>
+<input id="cadSetup" type="number" value="30">
+</div>
+
+<div class="form-group">
+<label>Programming Time (min)</label>
+<input id="cadProgram" type="number" value="45">
+</div>
+
+<div class="form-group">
+<label>Machining Time / Part (min)</label>
+<input id="cadMachining" type="number" value="60">
+</div>
+
+<div class="form-group">
+<label>VMC Rate ₹/hour</label>
+<input id="cadMachineRate" type="number" value="900">
+</div>
+
+<div class="form-group">
+<label>Manpower ₹/hour</label>
+<input id="cadManpower" type="number" value="250">
+</div>
+
+<div class="form-group">
+<label>Tooling ₹/part</label>
+<input id="cadTooling" type="number" value="100">
+</div>
+
+</div>
+
+<button class="btn btn-success" style="margin-top:15px;" onclick="calculateCADCost()">
+Calculate Machining Cost
+</button>
+
+<div class="result-box">
+<div class="result-main">
+Estimated Cost: ₹ <span id="cadCost">0.00</span>
+</div>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- WELDING -->
+<!-- ===================================================== -->
+
+<section id="welding" class="page">
+
+<div class="section-title">
+
+<h2>🔥 Welding Cost Calculator</h2>
+
+<p>Calculate welding machine, manpower, consumable and overhead cost.</p>
+
+</div>
+
+
+<div class="form-card">
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Welding Process</label>
+
+<select id="weldProcess">
+
+<option>MIG</option>
+<option>TIG</option>
+<option>Arc Welding</option>
+<option>Spot Welding</option>
+<option>Gas Welding</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Welding Time (hours)</label>
+<input id="weldTime" type="number" value="1">
+</div>
+
+<div class="form-group">
+<label>Machine Rate ₹/hour</label>
+<input id="weldMachineRate" type="number" value="450">
+</div>
+
+<div class="form-group">
+<label>Manpower ₹/hour</label>
+<input id="weldManpower" type="number" value="250">
+</div>
+
+<div class="form-group">
+<label>Welding Consumable ₹</label>
+<input id="weldConsumable" type="number" value="100">
+</div>
+
+<div class="form-group">
+<label>Gas / Electricity ₹</label>
+<input id="weldGas" type="number" value="80">
+</div>
+
+<div class="form-group">
+<label>Overhead %</label>
+<input id="weldOverhead" type="number" value="10">
+</div>
+
+<div class="form-group">
+<label>Profit %</label>
+<input id="weldProfit" type="number" value="15">
+</div>
+
+</div>
+
+<button class="btn btn-primary" style="margin-top:15px;" onclick="calculateWelding()">
+
+Calculate Welding Cost
+
+</button>
+
+<div class="result-box">
+
+<div class="result-main">
+
+₹ <span id="weldTotal">0</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- ASSEMBLY -->
+<!-- ===================================================== -->
+
+<section id="assembly" class="page">
+
+<div class="section-title">
+
+<h2>🔩 Assembly Cost Calculator</h2>
+
+</div>
+
+<div class="form-card">
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Assembly Quantity</label>
+<input id="assemblyQty" type="number" value="1">
+</div>
+
+<div class="form-group">
+<label>Assembly Time / Part (min)</label>
+<input id="assemblyTime" type="number" value="30">
+</div>
+
+<div class="form-group">
+<label>Manpower ₹/hour</label>
+<input id="assemblyManpower" type="number" value="250">
+</div>
+
+<div class="form-group">
+<label>Tools / Consumables ₹</label>
+<input id="assemblyTools" type="number" value="50">
+</div>
+
+<div class="form-group">
+<label>Inspection ₹</label>
+<input id="assemblyInspection" type="number" value="30">
+</div>
+
+<div class="form-group">
+<label>Overhead %</label>
+<input id="assemblyOverhead" type="number" value="10">
+</div>
+
+<div class="form-group">
+<label>Profit %</label>
+<input id="assemblyProfit" type="number" value="15">
+</div>
+
+</div>
+
+<button class="btn btn-primary" style="margin-top:15px;" onclick="calculateAssembly()">
+
+Calculate Assembly Cost
+
+</button>
+
+<div class="result-box">
+
+<div class="result-main">
+
+₹ <span id="assemblyTotal">0</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- PAINTING -->
+<!-- ===================================================== -->
+
+<section id="painting" class="page">
+
+<div class="section-title">
+
+<h2>🎨 Painting / Powder Coating Cost</h2>
+
+</div>
+
+<div class="form-card">
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Surface Area (m²)</label>
+<input id="paintArea" type="number" value="1">
+</div>
+
+<div class="form-group">
+<label>Painting Rate ₹/m²</label>
+<input id="paintRate" type="number" value="80">
+</div>
+
+<div class="form-group">
+<label>Manpower Time (hour)</label>
+<input id="paintTime" type="number" value="1">
+</div>
+
+<div class="form-group">
+<label>Manpower ₹/hour</label>
+<input id="paintManpower" type="number" value="250">
+</div>
+
+<div class="form-group">
+<label>Paint / Powder Cost ₹</label>
+<input id="paintMaterial" type="number" value="100">
+</div>
+
+<div class="form-group">
+<label>Surface Preparation ₹</label>
+<input id="paintPrep" type="number" value="50">
+</div>
+
+<div class="form-group">
+<label>Overhead %</label>
+<input id="paintOverhead" type="number" value="10">
+</div>
+
+<div class="form-group">
+<label>Profit %</label>
+<input id="paintProfit" type="number" value="15">
+</div>
+
+</div>
+
+<button class="btn btn-primary" style="margin-top:15px;" onclick="calculatePainting()">
+
+Calculate Painting Cost
+
+</button>
+
+<div class="result-box">
+
+<div class="result-main">
+
+₹ <span id="paintTotal">0</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- CONVERTER -->
+<!-- ===================================================== -->
+
+<section id="converter" class="page">
+
+<div class="section-title">
+
+<h2>🔄 Manufacturing Unit & Rate Converter</h2>
+
+<p>Convert dimensions, weight and manufacturing rates.</p>
+
+</div>
+
+
+<div class="grid-2">
+
+<div class="form-card">
+
+<h3>Dimension Converter</h3>
+
+<div class="form-group">
+<label>Value</label>
+<input id="convValue" type="number" value="1">
+</div>
+
+<div class="form-group" style="margin-top:10px;">
+<label>From</label>
+
+<select id="convFrom">
+
+<option value="mm">Millimetre</option>
+<option value="cm">Centimetre</option>
+<option value="m">Metre</option>
+<option value="inch">Inch</option>
+<option value="ft">Feet</option>
+
+</select>
+
+</div>
+
+<div class="form-group" style="margin-top:10px;">
+<label>To</label>
+
+<select id="convTo">
+
+<option value="mm">Millimetre</option>
+<option value="cm">Centimetre</option>
+<option value="m">Metre</option>
+<option value="inch">Inch</option>
+<option value="ft">Feet</option>
+
+</select>
+
+</div>
+
+<button class="btn btn-primary" style="margin-top:15px;" onclick="convertDimension()">
+
+Convert
+
+</button>
+
+<div class="result-box">
+
+<div class="result-main">
+
+<span id="dimensionResult">0</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="form-card">
+
+<h3>Weight Converter</h3>
+
+<div class="form-group">
+<label>Value</label>
+<input id="weightValue" type="number" value="1">
+</div>
+
+<div class="form-group" style="margin-top:10px;">
+<label>From</label>
+
+<select id="weightFrom">
+
+<option value="g">Gram</option>
+<option value="kg">Kilogram</option>
+<option value="ton">Metric Ton</option>
+<option value="lb">Pound</option>
+
+</select>
+
+</div>
+
+<div class="form-group" style="margin-top:10px;">
+<label>To</label>
+
+<select id="weightTo">
+
+<option value="g">Gram</option>
+<option value="kg">Kilogram</option>
+<option value="ton">Metric Ton</option>
+<option value="lb">Pound</option>
+
+</select>
+
+</div>
+
+<button class="btn btn-primary" style="margin-top:15px;" onclick="convertWeight()">
+
+Convert
+
+</button>
+
+<div class="result-box">
+
+<div class="result-main">
+
+<span id="weightResult">0</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="form-card">
+
+<h3>₹ Rate Converter</h3>
+
+<p style="color:#607d8b;margin-bottom:15px;">
+
+Examples: ₹/kg → ₹/gram, ₹/m² → ₹/mm², ₹/hour → ₹/minute.
+
+</p>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Rate</label>
+<input id="rateConvertValue" type="number" value="100">
+</div>
+
+<div class="form-group">
+<label>Conversion</label>
+
+<select id="rateConversion">
+
+<option value="kg-g">₹/kg → ₹/gram</option>
+<option value="g-kg">₹/gram → ₹/kg</option>
+<option value="m2-mm2">₹/m² → ₹/mm²</option>
+<option value="mm2-m2">₹/mm² → ₹/m²</option>
+<option value="hour-min">₹/hour → ₹/minute</option>
+<option value="min-hour">₹/minute → ₹/hour</option>
+</select>
+
+</div>
+
+</div>
+
+<button class="btn btn-primary" style="margin-top:15px;" onclick="convertRate()">
+
+Convert Rate
+
+</button>
+
+<div class="result-box">
+
+<div class="result-main">
+
+₹ <span id="rateResult">0</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- NORMAL CALCULATOR -->
+<!-- ===================================================== -->
+
+<section id="calculator" class="page">
+
+<div class="section-title">
+
+<h2>🧮 Normal Calculator</h2>
+
+</div>
+
+<div class="form-card" style="max-width:420px;margin:auto;">
+
+<input id="calcDisplay" class="calc-display" value="0" readonly>
+
+<div class="calc-buttons">
+
+<button onclick="calcClear()">AC</button>
+<button onclick="calcBack()">⌫</button>
+<button onclick="calcInput('%')">%</button>
+<button class="operator" onclick="calcInput('/')">÷</button>
+
+<button onclick="calcInput('7')">7</button>
+<button onclick="calcInput('8')">8</button>
+<button onclick="calcInput('9')">9</button>
+<button class="operator" onclick="calcInput('*')">×</button>
+
+<button onclick="calcInput('4')">4</button>
+<button onclick="calcInput('5')">5</button>
+<button onclick="calcInput('6')">6</button>
+<button class="operator" onclick="calcInput('-')">−</button>
+
+<button onclick="calcInput('1')">1</button>
+<button onclick="calcInput('2')">2</button>
+<button onclick="calcInput('3')">3</button>
+<button class="operator" onclick="calcInput('+')">+</button>
+
+<button onclick="calcInput('0')">0</button>
+<button onclick="calcInput('.')">.</button>
+<button onclick="calcCalculate()">=</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- QUOTATION -->
+<!-- ===================================================== -->
+
+<section id="quotation" class="page">
+
+<div class="section-title no-print">
+
+<h2>📄 Manufacturing Quotation</h2>
+
+<p>Combine material, machining, welding, assembly, painting and other costs.</p>
+
+</div>
+
+
+<div class="form-card no-print">
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Customer Name</label>
+<input id="customerName" placeholder="Customer / Company">
+</div>
+
+<div class="form-group">
+<label>Quotation Number</label>
+<input id="quoteNumber">
+</div>
+
+<div class="form-group">
+<label>Project / Part Name</label>
+<input id="quotePart">
+</div>
+
+<div class="form-group">
+<label>Quantity</label>
+<input id="quoteQty" type="number" value="1">
+</div>
+
+</div>
+
+<br>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Material Cost ₹</label>
+<input id="quoteMaterial" type="number" value="0">
+</div>
+
+<div class="form-group">
+<label>VMC / Machining ₹</label>
+<input id="quoteVMC" type="number" value="0">
+</div>
+
+<div class="form-group">
+<label>Welding ₹</label>
+<input id="quoteWelding" type="number" value="0">
+</div>
+
+<div class="form-group">
+<label>Assembly ₹</label>
+<input id="quoteAssembly" type="number" value="0">
+</div>
+
+<div class="form-group">
+<label>Painting ₹</label>
+<input id="quotePainting" type="number" value="0">
+</div>
+
+<div class="form-group">
+<label>Other Cost ₹</label>
+<input id="quoteOther" type="number" value="0">
+</div>
+
+<div class="form-group">
+<label>Profit %</label>
+<input id="quoteProfit" type="number" value="15">
+</div>
+
+<div class="form-group">
+<label>GST %</label>
+<input id="quoteGST" type="number" value="18">
+</div>
+
+</div>
+
+<button class="btn btn-success" style="margin-top:15px;" onclick="generateQuotation()">
+
+Generate Quotation
+
+</button>
+
+<button class="btn btn-primary" style="margin-top:15px;" onclick="window.print()">
+
+Print / Save PDF
+
+</button>
+
+</div>
+
+
+<div class="quote">
+
+<div class="quote-header">
+
+<div>
+
+<div class="quote-company">
+
+Rinix Automation Pvt. Limited
+
+</div>
+
+<div>Manufacturing & Automation Solutions</div>
+
+<div style="margin-top:8px;">
+
+Quotation No:
+<strong id="qNo">---</strong>
+
+</div>
+
+</div>
+
+<div style="text-align:right;">
+
+Date:
+<strong id="qDate">---</strong>
+
+<br>
+
+Valid for:
+<strong>15 Days</strong>
+
+</div>
+
+</div>
+
+
+<p><strong>Customer:</strong> <span id="qCustomer">---</span></p>
+
+<p style="margin-top:7px;">
+
+<strong>Project:</strong> <span id="qPart">---</span>
+
+</p>
+
+
+<table style="margin-top:20px;">
+
+<thead>
+
+<tr>
+
+<th>Description</th>
+
+<th>Amount ₹</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>Material</td>
+<td id="qMaterial">0</td>
+</tr>
+
+<tr>
+<td>VMC / Machining</td>
+<td id="qVMC">0</td>
+</tr>
+
+<tr>
+<td>Welding</td>
+<td id="qWelding">0</td>
+</tr>
+
+<tr>
+<td>Assembly</td>
+<td id="qAssembly">0</td>
+</tr>
+
+<tr>
+<td>Painting</td>
+<td id="qPainting">0</td>
+</tr>
+
+<tr>
+<td>Other Cost</td>
+<td id="qOther">0</td>
+</tr>
+
+<tr>
+<td>Subtotal</td>
+<td id="qSubtotal">0</td>
+</tr>
+
+<tr>
+<td>Profit</td>
+<td id="qProfit">0</td>
+</tr>
+
+<tr>
+<td>GST</td>
+<td id="qGST">0</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+<div style="margin-top:20px;text-align:right;">
+
+<div class="quote-total">
+
+Grand Total: ₹ <span id="qGrandTotal">0</span>
+
+</div>
+
+</div>
+
+
+<div style="margin-top:50px;">
+
+<p><strong>Terms & Conditions</strong></p>
+
+<ol style="margin:10px 0 0 20px;line-height:1.7;">
+
+<li>Material specification shall be as mutually agreed.</li>
+
+<li>Machining cost is based on estimated machine time and tooling.</li>
+
+<li>Delivery shall be as mutually agreed.</li>
+
+<li>GST is applicable as mentioned above.</li>
+
+<li>Any change in drawing/specification may affect the quotation.</li>
+
+</ol>
+
+</div>
+
+
+<div style="margin-top:60px;text-align:right;">
+
+<strong>For Rinix Automation Pvt. Limited</strong>
+
+<br><br><br>
+
+Authorized Signatory
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+Avaneesh Machining Calculator © 2026 |
+
+Manufacturing Cost Estimation System
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+LIVE CLOCK
+===================================================== */
+
+function updateClock(){
+
+const now=new Date();
+
+document.getElementById("liveDate").innerText=
+now.toLocaleDateString("en-IN",{
+weekday:"short",
+day:"2-digit",
+month:"short",
+year:"numeric"
+});
+
+document.getElementById("liveTime").innerText=
+now.toLocaleTimeString("en-IN");
+
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+
+/* =====================================================
+PAGE NAVIGATION
+===================================================== */
+
+function showPage(page,button){
+
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("active");
+});
+
+document.getElementById(page).classList.add("active");
+
+document.querySelectorAll(".nav-btn").forEach(b=>{
+b.classList.remove("active");
+});
+
+button.classList.add("active");
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+/* =====================================================
+RATES
+===================================================== */
+
+function updateRates(){
+
+const values={
+MS:document.getElementById("rateMS").value,
+SS:document.getElementById("rateSS").value,
+AL:document.getElementById("rateAL").value,
+Brass:document.getElementById("rateBrass").value,
+VMC:document.getElementById("rateVMC").value,
+Welding:document.getElementById("rateWelding").value,
+Manpower:document.getElementById("rateManpower").value,
+Paint:document.getElementById("ratePaint").value
+};
+
+document.getElementById("dashMS").innerText=values.MS;
+document.getElementById("dashSS").innerText=values.SS;
+document.getElementById("dashAL").innerText=values.AL;
+document.getElementById("dashBrass").innerText=values.Brass;
+document.getElementById("dashVMC").innerText=values.VMC;
+document.getElementById("dashWelding").innerText=values.Welding;
+document.getElementById("dashManpower").innerText=values.Manpower;
+document.getElementById("dashPaint").innerText=values.Paint;
+
+document.getElementById("vmcMachineRate").value=values.VMC;
+
+}
+
+
+/* =====================================================
+DENSITY
+===================================================== */
+
+function getDensity(){
+
+const material=document.getElementById("metalMaterial").value;
+
+const density={
+
+MS:7850,
+
+SS304:8000,
+
+AL:2700,
+
+BRASS:8500,
+
+COPPER:8960,
+
+GI:7850,
+
+CAST:7200
+
+};
+
+if(material==="CUSTOM"){
+return Number(document.getElementById("customDensity").value)||0;
+}
+
+return density[material]||7850;
+
+}
+
+
+/* =====================================================
+METAL INPUTS
+===================================================== */
+
+function buildMetalInputs(){
+
+const shape=document.getElementById("metalShape").value;
+
+let html="";
+
+if(shape==="plate"){
+
+html+=inputHTML("Length","metalL");
+html+=inputHTML("Width","metalW");
+html+=inputHTML("Thickness","metalT");
+
+}
+
+else if(shape==="round" || shape==="rod"){
+
+html+=inputHTML("Diameter","metalD");
+html+=inputHTML("Length","metalL");
+
+}
+
+else if(shape==="square"){
+
+html+=inputHTML("Side","metalA");
+html+=inputHTML("Length","metalL");
+
+}
+
+else if(shape==="flat"){
+
+html+=inputHTML("Width","metalW");
+html+=inputHTML("Thickness","metalT");
+html+=inputHTML("Length","metalL");
+
+}
+
+else if(shape==="hex"){
+
+html+=inputHTML("Across Flats","metalA");
+html+=inputHTML("Length","metalL");
+
+}
+
+else if(shape==="pipe"){
+
+html+=inputHTML("Outer Diameter","metalOD");
+html+=inputHTML("Wall Thickness","metalT");
+html+=inputHTML("Length","metalL");
+
+}
+
+else if(shape==="tube"){
+
+html+=inputHTML("Outer Width","metalW");
+html+=inputHTML("Outer Height","metalH");
+html+=inputHTML("Wall Thickness","metalT");
+html+=inputHTML("Length","metalL");
+
+}
+
+else if(shape==="angle"){
+
+html+=inputHTML("Leg A","metalA");
+html+=inputHTML("Leg B","metalB");
+html+=inputHTML("Thickness","metalT");
+html+=inputHTML("Length","metalL");
+
+}
+
+else if(shape==="channel"){
+
+html+=inputHTML("Width","metalW");
+html+=inputHTML("Height","metalH");
+html+=inputHTML("Thickness","metalT");
+html+=inputHTML("Length","metalL");
+
+}
+
+else if(shape==="ibeam"){
+
+html+=inputHTML("Flange Width","metalW");
+html+=inputHTML("Overall Height","metalH");
+html+=inputHTML("Flange Thickness","metalFT");
+html+=inputHTML("Web Thickness","metalWT");
+html+=inputHTML("Length","metalL");
+
+}
+
+else if(shape==="circle"){
+
+html+=inputHTML("Diameter","metalD");
+html+=inputHTML("Thickness","metalT");
+
+}
+
+else if(shape==="ring"){
+
+html+=inputHTML("Outer Diameter","metalOD");
+html+=inputHTML("Inner Diameter","metalID");
+html+=inputHTML("Thickness","metalT");
+
+}
+
+document.getElementById("metalInputs").innerHTML=html;
+
+drawShape(shape);
+
+calculateMetal();
+
+}
+
+
+function inputHTML(label,id){
+
+return`
+
+<div class="form-group">
+
+<label>${label} (mm)</label>
+
+<input
+id="${id}"
+type="number"
+value="100"
+min="0"
+oninput="calculateMetal()"
+>
+
+</div>
+
+`;
+
+}
+
+
+/* =====================================================
+SHAPE DRAWING
+===================================================== */
+
+function drawShape(shape){
+
+let svg="";
+
+if(shape==="plate"){
+
+svg=`
+<svg viewBox="0 0 300 180">
+<rect x="45" y="55" width="210" height="80"
+fill="#90caf9" stroke="#0d47a1" stroke-width="3"/>
+<text x="150" y="45" text-anchor="middle">L × W × T</text>
+</svg>`;
+
+}
+
+else if(shape==="round"||shape==="rod"){
+
+svg=`
+<svg viewBox="0 0 300 180">
+<ellipse cx="80" cy="90" rx="35" ry="50"
+fill="#90caf9" stroke="#0d47a1" stroke-width="3"/>
+<rect x="80" y="40" width="140" height="100"
+fill="#64b5f6" stroke="#0d47a1" stroke-width="3"/>
+<ellipse cx="220" cy="90" rx="35" ry="50"
+fill="#42a5f5" stroke="#0d47a1" stroke-width="3"/>
+<text x="150" y="25" text-anchor="middle">Ø × L</text>
+</svg>`;
+
+}
+
+else if(shape==="pipe"){
+
+svg=`
+<svg viewBox="0 0 300 180">
+<ellipse cx="80" cy="90" rx="40" ry="55"
+fill="#90caf9" stroke="#0d47a1" stroke-width="3"/>
+<ellipse cx="80" cy="90" rx="20" ry="28"
+fill="white" stroke="#0d47a1" stroke-width="3"/>
+<rect x="80" y="35" width="140" height="110"
+fill="#64b5f6" stroke="#0d47a1" stroke-width="3"/>
+<text x="150" y="25" text-anchor="middle">OD / ID / L</text>
+</svg>`;
+
+}
+
+else if(shape==="circle"||shape==="ring"){
+
+svg=`
+<svg viewBox="0 0 300 180">
+<circle cx="150" cy="90" r="60"
+fill="#90caf9" stroke="#0d47a1" stroke-width="3"/>
+<circle cx="150" cy="90" r="${shape==="ring"?30:0}"
+fill="white" stroke="#0d47a1" stroke-width="3"/>
+<text x="150" y="170" text-anchor="middle">Circular Section</text>
+</svg>`;
+
+}
+
+else{
+
+svg=`
+<svg viewBox="0 0 300 180">
+<rect x="70" y="55" width="160" height="80"
+fill="#90caf9" stroke="#0d47a1" stroke-width="3"/>
+<text x="150" y="100" text-anchor="middle">${shape.toUpperCase()}</text>
+</svg>`;
+
+}
+
+document.getElementById("shapeDrawing").innerHTML=svg;
+
+}
+
+
+/* =====================================================
+METAL CALCULATION
+===================================================== */
+
+function calculateMetal(){
+
+const shape=document.getElementById("metalShape").value;
+
+const density=getDensity();
+
+let volume=0;
+
+const pi=Math.PI;
+
+const val=id=>Number(document.getElementById(id)?.value)||0;
+
+switch(shape){
+
+case "plate":
+
+volume=val("metalL")*val("metalW")*val("metalT");
+
+break;
+
+case "round":
+case "rod":
+
+volume=pi*Math.pow(val("metalD")/2,2)*val("metalL");
+
+break;
+
+case "square":
+
+volume=val("metalA")*val("metalA")*val("metalL");
+
+break;
+
+case "flat":
+
+volume=val("metalW")*val("metalT")*val("metalL");
+
+break;
+
+case "hex":
+
+volume=(3*Math.sqrt(3)/2)*Math.pow(val("metalA")/2,2)*val("metalL");
+
+break;
+
+case "pipe":
+
+volume=pi/4*
+(Math.pow(val("metalOD"),2)-
+Math.pow(val("metalOD")-2*val("metalT"),2))*
+val("metalL");
+
+break;
+
+case "tube":
+
+volume=(
+val("metalW")*val("metalH")-
+(val("metalW")-2*val("metalT"))*
+(val("metalH")-2*val("metalT"))
+)*val("metalL");
+
+break;
+
+case "angle":
+
+volume=(
+val("metalA")*val("metalT")+
+(val("metalB")-val("metalT"))*val("metalT")
+)*val("metalL");
+
+break;
+
+case "channel":
+
+volume=(
+val("metalW")*val("metalT")*2+
+(val("metalH")-2*val("metalT"))*val("metalT")
+)*val("metalL");
+
+break;
+
+case "ibeam":
+
+volume=(
+2*val("metalW")*val("metalFT")+
+(val("metalH")-2*val("metalFT"))*val("metalWT")
+)*val("metalL");
+
+break;
+
+case "circle":
+
+volume=pi*Math.pow(val("metalD")/2,2)*val("metalT");
+
+break;
+
+case "ring":
+
+volume=pi/4*
+(Math.pow(val("metalOD"),2)-
+Math.pow(val("metalID"),2))*
+val("metalT");
+
+break;
+
+}
+
+const volumeM3=volume/1000000000;
+
+const weight=volumeM3*density;
+
+const qty=val("metalQty")||1;
+
+const totalWeight=weight*qty;
+
+const rate=getMaterialRate();
+
+const cost=totalWeight*rate;
+
+document.getElementById("metalVolume").innerText=
+volume.toFixed(2);
+
+document.getElementById("metalWeight").innerText=
+totalWeight.toFixed(3);
+
+document.getElementById("metalRate").innerText=
+rate.toFixed(2);
+
+document.getElementById("metalCost").innerText=
+cost.toFixed(2);
+
+updateFormula(shape);
+
+}
+
+
+function getMaterialRate(){
+
+const material=document.getElementById("metalMaterial").value;
+
+const rates={
+
+MS:Number(document.getElementById("rateMS").value),
+
+SS304:Number(document.getElementById("rateSS").value),
+
+AL:Number(document.getElementById("rateAL").value),
+
+BRASS:Number(document.getElementById("rateBrass").value),
+
+COPPER:850,
+
+GI:Number(document.getElementById("rateMS").value),
+
+CAST:100,
+
+CUSTOM:0
+
+};
+
+return rates[material]||0;
+
+}
+
+
+/* =====================================================
+FORMULAS
+===================================================== */
+
+function updateFormula(shape){
+
+const formulas={
+
+plate:"Volume = Length × Width × Thickness",
+
+round:"Volume = π × D² / 4 × Length",
+
+rod:"Volume = π × D² / 4 × Length",
+
+square:"Volume = Side × Side × Length",
+
+flat:"Volume = Width × Thickness × Length",
+
+hex:"Volume ≈ (3√3/2) × (Across Flats / 2)² × Length",
+
+pipe:"Volume = π/4 × (OD² − ID²) × Length",
+
+tube:"Volume = [Outer Area − Inner Area] × Length",
+
+angle:"Approx. Volume = [A×T + (B−T)×T] × Length",
+
+channel:"Approx. Volume = [2×W×T + (H−2T)×T] × Length",
+
+ibeam:"Approx. Volume = [2×W×Flange T + Web Area] × Length",
+
+circle:"Volume = π × D² / 4 × Thickness",
+
+ring:"Volume = π/4 × (OD² − ID²) × Thickness"
+
+};
+
+document.getElementById("metalFormula").innerText=
+formulas[shape]||"";
+
+}
+
+
+/* =====================================================
+VMC
+===================================================== */
+
+function calculateVMC(){
+
+const qty=Number(document.getElementById("vmcQty").value)||1;
+
+const machineRate=Number(document.getElementById("vmcMachineRate").value)||0;
+
+const setup=Number(document.getElementById("setupTime").value)||0;
+
+const program=Number(document.getElementById("programTime").value)||0;
+
+const machining=Number(document.getElementById("machiningTime").value)||0;
+
+const tool=Number(document.getElementById("toolTime").value)||0;
+
+const toolCost=Number(document.getElementById("toolCost").value)||0;
+
+const inspection=Number(document.getElementById("inspectionCost").value)||0;
+
+const manpower=Number(document.getElementById("vmcManpower").value)||0;
+
+const other=Number(document.getElementById("vmcOther").value)||0;
+
+const overhead=Number(document.getElementById("vmcOverhead").value)||0;
+
+const profit=Number(document.getElementById("vmcProfit").value)||0;
+
+
+/* Setup is generally a one-time operation */
+
+const setupCost=(setup/60)*machineRate;
+
+const programCost=(program/60)*manpower;
+
+const machiningCost=((machining+tool)/60)*
+(machineRate+manpower+other)*qty;
+
+const tooling=toolCost*qty;
+
+const inspect=inspection*qty;
+
+const base=
+setupCost+
+programCost+
+machiningCost+
+tooling+
+inspect;
+
+const overheadCost=base*overhead/100;
+
+const costBeforeProfit=base+overheadCost;
+
+const profitValue=
+costBeforeProfit*profit/100;
+
+const total=
+costBeforeProfit+profitValue;
+
+
+document.getElementById("vmcSetupCost").innerText=
+setupCost.toFixed(2);
+
+document.getElementById("vmcProgramCost").innerText=
+programCost.toFixed(2);
+
+document.getElementById("vmcMachineCost").innerText=
+machiningCost.toFixed(2);
+
+document.getElementById("vmcTooling").innerText=
+tooling.toFixed(2);
+
+document.getElementById("vmcInspection").innerText=
+inspect.toFixed(2);
+
+document.getElementById("vmcOH").innerText=
+overheadCost.toFixed(2);
+
+document.getElementById("vmcProfitValue").innerText=
+profitValue.toFixed(2);
+
+document.getElementById("vmcTotal").innerText=
+total.toFixed(2);
+
+}
+
+
+/* =====================================================
+DXF / IGES CAD VIEWER
+Only this CAD module was changed.
+===================================================== */
+
+let cadScene=null;
+let cadCamera=null;
+let cadRenderer=null;
+let cadControls=null;
+let cadModel=null;
+let cadGrid=null;
+let cadAnimationId=null;
+let cadViewMode="2D";
+let cadInitialized=false;
+let cadOcctPromise=null;
+
+function initCADViewer(){
+
+    const container=document.getElementById("cadViewer");
+
+    if(!container || typeof THREE==="undefined") return;
+
+    if(cadInitialized){
+        if(cadRenderer){
+            cadRenderer.setSize(container.clientWidth,container.clientHeight);
+        }
+        return;
+    }
+
+    cadInitialized=true;
+
+    cadScene=new THREE.Scene();
+    cadScene.background=new THREE.Color(0x111820);
+
+    cadCamera=new THREE.PerspectiveCamera(
+        45,
+        container.clientWidth/container.clientHeight,
+        0.01,
+        10000000
+    );
+
+    cadCamera.position.set(0,0,500);
+
+    cadRenderer=new THREE.WebGLRenderer({
+        antialias:true,
+        alpha:false
+    });
+
+    cadRenderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+    cadRenderer.setSize(container.clientWidth,container.clientHeight);
+    container.insertBefore(cadRenderer.domElement,container.firstChild);
+
+    if(typeof THREE.OrbitControls==="function"){
+        cadControls=new THREE.OrbitControls(cadCamera,cadRenderer.domElement);
+        cadControls.enableDamping=true;
+        cadControls.dampingFactor=0.08;
+        cadControls.screenSpacePanning=true;
+        cadControls.minDistance=0.01;
+        cadControls.maxDistance=10000000;
+    }
+
+    const ambient=new THREE.AmbientLight(0xffffff,1.4);
+    cadScene.add(ambient);
+
+    const light1=new THREE.DirectionalLight(0xffffff,1.5);
+    light1.position.set(1,1,1);
+    cadScene.add(light1);
+
+    const light2=new THREE.DirectionalLight(0xffffff,0.8);
+    light2.position.set(-1,-1,0.5);
+    cadScene.add(light2);
+
+    createCADGrid();
+
+    window.addEventListener("resize",resizeCADViewer);
+
+    animateCADViewer();
+}
+
+function createCADGrid(){
+
+    if(!cadScene) return;
+
+    if(cadGrid) cadScene.remove(cadGrid);
+
+    cadGrid=new THREE.GridHelper(1000,50,0x38505f,0x25343d);
+    cadGrid.visible=false;
+    cadScene.add(cadGrid);
+}
+
+function animateCADViewer(){
+
+    cadAnimationId=requestAnimationFrame(animateCADViewer);
+
+    if(cadControls) cadControls.update();
+
+    if(cadRenderer && cadScene && cadCamera){
+        cadRenderer.render(cadScene,cadCamera);
+    }
+}
+
+function resizeCADViewer(){
+
+    const container=document.getElementById("cadViewer");
+
+    if(!container || !cadRenderer || !cadCamera) return;
+
+    const w=Math.max(container.clientWidth,300);
+    const h=Math.max(container.clientHeight,300);
+
+    cadCamera.aspect=w/h;
+    cadCamera.updateProjectionMatrix();
+    cadRenderer.setSize(w,h);
+}
+
+function loadCADDrawing(input){
+
+    const file=input.files && input.files[0];
+
+    if(!file) return;
+
+    initCADViewer();
+
+    const ext=file.name.split(".").pop().toLowerCase();
+
+    document.getElementById("cadViewerStatus").innerText=
+        "Loading: "+file.name+" ...";
+
+    document.getElementById("cadEmptyMessage").style.display="none";
+
+    clearCADModel();
+
+    if(ext==="dxf"){
+        loadDXFCAD(file);
+        return;
+    }
+
+    if(ext==="igs" || ext==="iges"){
+        loadIGESCAD(file);
+        return;
+    }
+
+    showCADError("Unsupported CAD format.");
+}
+
+function loadDXFCAD(file){
+
+    if(typeof DxfParser==="undefined"){
+        showCADError(
+            "DXF parser could not be loaded. Check your internet connection and refresh the page."
+        );
+        return;
+    }
+
+    const reader=new FileReader();
+
+    reader.onload=function(e){
+
+        try{
+
+            const parser=new DxfParser();
+            const dxf=parser.parseSync(e.target.result);
+
+            drawDXFCAD(dxf);
+
+            showCADFileInfo(file,dxf,"DXF");
+
+        }catch(error){
+
+            console.error(error);
+
+            showCADError(
+                "DXF could not be opened: "+
+                (error.message || error)
+            );
+        }
+
+    };
+
+    reader.onerror=function(){
+        showCADError("Unable to read the DXF file.");
+    };
+
+    reader.readAsText(file);
+}
+
+function drawDXFCAD(dxf){
+
+    cadViewMode="2D";
+
+    const group=new THREE.Group();
+
+    const entities=(dxf.entities || []);
+
+    let entityCount=0;
+    let lineCount=0;
+    let circleCount=0;
+    let arcCount=0;
+    let polyCount=0;
+
+    entities.forEach(function(entity){
+
+        try{
+
+            if(entity.type==="LINE"){
+
+                addCADLine(
+                    group,
+                    entity.vertices && entity.vertices[0],
+                    entity.vertices && entity.vertices[1]
+                );
+
+                lineCount++;
+                entityCount++;
+
+            }
+
+            else if(entity.type==="CIRCLE"){
+
+                addCADCircle(
+                    group,
+                    entity.center,
+                    Number(entity.radius)||0
+                );
+
+                circleCount++;
+                entityCount++;
+
+            }
+
+            else if(entity.type==="ARC"){
+
+                addCADArc(
+                    group,
+                    entity.center,
+                    Number(entity.radius)||0,
+                    Number(entity.startAngle)||0,
+                    Number(entity.endAngle)||0
+                );
+
+                arcCount++;
+                entityCount++;
+
+            }
+
+            else if(entity.type==="LWPOLYLINE"){
+
+                addCADPolyline(
+                    group,
+                    entity.vertices || [],
+                    !!entity.shape
+                );
+
+                polyCount++;
+                entityCount++;
+
+            }
+
+            else if(entity.type==="POLYLINE"){
+
+                addCADPolyline(
+                    group,
+                    entity.vertices || [],
+                    !!entity.shape
+                );
+
+                polyCount++;
+                entityCount++;
+            }
+
+        }catch(error){
+            console.warn("DXF entity skipped:",entity,error);
+        }
+
+    });
+
+    if(entityCount===0){
+        showCADError(
+            "DXF was read, but no supported 2D drawing entities were found."
+        );
+        return;
+    }
+
+    cadModel=group;
+    cadScene.add(cadModel);
+
+    document.getElementById("cadViewerStatus").innerText=
+        "DXF drawing opened successfully • "+
+        entityCount+" entities";
+
+    updateCADDimensions(cadModel,"DXF");
+    cadFitView();
+}
+
+function addCADLine(group,a,b){
+
+    if(!a || !b) return;
+
+    const geometry=new THREE.BufferGeometry();
+
+    geometry.setAttribute(
+        "position",
+        new THREE.Float32BufferAttribute([
+            Number(a.x)||0,Number(a.y)||0,Number(a.z)||0,
+            Number(b.x)||0,Number(b.y)||0,Number(b.z)||0
+        ],3)
+    );
+
+    const material=new THREE.LineBasicMaterial({
+        color:0x00e676
+    });
+
+    group.add(new THREE.Line(geometry,material));
+}
+
+function addCADCircle(group,center,radius){
+
+    if(!center || !radius) return;
+
+    const points=[];
+
+    for(let i=0;i<=128;i++){
+
+        const a=(i/128)*Math.PI*2;
+
+        points.push(
+            new THREE.Vector3(
+                (Number(center.x)||0)+radius*Math.cos(a),
+                (Number(center.y)||0)+radius*Math.sin(a),
+                Number(center.z)||0
+            )
+        );
+    }
+
+    const geometry=new THREE.BufferGeometry().setFromPoints(points);
+
+    group.add(
+        new THREE.Line(
+            geometry,
+            new THREE.LineBasicMaterial({color:0x29b6f6})
+        )
+    );
+}
+
+function addCADArc(group,center,radius,startAngle,endAngle){
+
+    if(!center || !radius) return;
+
+    let start=startAngle;
+    let end=endAngle;
+
+    while(end<start) end+=Math.PI*2;
+
+    const points=[];
+    const count=Math.max(16,Math.ceil((end-start)*40));
+
+    for(let i=0;i<=count;i++){
+
+        const a=start+(end-start)*(i/count);
+
+        points.push(
+            new THREE.Vector3(
+                (Number(center.x)||0)+radius*Math.cos(a),
+                (Number(center.y)||0)+radius*Math.sin(a),
+                Number(center.z)||0
+            )
+        );
+    }
+
+    const geometry=new THREE.BufferGeometry().setFromPoints(points);
+
+    group.add(
+        new THREE.Line(
+            geometry,
+            new THREE.LineBasicMaterial({color:0xffca28})
+        )
+    );
+}
+
+function addCADPolyline(group,vertices,closed){
+
+    if(!vertices || vertices.length<2) return;
+
+    const points=vertices.map(function(v){
+        return new THREE.Vector3(
+            Number(v.x)||0,
+            Number(v.y)||0,
+            Number(v.z)||0
+        );
+    });
+
+    if(closed){
+        points.push(points[0].clone());
+    }
+
+    const geometry=new THREE.BufferGeometry().setFromPoints(points);
+
+    group.add(
+        new THREE.Line(
+            geometry,
+            new THREE.LineBasicMaterial({color:0x00e5ff})
+        )
+    );
+}
+
+async function loadIGESCAD(file){
+
+    cadViewMode="3D";
+
+    if(typeof occtimportjs!=="function"){
+
+        showCADError(
+            "IGES 3D engine could not be loaded. Check your internet connection and refresh the page."
+        );
+
+        return;
+    }
+
+    try{
+
+        if(!cadOcctPromise){
+
+            cadOcctPromise=occtimportjs({
+                locateFile:function(path){
+                    return "https://cdn.jsdelivr.net/npm/occt-import-js@0.0.23/dist/"+path;
+                }
+            });
+        }
+
+        document.getElementById("cadViewerStatus").innerText=
+            "Starting 3D CAD engine...";
+
+        const occt=await cadOcctPromise;
+
+        const buffer=await file.arrayBuffer();
+
+        const fileBuffer=new Uint8Array(buffer);
+
+        document.getElementById("cadViewerStatus").innerText=
+            "Reading IGES geometry...";
+
+        const result=occt.ReadIgesFile(
+            fileBuffer,
+            {
+                linearUnit:"millimeter",
+                linearDeflectionType:"bounding_box_ratio",
+                linearDeflection:0.001,
+                angularDeflection:0.5
+            }
+        );
+
+        if(!result || !result.success){
+
+            throw new Error(
+                result && result.error
+                ? result.error
+                : "OpenCascade could not import this IGES file."
+            );
+        }
+
+        drawOCCTResult(result);
+
+        showCADFileInfo(file,result,"IGES");
+
+    }catch(error){
+
+        console.error(error);
+
+        showCADError(
+            "IGES could not be opened: "+
+            (error.message || error)+
+            ". Some IGES files may require export from CAD software with valid solid/surface geometry."
+        );
+    }
+}
+
+function drawOCCTResult(result){
+
+    const group=new THREE.Group();
+
+    let meshCount=0;
+    let triangleCount=0;
+
+    const meshes=result.meshes || [];
+
+    meshes.forEach(function(mesh){
+
+        const positionData=
+            mesh.attributes &&
+            mesh.attributes.position &&
+            mesh.attributes.position.array;
+
+        if(!positionData || !positionData.length) return;
+
+        const geometry=new THREE.BufferGeometry();
+
+        geometry.setAttribute(
+            "position",
+            new THREE.BufferAttribute(
+                new Float32Array(positionData),
+                3
+            )
+        );
+
+        const normalData=
+            mesh.attributes &&
+            mesh.attributes.normal &&
+            mesh.attributes.normal.array;
+
+        if(normalData && normalData.length){
+            geometry.setAttribute(
+                "normal",
+                new THREE.BufferAttribute(
+                    new Float32Array(normalData),
+                    3
+                )
+            );
+        }else{
+            geometry.computeVertexNormals();
+        }
+
+        const indexData=
+            mesh.index &&
+            mesh.index.array;
+
+        if(indexData && indexData.length){
+            geometry.setIndex(
+                new THREE.BufferAttribute(
+                    new Uint32Array(indexData),
+                    1
+                )
+            );
+
+            triangleCount+=Math.floor(indexData.length/3);
+        }
+
+        geometry.computeBoundingBox();
+        geometry.computeBoundingSphere();
+
+        let materialColor=0x90caf9;
+
+        if(Array.isArray(mesh.color) && mesh.color.length>=3){
+
+            materialColor=new THREE.Color(
+                Number(mesh.color[0])||0.56,
+                Number(mesh.color[1])||0.79,
+                Number(mesh.color[2])||0.98
+            );
+        }
+
+        const material=new THREE.MeshStandardMaterial({
+            color:materialColor,
+            metalness:0.15,
+            roughness:0.55,
+            side:THREE.DoubleSide
+        });
+
+        const threeMesh=new THREE.Mesh(
+            geometry,
+            material
+        );
+
+        group.add(threeMesh);
+        meshCount++;
+    });
+
+    if(meshCount===0){
+        throw new Error(
+            "IGES was imported, but no renderable triangulated geometry was returned."
+        );
+    }
+
+    cadModel=group;
+    cadScene.add(cadModel);
+
+    document.getElementById("cadViewerStatus").innerText=
+        "IGES 3D model opened successfully • "+
+        meshCount+" mesh(es) • "+
+        triangleCount+" triangles";
+
+    updateCADDimensions(cadModel,"IGES");
+    cadFitView();
+}
+
+function showCADFileInfo(file,data,type){
+
+    let info=
+        "<strong>File:</strong> "+
+        escapeCADHTML(file.name)+
+        "<br>"+
+        "<strong>Type:</strong> "+
+        type+
+        "<br>"+
+        "<strong>Size:</strong> "+
+        (file.size/1024).toFixed(2)+
+        " KB<br>";
+
+    if(type==="DXF"){
+
+        const entities=data.entities || [];
+
+        const layers=
+            data.tables &&
+            data.tables.layer &&
+            data.tables.layer.layers
+            ? Object.keys(data.tables.layer.layers).length
+            : 0;
+
+        info+=
+            "<strong>Entities:</strong> "+
+            entities.length+
+            "<br>"+
+            "<strong>Layers:</strong> "+
+            layers+
+            "<br>"+
+            "<strong>Status:</strong> DXF drawing rendered.";
+
+    }else{
+
+        const meshes=data.meshes || [];
+
+        let triangles=0;
+
+        meshes.forEach(function(mesh){
+
+            if(mesh.index && mesh.index.array){
+                triangles+=Math.floor(mesh.index.array.length/3);
+            }
+        });
+
+        info+=
+            "<strong>Meshes:</strong> "+
+            meshes.length+
+            "<br>"+
+            "<strong>Triangles:</strong> "+
+            triangles+
+            "<br>"+
+            "<strong>Status:</strong> IGES 3D geometry rendered.";
+    }
+
+    document.getElementById("cadResult").innerHTML=info;
+}
+
+function updateCADDimensions(model,type){
+
+    if(!model) return;
+
+    const box=new THREE.Box3().setFromObject(model);
+
+    if(box.isEmpty()){
+        document.getElementById("cadDimensions").innerHTML=
+            "No dimensions available.";
+        return;
+    }
+
+    const size=new THREE.Vector3();
+    box.getSize(size);
+
+    document.getElementById("cadDimensions").innerHTML=
+        "<strong>Width X:</strong> "+
+        size.x.toFixed(3)+
+        " mm<br>"+
+        "<strong>Height Y:</strong> "+
+        size.y.toFixed(3)+
+        " mm<br>"+
+        "<strong>Depth Z:</strong> "+
+        size.z.toFixed(3)+
+        " mm<br>"+
+        "<strong>Format:</strong> "+
+        type;
+}
+
+function cadFitView(){
+
+    if(!cadModel || !cadCamera) return;
+
+    const box=new THREE.Box3().setFromObject(cadModel);
+
+    if(box.isEmpty()) return;
+
+    const center=new THREE.Vector3();
+    const size=new THREE.Vector3();
+
+    box.getCenter(center);
+    box.getSize(size);
+
+    const maxSize=Math.max(size.x,size.y,size.z);
+
+    if(maxSize<=0) return;
+
+    if(cadViewMode==="2D"){
+
+        const distance=Math.max(maxSize*1.25,10);
+
+        cadCamera.position.set(
+            center.x,
+            center.y,
+            center.z+distance
+        );
+
+    }else{
+
+        const distance=Math.max(maxSize*1.8,10);
+
+        cadCamera.position.set(
+            center.x+distance*0.7,
+            center.y+distance*0.7,
+            center.z+distance*0.7
+        );
+    }
+
+    cadCamera.lookAt(center);
+
+    if(cadControls){
+        cadControls.target.copy(center);
+        cadControls.update();
+    }
+}
+
+function cadResetView(){
+
+    if(!cadCamera) return;
+
+    if(cadControls){
+        cadControls.reset();
+    }
+
+    cadFitView();
+}
+
+function toggleCADGrid(){
+
+    if(!cadGrid) return;
+
+    cadGrid.visible=!cadGrid.visible;
+
+    if(cadGrid.visible && cadModel){
+
+        const box=new THREE.Box3().setFromObject(cadModel);
+        const size=new THREE.Vector3();
+
+        box.getSize(size);
+
+        const maxSize=Math.max(size.x,size.y,size.z,100);
+
+        cadGrid.scale.setScalar(maxSize/1000);
+
+        const center=new THREE.Vector3();
+        box.getCenter(center);
+
+        cadGrid.position.set(
+            center.x,
+            center.y,
+            box.min.z
+        );
+    }
+}
+
+function clearCADModel(){
+
+    if(!cadModel) return;
+
+    cadScene.remove(cadModel);
+
+    cadModel.traverse(function(object){
+
+        if(object.geometry){
+            object.geometry.dispose();
+        }
+
+        if(object.material){
+
+            if(Array.isArray(object.material)){
+                object.material.forEach(function(m){m.dispose();});
+            }else{
+                object.material.dispose();
+            }
+        }
+    });
+
+    cadModel=null;
+}
+
+function showCADError(message){
+
+    document.getElementById("cadViewerStatus").innerText="CAD loading failed";
+
+    document.getElementById("cadEmptyMessage").style.display="flex";
+
+    document.getElementById("cadEmptyMessage").innerHTML=
+        "⚠️ "+escapeCADHTML(message);
+
+    document.getElementById("cadResult").innerHTML=
+        "<strong style='color:#c62828;'>Error:</strong> "+
+        escapeCADHTML(message);
+}
+
+function escapeCADHTML(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function calculateCADCost(){
+
+    const setup=
+        Number(document.getElementById("cadSetup").value)||0;
+
+    const programming=
+        Number(document.getElementById("cadProgram").value)||0;
+
+    const machining=
+        Number(document.getElementById("cadMachining").value)||0;
+
+    const qty=
+        Number(document.getElementById("cadQty").value)||1;
+
+    const machineRate=
+        Number(document.getElementById("cadMachineRate").value)||0;
+
+    const manpower=
+        Number(document.getElementById("cadManpower").value)||0;
+
+    const tooling=
+        Number(document.getElementById("cadTooling").value)||0;
+
+    const setupCost=
+        setup/60*machineRate;
+
+    const programmingCost=
+        programming/60*manpower;
+
+    const machiningCost=
+        machining/60*(machineRate+manpower)*qty;
+
+    const toolingCost=
+        tooling*qty;
+
+    const total=
+        setupCost+
+        programmingCost+
+        machiningCost+
+        toolingCost;
+
+    document.getElementById("cadCost").innerText=
+        total.toFixed(2);
+}
+
+/* Keep the old function name working if anything else in the page calls it. */
+function readCADFile(input){
+    loadCADDrawing(input);
+}
+
+function estimateCADCost(){
+    calculateCADCost();
+}
+
+/* =====================================================
+WELDING
+===================================================== */
+
+function calculateWelding(){
+
+const time=Number(document.getElementById("weldTime").value)||0;
+
+const machine=Number(document.getElementById("weldMachineRate").value)||0;
+
+const manpower=Number(document.getElementById("weldManpower").value)||0;
+
+const consumable=Number(document.getElementById("weldConsumable").value)||0;
+
+const gas=Number(document.getElementById("weldGas").value)||0;
+
+const overhead=Number(document.getElementById("weldOverhead").value)||0;
+
+const profit=Number(document.getElementById("weldProfit").value)||0;
+
+const base=
+time*(machine+manpower)+
+consumable+
+gas;
+
+const oh=base*overhead/100;
+
+const beforeProfit=base+oh;
+
+const profitValue=beforeProfit*profit/100;
+
+const total=beforeProfit+profitValue;
+
+document.getElementById("weldTotal").innerText=
+total.toFixed(2);
+
+}
+
+
+/* =====================================================
+ASSEMBLY
+===================================================== */
+
+function calculateAssembly(){
+
+const qty=Number(document.getElementById("assemblyQty").value)||1;
+
+const time=Number(document.getElementById("assemblyTime").value)||0;
+
+const manpower=Number(document.getElementById("assemblyManpower").value)||0;
+
+const tools=Number(document.getElementById("assemblyTools").value)||0;
+
+const inspection=Number(document.getElementById("assemblyInspection").value)||0;
+
+const overhead=Number(document.getElementById("assemblyOverhead").value)||0;
+
+const profit=Number(document.getElementById("assemblyProfit").value)||0;
+
+const labour=
+time/60*manpower*qty;
+
+const base=
+labour+
+tools+
+inspection;
+
+const oh=base*overhead/100;
+
+const beforeProfit=base+oh;
+
+const profitValue=
+beforeProfit*profit/100;
+
+const total=
+beforeProfit+profitValue;
+
+document.getElementById("assemblyTotal").innerText=
+total.toFixed(2);
+
+}
+
+
+/* =====================================================
+PAINTING
+===================================================== */
+
+function calculatePainting(){
+
+const area=Number(document.getElementById("paintArea").value)||0;
+
+const rate=Number(document.getElementById("paintRate").value)||0;
+
+const time=Number(document.getElementById("paintTime").value)||0;
+
+const manpower=Number(document.getElementById("paintManpower").value)||0;
+
+const material=Number(document.getElementById("paintMaterial").value)||0;
+
+const prep=Number(document.getElementById("paintPrep").value)||0;
+
+const overhead=Number(document.getElementById("paintOverhead").value)||0;
+
+const profit=Number(document.getElementById("paintProfit").value)||0;
+
+const base=
+area*rate+
+time*manpower+
+material+
+prep;
+
+const oh=base*overhead/100;
+
+const beforeProfit=base+oh;
+
+const profitValue=
+beforeProfit*profit/100;
+
+const total=
+beforeProfit+profitValue;
+
+document.getElementById("paintTotal").innerText=
+total.toFixed(2);
+
+}
+
+
+/* =====================================================
+DIMENSION CONVERTER
+===================================================== */
+
+function convertDimension(){
+
+const value=Number(document.getElementById("convValue").value)||0;
+
+const from=document.getElementById("convFrom").value;
+
+const to=document.getElementById("convTo").value;
+
+const factors={
+
+mm:1,
+
+cm:10,
+
+m:1000,
+
+inch:25.4,
+
+ft:304.8
+
+};
+
+const mm=value*factors[from];
+
+const result=mm/factors[to];
+
+document.getElementById("dimensionResult").innerText=
+result.toFixed(6);
+
+}
+
+
+/* =====================================================
+WEIGHT CONVERTER
+===================================================== */
+
+function convertWeight(){
+
+const value=Number(document.getElementById("weightValue").value)||0;
+
+const from=document.getElementById("weightFrom").value;
+
+const to=document.getElementById("weightTo").value;
+
+const factors={
+
+g:1,
+
+kg:1000,
+
+ton:1000000,
+
+lb:453.59237
+
+};
+
+const grams=value*factors[from];
+
+const result=grams/factors[to];
+
+document.getElementById("weightResult").innerText=
+result.toFixed(6);
+
+}
+
+
+/* =====================================================
+RATE CONVERTER
+===================================================== */
+
+function convertRate(){
+
+const value=Number(document.getElementById("rateConvertValue").value)||0;
+
+const type=document.getElementById("rateConversion").value;
+
+let result=0;
+
+if(type==="kg-g") result=value/1000;
+
+if(type==="g-kg") result=value*1000;
+
+if(type==="m2-mm2") result=value/1000000;
+
+if(type==="mm2-m2") result=value*1000000;
+
+if(type==="hour-min") result=value/60;
+
+if(type==="min-hour") result=value*60;
+
+document.getElementById("rateResult").innerText=
+result.toFixed(8);
+
+}
+
+
+/* =====================================================
+NORMAL CALCULATOR
+===================================================== */
+
+function calcInput(value){
+
+const display=document.getElementById("calcDisplay");
+
+if(display.value==="0"){
+
+display.value=value;
+
+}else{
+
+display.value+=value;
+
+}
+
+}
+
+
+function calcClear(){
+
+document.getElementById("calcDisplay").value="0";
+
+}
+
+
+function calcBack(){
+
+const display=document.getElementById("calcDisplay");
+
+display.value=
+display.value.length>1
+?display.value.slice(0,-1)
+:"0";
+
+}
+
+
+function calcCalculate(){
+
+const display=document.getElementById("calcDisplay");
+
+try{
+
+let expression=display.value.replace("%","/100");
+
+display.value=
+Function('"use strict";return ('+expression+')')();
+
+}catch{
+
+display.value="Error";
+
+}
+
+}
+
+
+/* =====================================================
+QUOTATION
+===================================================== */
+
+function generateQuotation(){
+
+const customer=
+document.getElementById("customerName").value||"Customer";
+
+const number=
+document.getElementById("quoteNumber").value||
+"RA-"+Date.now().toString().slice(-6);
+
+const part=
+document.getElementById("quotePart").value||
+"Manufacturing Work";
+
+const material=
+Number(document.getElementById("quoteMaterial").value)||0;
+
+const vmc=
+Number(document.getElementById("quoteVMC").value)||0;
+
+const welding=
+Number(document.getElementById("quoteWelding").value)||0;
+
+const assembly=
+Number(document.getElementById("quoteAssembly").value)||0;
+
+const painting=
+Number(document.getElementById("quotePainting").value)||0;
+
+const other=
+Number(document.getElementById("quoteOther").value)||0;
+
+const profitPercent=
+Number(document.getElementById("quoteProfit").value)||0;
+
+const gstPercent=
+Number(document.getElementById("quoteGST").value)||0;
+
+const subtotal=
+material+
+vmc+
+welding+
+assembly+
+painting+
+other;
+
+const profit=
+subtotal*profitPercent/100;
+
+const taxable=
+subtotal+profit;
+
+const gst=
+taxable*gstPercent/100;
+
+const grand=
+taxable+gst;
+
+
+document.getElementById("qNo").innerText=number;
+
+document.getElementById("qDate").innerText=
+new Date().toLocaleDateString("en-IN");
+
+document.getElementById("qCustomer").innerText=customer;
+
+document.getElementById("qPart").innerText=part;
+
+document.getElementById("qMaterial").innerText=
+material.toFixed(2);
+
+document.getElementById("qVMC").innerText=
+vmc.toFixed(2);
+
+document.getElementById("qWelding").innerText=
+welding.toFixed(2);
+
+document.getElementById("qAssembly").innerText=
+assembly.toFixed(2);
+
+document.getElementById("qPainting").innerText=
+painting.toFixed(2);
+
+document.getElementById("qOther").innerText=
+other.toFixed(2);
+
+document.getElementById("qSubtotal").innerText=
+subtotal.toFixed(2);
+
+document.getElementById("qProfit").innerText=
+profit.toFixed(2);
+
+document.getElementById("qGST").innerText=
+gst.toFixed(2);
+
+document.getElementById("qGrandTotal").innerText=
+grand.toFixed(2);
+
+}
+
+
+/* =====================================================
+INITIALIZATION
+===================================================== */
+
+buildMetalInputs();
+
+updateRates();
+
+document.getElementById("quoteNumber").value=
+"RA-"+new Date().getFullYear()+"-"+Math.floor(Math.random()*9000+1000);
+
+</script>
+
+</body>
+</html>
